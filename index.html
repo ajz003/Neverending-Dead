@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zombie King</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <main>
+            <header>
+                <h1>Zombie King</h1>
+                <div id="gameover">
+                    <img src="https://vignette.wikia.nocookie.net/battlefordreamislandfanfiction/images/5/59/Game_Over_Screen.png/revision/latest?cb=20150903025146">
+                </div>
+                <div id="winscreen">
+                    <img style="max-width:100%" src="https://vignette.wikia.nocookie.net/battlefordreamislandfanfiction/images/5/59/Game_Over_Screen.png/revision/latest?cb=20150903025146">
+                    <h1>You Win!!</h1>
+                </div>
+            </header>
+
+            <div id="gameDiv">
+
+                <p><span id="TitleText">Fight the Zombie King's Army, win and become the King, lose and join his
+                        ranks...</span></p>
+
+                <p><span id="currentCharacterText">Your Character</span></p>
+
+                <div id="myCharDiv">
+                    <div class="character myChar" id="Me"><img src="https://upload.wikimedia.org/wikipedia/en/e/e9/Rick_and_Morty_characters_-_Rick_Sanchez.jpg">
+                        <div class="stats">
+                            HP: <span id="myHealth" class="charHealth"></span>
+                            <br> Attack: <span id="myAttack" class="charAttack"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <p><span id="fightSectionText">Click to Attack</span></p>
+
+                <div id="buttonDiv"><button id="attackButton">Attack!</button></div>
+
+                <p><span id="defenderText">Enemy</span></p>
+
+                <div id="defenderDiv">
+                    <div class="character myOpp" id="Enemy"><img src="https://upload.wikimedia.org/wikipedia/en/d/d7/Rick_and_Morty_characters_-_Morty_Smith.jpg">
+                        <div class="stats">
+                            HP: <span id="enemyHealth" class="charHealth"></span>
+                            <br>Attack: <span id="enemyAttack" class="charAttack"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="consoleDiv">
+                    <p class="console1">Click Attack to Begin!</p>
+                    <p class="console2"></p>
+                </div>
+
+            </div>
+
+
+
+
+        </main>
+    </div>
+
+
+    <script src="assets/javascript/game.js"></script>
+</body>
+
+</html>
