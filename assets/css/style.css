@@ -34,8 +34,6 @@ p {
     padding: 30px;
 }
 
-
-
 img {
     max-height:100%;
 }
@@ -68,7 +66,7 @@ img {
 
 }
 
-#currentCharacterText {
+#myCharTitle {
     font-size:25px;
     color: green;
 }
@@ -80,12 +78,7 @@ img {
     text-align:center;
 }
 
-#chooseText {
-    color: blue;
-    font-size:25px;
-}
-
-#fightSectionText {
+#fightSectionTitle {
     font-size:25px;
     color:red;
 }
@@ -95,12 +88,12 @@ img {
     margin:10px 0;
 }
 
-#defenderText {
+#enemyTitle {
     font-size:25px;
     color: chartreuse;
 }
 
-#defenderDiv {
+#enemyDiv {
     padding: 50px 0px;
     background-color: purple;
     margin:10px 0;
@@ -119,4 +112,12 @@ img {
 
 .console2 {
     font-size:20px;
+}
+
+#gameover {
+    display:none
+}
+
+#winscreen {
+    display:none
 }
