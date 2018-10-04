@@ -7,6 +7,8 @@ let enemyName = "Morty";
 let enemyHealth = 100;
 let enemyAttack = 10;
 
+let myMaxHealth = myHealth;
+let enemyMaxHealth = enemyHealth;
 
 // hide the gameover and winscreen when the game starts
 $("#lose-screen").hide();
@@ -72,19 +74,21 @@ $("#attack-btn").click(function () {
         $("#win-screen").show();
     };
 
-    if (enemyHealth > (enemyHealth * 0.5)) {
-        $(`#enemy-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
-        // if (enemyHealth > (enemyHealth * 0.3)) {
-        //     $(`#enemy-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
-        // }
-    }
 
-    if (myHealth > (myHealth * 0.5)) {
+    if (enemyHealth <= (enemyMaxHealth * 0.5)) {
+        $(`#enemy-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
+        if (enemyHealth <= (enemyMaxHealth * 0.3)) {
+            $(`#enemy-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
+        }
+    };
+
+    if (myHealth <= (myMaxHealth * 0.5)) {
+        
         $(`#character-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
-        // if (enemyHealth > (enemyHealth * 0.3)) {
-        //     $(`#character-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
-        // }
-    }
+        if (myHealth <= (myMaxHealth * 0.3)) {
+            $(`#character-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
+        }
+    };
 
     // check if enemy survived my attack
     if (enemyHealth > 0) {
