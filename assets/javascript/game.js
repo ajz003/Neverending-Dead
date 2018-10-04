@@ -64,6 +64,7 @@ let myImg;
         //         console.log("created new character");
         //     }
         // );
+        
         spawnEnemy();
         $("#character-creator").hide();
         $("#game-screen").show();
