@@ -1,3 +1,5 @@
+var connection = require("../../config/connection.js");
+
 // initial stat values
 let myName = "";
 let myAttack = 30;
@@ -6,7 +8,7 @@ let myImg;
 let enemyName = "Morty";
 let enemyHealth = 100;
 let enemyAttack = 10;
-
+let position = 0;
 
 // hide the gameover and winscreen when the game starts
 $("#lose-screen").hide();
@@ -51,8 +53,6 @@ $("#create-btn").click(function (event) {
 });
 
 
-
-
 // Attack button calls attack function
 $("#attack-btn").click(function () {
 
@@ -61,7 +61,7 @@ $("#attack-btn").click(function () {
 
     // check if enemy died before he counter-attacks
     if (enemyHealth <= 0) {
-
+        spawnEnemy();
         // hides the game and shows the winscreen
         $("#game-screen").hide();
         $("#win-screen").show();
@@ -92,9 +92,14 @@ $("#attack-btn").click(function () {
     $('#my-health').text(myHealth);
 });
 
+let spawnEnemy = function(){
+    let queryString = "SELECT * FROM enemies WHERE position = " + position;
+    connection.query(queryString, function(err, results) {
+        console.log(results);
+    })
+};
 
-
-
+spawnEnemy();
 
 
 
