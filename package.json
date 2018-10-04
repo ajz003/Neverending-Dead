@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/do-kevin/Project-Two#readme",
   "dependencies": {
+    "express": "^4.16.3",
     "mysql": "^2.16.0",
     "mysql2": "^1.6.1",
+    "path": "^0.12.7",
     "sequelize": "^4.39.0"
   }
 }
