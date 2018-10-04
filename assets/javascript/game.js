@@ -1,4 +1,3 @@
-
 // initial stat values
 let myName = "";
 let myAttack = 30;
@@ -116,7 +115,7 @@ $("#attack-btn").click(function () {
             img: myImg,
             hp: myMaxHealth,
             attack: myAttack,
-            position:position
+            position: position
 
         };
         $.ajax("/api/enemy", {
@@ -157,7 +156,8 @@ let spawnEnemy = function () {
             $("#enemy-attack").text(enemyAttack);
             $("#enemy-name").text(enemyName);
             $("#enemy-image").attr("src", enemyImg);
-            position++;
+
         }
+        position++;
     })
 }
