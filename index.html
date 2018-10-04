@@ -4,97 +4,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Zombie King</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <title>Prototype</title>
 </head>
 
 <body>
+    <!-- Navigation Bar/Menu -->
+    <nav class="level" id="navigation">
+        <p class="level-item has-text-centered"></p>
+        <p class="level-item has-text-centered"></p>
+        <p class="level-item has-text-centered" id="gameTitle">
+            Zombie King
+        </p>
+        <p class="level-item has-text-centered"></p>
+        <p class="level-item has-text-centered"></p>
+    </nav>
+
     <div class="container">
         <main>
             <header>
-                <h1>Zombie King</h1>
-                <div id="gameover">
-                    <img src="https://vignette.wikia.nocookie.net/battlefordreamislandfanfiction/images/5/59/Game_Over_Screen.png/revision/latest?cb=20150903025146">
+                <div id="lose-screen">
+                    <img src="http://pixelartmaker.com/art/dabdcb017b41820.png">
                 </div>
-                <div id="winscreen">
-                    <img style="max-width:100%" src="https://vignette.wikia.nocookie.net/battlefordreamislandfanfiction/images/5/59/Game_Over_Screen.png/revision/latest?cb=20150903025146">
-                    <h1>You Win!!</h1>
+
+                <div id="win-screen">
+                    <img style="max-width:100%" src="https://ubisafe.org/images/transparent-png-victory-3.png">
                 </div>
             </header>
 
 
-            <div id="charCreate">
-                <h2>Create a Character</h2>
-                <form class="create-form">
+            <div id="character-creator">
+                <h1 class="title has-text-centered">Create a Character</h1>
+                <div class="field">
+                    <form class="create-form">
 
-                    <div class="form-group">
-                        <label for="createName">Name:</label>
-                        <input type="text" id="createName" name="name">
-                    </div>
+                        <div>
+                            <label class="label" for="createName">Name:</label>
+                            <input class="input" type="text" id="input-name" name="playerName">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="createImg">Picture URL:</label>
-                        <input type="text" id="createImg" name="pic">
-                    </div>
+                        <div>
+                            <label class="label" for="createImg">Image URL:</label>
+                            <input class="input" type="text" id="input-imageUrl" name="playerImage">
+                        </div><br>
+                    
+                        <a class="button is-large is-link" id="create-btn" type="submit">Create</a>
 
-                    <button type="submit">Create</button>
-                </form>
+                    </form>
+                </div>
             </div>
 
 
-            <div id="gameDiv">
+            <div id="game-screen">
 
-                <p><span id="TitleText">Fight the Zombie King's Army, win and become the King, lose and join his
-                        ranks...</span>
+                <p>
+                    <span id="summary">
+                        Fight the Zombie King's Army, win and become the King, lose and join his ranks...
+                    </span>
                 </p>
 
-                <p><span id="myCharTitle">Your Character</span></p>
-                <div id="myCharDiv">
-                    <div class="character myChar" id="Me"><img id="myImg" src="https://upload.wikimedia.org/wikipedia/en/e/e9/Rick_and_Morty_characters_-_Rick_Sanchez.jpg">
+                <p><span id="character-heading">Your Character</span></p>
+                <div id="character-box">
+                    <div class="avatar-box" id="player-box">
+                        <img id="my-image" src="https://upload.wikimedia.org/wikipedia/en/e/e9/Rick_and_Morty_characters_-_Rick_Sanchez.jpg">
                         <div class="stats">
-                            <span id="myName"></span><br>
-                            HP: <span id="myHealth"></span><br>
-                            Attack: <span id="myAttack"></span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <p><span id="fightSectionTitle">Click to Attack</span></p>
-
-                <div id="buttonDiv"><button id="attackButton">Attack!</button></div>
-
-                <p><span id="enemyTitle">Enemy</span></p>
-
-                <div id="enemyDiv">
-                    <div class="character myOpp" id="Enemy"><img id="enemyImg" src="https://upload.wikimedia.org/wikipedia/en/d/d7/Rick_and_Morty_characters_-_Morty_Smith.jpg">
-                        <div class="stats">
-                            <span id="enemyName"></span><br>
-                            HP: <span id="enemyHealth"></span><br>
-                            Attack: <span id="enemyAttack"></span>
+                            <span id="my-name"></span><br>
+                            HP: <span id="my-health"></span><br>
+                            Attack: <span id="my-attack"></span>
                         </div>
                     </div>
-
                 </div>
 
-                <div id="consoleDiv">
-                    <p class="console1">Click Attack to Begin!</p>
-                    <p class="console2"></p>
+                <p><span id="instructions">Click to Attack</span></p>
+
+                <div id="attack-btn-wrapper">
+                    <a class="button is-large is-danger" id="attack-btn">Attack</a>
+                </div>
+
+                <p><span id="enemy-heading">Enemy</span></p>
+
+                <div id="enemy-box">
+                    <div class="avatar-box" id="enemy-box">
+                        <img id="enemyImg" src="https://upload.wikimedia.org/wikipedia/en/d/d7/Rick_and_Morty_characters_-_Morty_Smith.jpg">
+                        <div class="stats">
+                            <span id="enemy-name"></span><br>
+                            HP: <span id="enemy-health"></span><br>
+                            Attack: <span id="enemy-attack"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="console-box">
+                    <p class="console-log-1">Click Attack to Begin!</p>
+                    <p class="console-log-2"></p>
                 </div>
 
             </div>
-
-
-
-
         </main>
     </div>
 
 
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     <script src="assets/javascript/game.js"></script>
 </body>
 

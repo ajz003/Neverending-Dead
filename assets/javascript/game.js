@@ -9,29 +9,29 @@ let enemyAttack = 10;
 
 
 // hide the gameover and winscreen when the game starts
-$("#gameover").hide();
-$("#winscreen").hide();
+$("#lose-screen").hide();
+$("#win-screen").hide();
 
 // sets DOM text to initial values
-$("#myHealth").text(myHealth);
-$("#myAttack").text(myAttack);
-$("#enemyHealth").text(enemyHealth);
-$("#enemyAttack").text(enemyAttack);
-$("#enemyName").text(enemyName);
+$("#my-health").text(myHealth);
+$("#my-attack").text(myAttack);
+$("#enemy-health").text(enemyHealth);
+$("#enemy-attack").text(enemyAttack);
+$("#enemy-name").text(enemyName);
 
 // character creation logic
-$(".create-form").on("submit", function (event) {
+$("#create-btn").click(function (event) {
 
     // Make sure to preventDefault on a submit event.
     event.preventDefault();
 
-    myName = $("#createName").val().trim();
-    myImg = $("#createImg").val().trim();
+    myName = $("#input-name").val().trim();
+    myImg = $("#input-imageUrl").val().trim();
     if (myImg !== "") {
-        $("#myImg").attr("src", myImg)
+        $("#my-image").attr("src", myImg)
     };
 
-    $("#myName").text(myName);
+    $("#my-name").text(myName);
 
 
     // // Send the POST request.
@@ -45,8 +45,8 @@ $(".create-form").on("submit", function (event) {
     //     }
     // );
 
-    $("#charCreate").hide();
-    $("#gameDiv").show();
+    $("#character-creator").hide();
+    $("#game-screen").show();
 
 });
 
@@ -54,7 +54,7 @@ $(".create-form").on("submit", function (event) {
 
 
 // Attack button calls attack function
-$("#attackButton").on("click", function () {
+$("#attack-btn").click(function () {
 
     // Reduce enemy health by myAttack value
     enemyHealth -= myAttack;
@@ -63,8 +63,8 @@ $("#attackButton").on("click", function () {
     if (enemyHealth <= 0) {
 
         // hides the game and shows the winscreen
-        $("#gameDiv").hide();
-        $("#winscreen").show();
+        $("#game-screen").hide();
+        $("#win-screen").show();
     };
 
     // check if enemy survived my attack
@@ -83,13 +83,13 @@ $("#attackButton").on("click", function () {
     if (myHealth <= 0) {
 
         // hides the game and shows the gameover screen
-        $("#gameDiv").hide();
-        $("#gameover").show();
+        $("#game-screen").hide();
+        $("#lose-screen").show();
     };
 
     // if no one died, update the character stat boxes
-    $('#enemyHealth').text(enemyHealth);
-    $('#myHealth').text(myHealth);
+    $('#enemy-health').text(enemyHealth);
+    $('#my-health').text(myHealth);
 });
 
 
