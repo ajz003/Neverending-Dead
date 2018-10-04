@@ -1,5 +1,3 @@
-var connection = require("../../config/connection.js");
-
 // initial stat values
 let myName = "";
 let myAttack = 30;
