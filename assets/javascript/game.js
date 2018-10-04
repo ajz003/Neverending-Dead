@@ -13,6 +13,8 @@ let enemyMaxHealth = enemyHealth;
 let position = 0;
 
 
+
+
 // hide the gameover and winscreen when the game starts
 $("#lose-screen").hide();
 $("#win-screen").hide();
@@ -37,6 +39,13 @@ $("#create-btn").click(function (event) {
 
     myName = $("#input-name").val().trim();
     myImg = $("#input-imageUrl").val().trim();
+
+    if (myName === "") {
+        $("#name-invalid").css("visibility", "visible")
+        setTimeout(function() {$("#name-invalid").css("visibility", "hidden")}, 3000)
+        return;
+    }
+
     if (myImg !== "") {
         $("#my-image").attr("src", myImg)
     };
@@ -69,7 +78,7 @@ $("#attack-btn").click(function () {
 
     // check if enemy died before he counter-attacks
     if (enemyHealth <= 0) {
-        spawnEnemy();
+        // spawnEnemy();
         // hides the game and shows the winscreen
         $("#game-screen").hide();
         $("#win-screen").show();
@@ -121,14 +130,14 @@ $("#attack-btn").click(function () {
 
 });
 
-let spawnEnemy = function(){
-    let queryString = "SELECT * FROM enemies WHERE position = " + position;
-    connection.query(queryString, function(err, results) {
-        console.log(results);
-    })
-};
+// let spawnEnemy = function(){
+//     let queryString = "SELECT * FROM enemies WHERE position = " + position;
+//     connection.query(queryString, function(err, results) {
+//         console.log(results);
+//     })
+// };
 
-spawnEnemy();
+
 
 
 

@@ -126,3 +126,8 @@ button {
 .console-log-2 {
     font-size:20px;
 }
+
+#name-invalid {
+    color: red;
+    visibility: hidden;
+}
