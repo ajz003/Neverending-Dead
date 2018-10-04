@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/do-kevin/Project-Two/issues"
   },
-  "homepage": "https://github.com/do-kevin/Project-Two#readme"
+  "homepage": "https://github.com/do-kevin/Project-Two#readme",
+  "dependencies": {
+    "mysql": "^2.16.0"
+  }
 }
