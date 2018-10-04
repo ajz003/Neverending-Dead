@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    // initial stat values
-    let myName = "";
-    let myAttack = 30;
-    let myHealth = 100;
-    let myImg;
+// initial stat values
+let myName = "";
+let myAttack = 15;
+let myHealth = 100;
+let myImg;
 
     let enemyName = "";
     let enemyImg = "";
@@ -70,12 +70,29 @@ $(document).ready(function () {
 
     });
 
-
     // Attack button calls attack function
     $("#attack-btn").click(function () {
 
+  
+   let myCritRate = 0.75;
+    let enemyCritRate = 0.5;
+
+    let myCrit = Math.random();
+    let enemyCrit = Math.random();
+
+    let myCritMod = 1;
+    let enemyCritMod = 1;
+
+    let myCritNote = "";
+
+
+    if (myCrit <= myCritRate) {
+        myCritMod = 2;
+        myCritNote = "CRIT! "
+    }
+
         // Reduce enemy health by myAttack value
-        enemyHealth -= myAttack;
+    enemyHealth -= myAttack * myCritMod;
 
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
@@ -103,15 +120,15 @@ $(document).ready(function () {
             }
         };
 
+
         // check if enemy survived my attack
         if (enemyHealth > 0) {
-
             // reduce my health by enemyAttack
             myHealth -= enemyAttack;
 
-            // update console lines
-            $(".console-log-1").text("You attacked for " + myAttack + " damage!");
-            $(".console-log-2").text("Your opponent hit back for " + enemyAttack + " damage!");
+        // update console lines
+        $(".console-log-1").text(myCritNote + "You attacked for " + myAttack * myCritMod + " damage!");
+        $(".console-log-2").text("Your opponent hit back for " + enemyAttack + " damage!");
 
         };
 
