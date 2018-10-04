@@ -25,6 +25,26 @@
                 </div>
             </header>
 
+
+            <div id="charCreate">
+                <h2>Create a Character</h2>
+                <form class="create-form">
+
+                    <div class="form-group">
+                        <label for="createName">Name:</label>
+                        <input type="text" id="createName" name="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="createImg">Picture URL:</label>
+                        <input type="text" id="createImg" name="pic">
+                    </div>
+
+                    <button type="submit">Create</button>
+                </form>
+            </div>
+
+
             <div id="gameDiv">
 
                 <p><span id="TitleText">Fight the Zombie King's Army, win and become the King, lose and join his
@@ -33,10 +53,11 @@
 
                 <p><span id="myCharTitle">Your Character</span></p>
                 <div id="myCharDiv">
-                    <div class="character myChar" id="Me"><img src="https://upload.wikimedia.org/wikipedia/en/e/e9/Rick_and_Morty_characters_-_Rick_Sanchez.jpg">
+                    <div class="character myChar" id="Me"><img id="myImg" src="https://upload.wikimedia.org/wikipedia/en/e/e9/Rick_and_Morty_characters_-_Rick_Sanchez.jpg">
                         <div class="stats">
-                            HP: <span id="myHealth"></span>
-                            <br> Attack: <span id="myAttack"></span>
+                            <span id="myName"></span><br>
+                            HP: <span id="myHealth"></span><br>
+                            Attack: <span id="myAttack"></span>
                         </div>
 
                     </div>
@@ -50,10 +71,11 @@
                 <p><span id="enemyTitle">Enemy</span></p>
 
                 <div id="enemyDiv">
-                    <div class="character myOpp" id="Enemy"><img src="https://upload.wikimedia.org/wikipedia/en/d/d7/Rick_and_Morty_characters_-_Morty_Smith.jpg">
+                    <div class="character myOpp" id="Enemy"><img id="enemyImg" src="https://upload.wikimedia.org/wikipedia/en/d/d7/Rick_and_Morty_characters_-_Morty_Smith.jpg">
                         <div class="stats">
-                            HP: <span id="enemyHealth"></span>
-                            <br>Attack: <span id="enemyAttack"></span>
+                            <span id="enemyName"></span><br>
+                            HP: <span id="enemyHealth"></span><br>
+                            Attack: <span id="enemyAttack"></span>
                         </div>
                     </div>
 

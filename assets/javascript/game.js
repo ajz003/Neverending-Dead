@@ -1,6 +1,9 @@
 // initial stat values
+let myName = "";
 let myAttack = 30;
 let myHealth = 100;
+let myImg;
+let enemyName = "Morty";
 let enemyHealth = 100;
 let enemyAttack = 10;
 
@@ -14,8 +17,40 @@ $("#myHealth").text(myHealth);
 $("#myAttack").text(myAttack);
 $("#enemyHealth").text(enemyHealth);
 $("#enemyAttack").text(enemyAttack);
+$("#enemyName").text(enemyName);
 
-// Attack logic
+// character creation logic
+$(".create-form").on("submit", function (event) {
+
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    myName = $("#createName").val().trim();
+    myImg = $("#createImg").val().trim();
+    if (myImg !== "") {
+        $("#myImg").attr("src", myImg)
+    };
+
+    $("#myName").text(myName);
+
+
+    // // Send the POST request.
+    // let newChar = {};
+    // $.ajax("/api/create", {
+    //     type: "POST",
+    //     data: newChar
+    // }).then(
+    //     function () {
+    //         console.log("created new character");
+    //     }
+    // );
+
+    $("#charCreate").hide();
+    $("#gameDiv").show();
+
+});
+
+
 
 
 // Attack button calls attack function
@@ -55,8 +90,9 @@ $("#attackButton").on("click", function () {
     // if no one died, update the character stat boxes
     $('#enemyHealth').text(enemyHealth);
     $('#myHealth').text(myHealth);
-
 });
+
+
 
 
 

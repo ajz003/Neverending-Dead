@@ -32,6 +32,7 @@ p {
 #gameDiv {
     background-color: lightcyan;
     padding: 30px;
+    display: none;
 }
 
 img {
