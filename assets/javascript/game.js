@@ -78,7 +78,7 @@ $("#attack-btn").click(function () {
 
     // check if enemy died before he counter-attacks
     if (enemyHealth <= 0) {
-        // spawnEnemy();
+        spawnEnemy();
         // hides the game and shows the winscreen
         if (position > 2) {
             $("#game-screen").hide();
