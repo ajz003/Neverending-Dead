@@ -74,8 +74,8 @@ $("#attack-btn").click(function () {
         myHealth -= enemyAttack;
 
         // update console lines
-        $(".console1").text("You attacked for " + myAttack + " damage!");
-        $(".console2").text("Your opponent hit back for " + enemyAttack + " damage!");
+        $(".console-log-1").text("You attacked for " + myAttack + " damage!");
+        $(".console-log-2").text("Your opponent hit back for " + enemyAttack + " damage!");
 
     };
 

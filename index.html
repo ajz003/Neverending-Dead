@@ -16,14 +16,14 @@
     <nav class="level" id="navigation">
         <p class="level-item has-text-centered"></p>
         <p class="level-item has-text-centered"></p>
-        <p class="level-item has-text-centered" id="gameTitle">
-            Zombie King
+        <p class="level-item has-text-centered" id="game-title">
+            Journey to the Lich
         </p>
         <p class="level-item has-text-centered"></p>
         <p class="level-item has-text-centered"></p>
     </nav>
 
-    <div class="container">
+    <div class="container" id="body-content">
         <main>
             <header>
                 <div id="lose-screen">
@@ -50,60 +50,88 @@
                             <label class="label" for="createImg">Image URL:</label>
                             <input class="input" type="text" id="input-imageUrl" name="playerImage">
                         </div><br>
-                    
+
                         <a class="button is-large is-link" id="create-btn" type="submit">Create</a>
 
                     </form>
                 </div>
             </div>
 
-
             <div id="game-screen">
 
-                <p>
+                <p class="has-text-centered">
                     <span id="summary">
-                        Fight the Zombie King's Army, win and become the King, lose and join his ranks...
+                        You've come far to face the Lich. Strike down all his minions and slay him. Die and you'll become a part of his undead army.
                     </span>
                 </p>
+                <br>
 
-                <p><span id="character-heading">Your Character</span></p>
-                <div id="character-box">
-                    <div class="avatar-box" id="player-box">
-                        <img id="my-image" src="https://upload.wikimedia.org/wikipedia/en/e/e9/Rick_and_Morty_characters_-_Rick_Sanchez.jpg">
-                        <div class="stats">
-                            <span id="my-name"></span><br>
-                            HP: <span id="my-health"></span><br>
-                            Attack: <span id="my-attack"></span>
+                <div class="tile is-ancestor">
+                    <div class="tile is-vertical is-12">
+                        <div class="tile">
+                            <div class="tile is-parent is-vertical">
+                                <div id="character-box">
+                                    <p><span id="character-heading">Your Character</span></p>
+                                    <progress class="progress is-success" value="30" max="100">30%</progress>
+                                    <div class="avatar-box" id="player-box">
+                                        <img id="my-image" src="https://upload.wikimedia.org/wikipedia/en/e/e9/Rick_and_Morty_characters_-_Rick_Sanchez.jpg">
+                                        <div class="stats">
+                                            <span id="my-name"></span><br>
+                                            HP: <span id="my-health"></span><br>
+                                            Attack: <span id="my-attack"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tile is-parent is-vertical">
+                                <div id="enemy-box">
+                                    <p><span id="enemy-heading">Enemy</span></p>
+                                    <progress class="progress is-success" value="40" max="100"><40%></progress>
+                                    <div class="avatar-box" id="enemy-box">
+                                        <img id="enemyImg" src="https://upload.wikimedia.org/wikipedia/en/d/d7/Rick_and_Morty_characters_-_Morty_Smith.jpg">
+                                        <div class="stats">
+                                            <span id="enemy-name"></span><br>
+                                            HP: <span id="enemy-health"></span><br>
+                                            Attack: <span id="enemy-attack"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tile">
+                            <div class="tile is-parent is-5">
+                                <article class="tile is-child notification is-primary has-text-centered">
+                                    <div id="attack-btn-wrapper">
+                                        <a class="button is-large is-danger" id="attack-btn">Attack</a>
+                                        <a class="button is-large is-danger" id="defend-btn">Defend</a>
+                                        <a class="button is-large is-danger" id="skills-btn">Skills</a>
+                                    </div>
+                                </article>
+                                <article class="tile is-child notification is-warning has-text-centered">
+                                    <h2 class="subtitle">Options</h2>
+                                    <a class="button is-large is-danger" id="#">Fire</a>
+                                    <a class="button is-large is-info" id="#">Water</a>
+                                    <a class="button is-large is-dark" id="#">Water</a>
+                                </article>
+                            </div>
+                            <div class="tile is-parent is-7">
+                                <article class="tile is-child notification is-danger has-text-centered" id="console-tile">
+                                    <div id="console-box">
+                                        <p class="console-log-1">Console</p>
+                                        <p class="console-log-2"></p>
+                                    </div>
+                                </article>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <p><span id="instructions">Click to Attack</span></p>
-
-                <div id="attack-btn-wrapper">
-                    <a class="button is-large is-danger" id="attack-btn">Attack</a>
-                </div>
-
-                <p><span id="enemy-heading">Enemy</span></p>
-
-                <div id="enemy-box">
-                    <div class="avatar-box" id="enemy-box">
-                        <img id="enemyImg" src="https://upload.wikimedia.org/wikipedia/en/d/d7/Rick_and_Morty_characters_-_Morty_Smith.jpg">
-                        <div class="stats">
-                            <span id="enemy-name"></span><br>
-                            HP: <span id="enemy-health"></span><br>
-                            Attack: <span id="enemy-attack"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="console-box">
-                    <p class="console-log-1">Click Attack to Begin!</p>
-                    <p class="console-log-2"></p>
-                </div>
-
             </div>
-        </main>
+
+
+
+
+    </div>
+    </main>
     </div>
 
 

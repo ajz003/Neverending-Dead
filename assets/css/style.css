@@ -1,32 +1,60 @@
-main {
-    max-width:960px;
-    margin:auto auto;
-    position:relative;
-    background-color:lemonchiffon;
-    border: 4px dashed blue;
-    padding: 40px;
-    overflow: hidden;
-}
-
-.container {
-    min-height:1080px;
-    padding:40px;
-    /* background-color: aqua; */
-    overflow: hidden;
-}
+@import url('https://fonts.googleapis.com/css?family=K2D');
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
 
 p {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Permanent Marker, 'Arial', sans-serif;
+    font-size: 18px;
+}
+
+img {
+    height:100%;
+    width: 100%;
+}
+
+body {
+    top: 0;
+    left: 0;
+    height: 1000px;
+    background: purple;
+}
+
+#navigation {
+    background-color: darkred;
+    color: white;
+    border-bottom: 1px solid rgb(43, 42, 42);
+}
+
+#game-title {
+    font-size: 50px;
+}
+
+#body-content {
+    background-color: rgb(112, 149, 252);
+    color: white;
+    padding: 20px;
+}
+
+#lose-screen {
+    display:none
+}
+
+#win-screen {
+    display:none
 }
 
 #game-screen {
-    background-color: lightcyan;
     padding: 30px;
     display: none;
 }
 
-img {
-    max-height:100%;
+#character-heading {
+    font-size:25px;
+    color: rgb(21, 231, 21);
+}
+
+#enemy-heading {
+    font-size:25px;
+    color: rgb(255, 0, 0);
 }
 
 .avatar-box {
@@ -45,7 +73,7 @@ img {
 .stats {
     float:left;
     position: absolute;
-    left:35%;
+    left:30%;
     bottom:5px;
     color:green;
     font-size:20px;
@@ -54,12 +82,17 @@ img {
     border: 1px solid green;
     border-radius: 9px;
     text-align: center;
-
 }
 
-#character-heading {
+#instructions {
     font-size:25px;
-    color: green;
+    color:red;
+}
+
+button {
+    margin: 0 0 10px 0; 
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
 }
 
 #character-box {
@@ -69,26 +102,16 @@ img {
     text-align:center;
 }
 
-#instructions {
-    font-size:25px;
-    color:red;
-}
-
-#attack-btn {
-    padding: 10px 30px;
-    margin:10px 0;
-}
-
-#enemy-heading {
-    font-size:25px;
-    color: chartreuse;
-}
-
 #enemy-box {
-    padding: 50px 0px;
-    background-color: purple;
-    margin:10px 0;
+    background-color: rgb(23, 219, 233);
+    padding:10px 0px;
+    margin:10px auto;
     text-align:center;
+}
+
+#console-tile {
+    border-right: 1px solid rgb(50, 50, 51);
+    border-bottom: 1px solid rgb(50, 50, 51);
 }
 
 #console-box {
@@ -103,20 +126,4 @@ img {
 
 .console-log-2 {
     font-size:20px;
-}
-
-#lose-screen {
-    display:none
-}
-
-#win-screen {
-    display:none
-}
-
-#navigation {
-    background: red;
-}
-
-#gameTitle {
-    font-size: 50px;
 }
