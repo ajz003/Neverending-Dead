@@ -19,6 +19,11 @@ $("#enemy-health").text(enemyHealth);
 $("#enemy-attack").text(enemyAttack);
 $("#enemy-name").text(enemyName);
 
+// Updates player's & enemy's hp bars when the battle starts
+$(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+$(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+
+
 // character creation logic
 $("#create-btn").click(function (event) {
 
@@ -67,6 +72,20 @@ $("#attack-btn").click(function () {
         $("#win-screen").show();
     };
 
+    if (enemyHealth > (enemyHealth * 0.5)) {
+        $(`#enemy-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
+        // if (enemyHealth > (enemyHealth * 0.3)) {
+        //     $(`#enemy-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
+        // }
+    }
+
+    if (myHealth > (myHealth * 0.5)) {
+        $(`#character-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
+        // if (enemyHealth > (enemyHealth * 0.3)) {
+        //     $(`#character-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
+        // }
+    }
+
     // check if enemy survived my attack
     if (enemyHealth > 0) {
 
@@ -87,9 +106,14 @@ $("#attack-btn").click(function () {
         $("#lose-screen").show();
     };
 
+    // Updates player's & enemy's hp bars as they damage each other
+    $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+    $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+
     // if no one died, update the character stat boxes
     $('#enemy-health').text(enemyHealth);
     $('#my-health').text(myHealth);
+
 });
 
 
