@@ -1,6 +1,6 @@
 // initial stat values
 let myName = "";
-let myAttack = 30;
+let myAttack = 15;
 let myHealth = 100;
 let myImg;
 
@@ -73,8 +73,22 @@ $("#create-btn").click(function (event) {
 // Attack button calls attack function
 $("#attack-btn").click(function () {
 
+    let myCritRate = 0.5;
+    let enemyCritRate = 0.5;
+
+    let myCrit = Math.random();
+    let enemyCrit = Math.random();
+
+    let myCritMod = 1
+    let enemyCritMod = 1
+
+
+    if (myCrit <= myCritRate) {
+        myCritMod = 2;
+    }
+
     // Reduce enemy health by myAttack value
-    enemyHealth -= myAttack;
+    enemyHealth -= myAttack * myCritMod;
 
     // check if enemy died before he counter-attacks
     if (enemyHealth <= 0) {
@@ -109,7 +123,7 @@ $("#attack-btn").click(function () {
         myHealth -= enemyAttack;
 
         // update console lines
-        $(".console-log-1").text("You attacked for " + myAttack + " damage!");
+        $(".console-log-1").text("You attacked for " + myAttack * myCritMod + " damage!");
         $(".console-log-2").text("Your opponent hit back for " + enemyAttack + " damage!");
 
     };
