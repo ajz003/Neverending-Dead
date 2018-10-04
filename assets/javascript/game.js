@@ -62,8 +62,10 @@ $("#attack-btn").click(function () {
     if (enemyHealth <= 0) {
         spawnEnemy();
         // hides the game and shows the winscreen
-        $("#game-screen").hide();
-        $("#win-screen").show();
+        if (position > 2) {
+            $("#game-screen").hide();
+            $("#win-screen").show();
+        }
     };
 
     // check if enemy survived my attack
@@ -103,6 +105,7 @@ let spawnEnemy = function () {
             $("#enemy-health").text(enemyHealth);
             $("#enemy-attack").text(enemyAttack);
             $("#enemy-name").text(enemyName);
+            $("#enemy-image").attr("src", enemyImg);
             position++;
         }
     })
