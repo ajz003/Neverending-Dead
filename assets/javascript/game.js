@@ -14,6 +14,8 @@ let enemyMaxHealth = enemyHealth;
 let position = 0;
 
 
+
+
 // hide the gameover and winscreen when the game starts
 $("#lose-screen").hide();
 $("#win-screen").hide();
@@ -38,6 +40,12 @@ $("#create-btn").click(function (event) {
 
     myName = $("#input-name").val().trim();
     myImg = $("#input-imageUrl").val().trim();
+
+    if (myName === "") {
+        $("#name-invalid").css("visibility", "visible");
+        return;
+    }
+
     if (myImg !== "") {
         $("#my-image").attr("src", myImg)
     };
@@ -70,7 +78,7 @@ $("#attack-btn").click(function () {
 
     // check if enemy died before he counter-attacks
     if (enemyHealth <= 0) {
-        spawnEnemy();
+        // spawnEnemy();
         // hides the game and shows the winscreen
         if (position > 2) {
             $("#game-screen").hide();
@@ -123,6 +131,7 @@ $("#attack-btn").click(function () {
     $('#my-health').text(myHealth);
 
 });
+
 
 let spawnEnemy = function () {
     $.get("/api/enemy/" + position, function (data) {
