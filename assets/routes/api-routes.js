@@ -12,73 +12,45 @@ var db = require("../../models");
 // =============================================================
 module.exports = function(app) {
 
-  // // GET route for getting all of the posts
-  // app.get("/api/posts/", function(req, res) {
-  //   db.Post.findAll({})
-  //     .then(function(dbPost) {
-  //       res.json(dbPost);
-  //     });
-  // });
 
-  // // Get route for returning posts of a specific category
-  // app.get("/api/posts/category/:category", function(req, res) {
-  //   db.Post.findAll({
-  //     where: {
-  //       category: req.params.category
-  //     }
-  //   })
-  //     .then(function(dbPost) {
-  //       res.json(dbPost);
-  //     });
-  // });
 
-  // // Get route for retrieving a single post
-  // app.get("/api/posts/:id", function(req, res) {
-  //   db.Post.findOne({
-  //     where: {
-  //       id: req.params.id
-  //     }
-  //   })
-  //     .then(function(dbPost) {
-  //       res.json(dbPost);
-  //     });
-  // });
+  // Get route for retrieving a single enemy
+  app.get("/api/enemy/:position", function(req, res) {
+    db.Enemy.findOne({
+      where: {
+        position: req.params.position
+      }
+    })
+      .then(function(enemy) {
+        res.json(enemy);
+      });
+  });
 
-  // // POST route for saving a new post
-  // app.post("/api/posts", function(req, res) {
-  //   console.log(req.body);
-  //   db.Post.create({
-  //     title: req.body.title,
-  //     body: req.body.body,
-  //     category: req.body.category
-  //   })
-  //     .then(function(dbPost) {
-  //       res.json(dbPost);
-  //     });
-  // });
+  // POST route for saving a new enemy
+  app.post("/api/enemy", function(req, res) {
+    console.log(req.body);
+    db.Enemy.create({
+      name: req.body.name,
+      img: req.body.img,
+      hp: req.body.hp,
+      attack: req.body.hp,
+      position:req.body.position
+    })
+      .then(function(newEnemy) {
+        res.json(newEnemy);
+      });
+  });
 
   // // DELETE route for deleting posts
-  // app.delete("/api/posts/:id", function(req, res) {
-  //   db.Post.destroy({
+  // app.delete("/api/enemy/:id", function(req, res) {
+  //   db.Enemy.destroy({
   //     where: {
   //       id: req.params.id
   //     }
   //   })
-  //     .then(function(dbPost) {
-  //       res.json(dbPost);
+  //     .then(function(enemy) {
+  //       res.json(enemy);
   //     });
   // });
 
-  // // PUT route for updating posts
-  // app.put("/api/posts", function(req, res) {
-  //   db.Post.update(req.body,
-  //     {
-  //       where: {
-  //         id: req.body.id
-  //       }
-  //     })
-  //     .then(function(dbPost) {
-  //       res.json(dbPost);
-  //     });
-  // });
 };
