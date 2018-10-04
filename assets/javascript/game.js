@@ -1,3 +1,4 @@
+
 // initial stat values
 let myName = "";
 let myAttack = 30;
@@ -53,16 +54,6 @@ $("#create-btn").click(function (event) {
     $("#my-name").text(myName);
 
 
-    // // Send the POST request.
-    // let newChar = {};
-    // $.ajax("/api/create", {
-    //     type: "POST",
-    //     data: newChar
-    // }).then(
-    //     function () {
-    //         console.log("created new character");
-    //     }
-    // );
     spawnEnemy();
     $("#character-creator").hide();
     $("#game-screen").show();
@@ -78,7 +69,7 @@ $("#attack-btn").click(function () {
 
     // check if enemy died before he counter-attacks
     if (enemyHealth <= 0) {
-        // spawnEnemy();
+        spawnEnemy();
         // hides the game and shows the winscreen
         if (position > 2) {
             $("#game-screen").hide();
@@ -95,7 +86,7 @@ $("#attack-btn").click(function () {
     };
 
     if (myHealth <= (myMaxHealth * 0.5)) {
-        
+
         $(`#character-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
         if (myHealth <= (myMaxHealth * 0.3)) {
             $(`#character-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
@@ -116,6 +107,26 @@ $("#attack-btn").click(function () {
 
     // after enemy counter-attack, check if my characer died
     if (myHealth <= 0) {
+
+
+
+        // Send the POST request to add character to DB
+        let newChar = {
+            name: myName,
+            img: myImg,
+            hp: myMaxHealth,
+            attack: myAttack,
+            position:position
+
+        };
+        $.ajax("/api/enemy", {
+            type: "POST",
+            data: newChar
+        }).then(
+            function () {
+                console.log("Added " + myName + " to the database");
+            }
+        );
 
         // hides the game and shows the gameover screen
         $("#game-screen").hide();

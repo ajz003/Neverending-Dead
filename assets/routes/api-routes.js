@@ -7,7 +7,7 @@
 
 // Requiring our Todo model
 var db = require("../../models");
-
+var connection = require("../../config/connection.js");
 // Routes
 // =============================================================
 module.exports = function(app) {
@@ -28,12 +28,17 @@ module.exports = function(app) {
 
   // POST route for saving a new enemy
   app.post("/api/enemy", function(req, res) {
-    console.log(req.body);
+    connection.query("UPDATE enemies SET position = position + 1 where position > " + req.body.position, function(err, result){
+      if(err) {throw err;}
+      console.log(result);
+
+    });
+
     db.Enemy.create({
       name: req.body.name,
       img: req.body.img,
       hp: req.body.hp,
-      attack: req.body.hp,
+      attack: req.body.attack,
       position:req.body.position
     })
       .then(function(newEnemy) {
@@ -41,16 +46,6 @@ module.exports = function(app) {
       });
   });
 
-  // // DELETE route for deleting posts
-  // app.delete("/api/enemy/:id", function(req, res) {
-  //   db.Enemy.destroy({
-  //     where: {
-  //       id: req.params.id
-  //     }
-  //   })
-  //     .then(function(enemy) {
-  //       res.json(enemy);
-  //     });
-  // });
+
 
 };
