@@ -3,10 +3,11 @@ let myName = "";
 let myAttack = 30;
 let myHealth = 100;
 let myImg;
-let enemyName = "Morty";
-let enemyHealth = 100;
-let enemyAttack = 10;
 
+let enemyName = "";
+let enemyImg = "";
+let enemyHealth;
+let enemyAttack;
 let myMaxHealth = myHealth;
 let enemyMaxHealth = enemyHealth;
 
@@ -54,7 +55,7 @@ $("#create-btn").click(function (event) {
     //         console.log("created new character");
     //     }
     // );
-
+    spawnEnemy();
     $("#character-creator").hide();
     $("#game-screen").show();
 
@@ -71,8 +72,10 @@ $("#attack-btn").click(function () {
     if (enemyHealth <= 0) {
         spawnEnemy();
         // hides the game and shows the winscreen
-        $("#game-screen").hide();
-        $("#win-screen").show();
+        if (position > 2) {
+            $("#game-screen").hide();
+            $("#win-screen").show();
+        }
     };
 
 
@@ -121,19 +124,20 @@ $("#attack-btn").click(function () {
 
 });
 
-let spawnEnemy = function(){
-    let queryString = "SELECT * FROM enemies WHERE position = " + position;
-    connection.query(queryString, function(err, results) {
-        console.log(results);
+let spawnEnemy = function () {
+    $.get("/api/enemy/" + position, function (data) {
+        if (data) {
+            console.log(data.name);
+            // If this enemy exists, fill page with its stats
+            enemyName = data.name;
+            enemyImg = data.img;
+            enemyHealth = data.hp;
+            enemyAttack = data.attack;
+            $("#enemy-health").text(enemyHealth);
+            $("#enemy-attack").text(enemyAttack);
+            $("#enemy-name").text(enemyName);
+            $("#enemy-image").attr("src", enemyImg);
+            position++;
+        }
     })
-};
-
-spawnEnemy();
-
-
-
-
-
-
-
-
+}
