@@ -74,18 +74,21 @@ let myImg;
     $("#attack-btn").click(function () {
 
   
-   let myCritRate = 0.5;
+   let myCritRate = 0.75;
     let enemyCritRate = 0.5;
 
     let myCrit = Math.random();
     let enemyCrit = Math.random();
 
-    let myCritMod = 1
-    let enemyCritMod = 1
+    let myCritMod = 1;
+    let enemyCritMod = 1;
+
+    let myCritNote = "";
 
 
     if (myCrit <= myCritRate) {
         myCritMod = 2;
+        myCritNote = "CRIT! "
     }
 
         // Reduce enemy health by myAttack value
@@ -124,7 +127,7 @@ let myImg;
             myHealth -= enemyAttack;
 
         // update console lines
-        $(".console-log-1").text("You attacked for " + myAttack * myCritMod + " damage!");
+        $(".console-log-1").text(myCritNote + "You attacked for " + myAttack * myCritMod + " damage!");
         $(".console-log-2").text("Your opponent hit back for " + enemyAttack + " damage!");
 
         };
