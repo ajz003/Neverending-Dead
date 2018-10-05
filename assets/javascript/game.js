@@ -2,7 +2,7 @@ $(document).ready(function () {
     // initial stat values
     let myName = "";
     let myAttack = 15;
-    let myHealth = 100;
+    let myHealth = 2000;
     let myImg;
 
     let enemyName = "";
@@ -69,12 +69,30 @@ $(document).ready(function () {
     });
 
     // ----------------------- Combat
+
+    var round = 1;
+
     // Attack button calls attack function
     $("#attack-btn").click(function () {
+        round++;
         attackLogic();
+        console.log(round);
+        myDeathLogic();
         enemyDeathLogic();
         hpBarUpdate();
         scrollToBottom();
+
+    });
+
+
+    $("#lucky-stab-btn").click(function () {
+        round++;
+        attackLogic("Lucky Stab");
+        myDeathLogic();
+        enemyDeathLogic();
+        hpBarUpdate();
+        scrollToBottom();
+
     });
 
     // -------------------- Functions
@@ -102,43 +120,35 @@ $(document).ready(function () {
         })
     }
 
-    let attackLogic = function attackLogic() {
-        // check if enemy died before he counter-attacks
-        if (enemyHealth <= 0) {
-            spawnEnemy();
-            // hides the game and shows the winscreen
-            if (position > 2) {
-                $("#game-screen").hide();
-                $("#win-screen").show();
-            }
-        };
+    let attackLogic = function attackLogic(ability) {
+        let myNewAttack = myAttack;
 
-        let myCritRate = 0.75;
-        let enemyCritRate = 0.5;
-        let myCrit = Math.random();
-        let enemyCrit = Math.random();
+        let myCritRate = 0.20;
+        // let enemyCritRate = 0.5;
+
+        // let enemyCrit = Math.random();
         let myCritMod = 1;
-        let enemyCritMod = 1;
+        // let enemyCritMod = 1;
         let myCritNote = "";
+
+        if (ability === "Lucky Stab") {
+            var myCrit = Math.random();
+            myNewAttack = myAttack * 0.5;
+        }
 
         if (myCrit <= myCritRate) {
             myCritMod = 2;
             myCritNote = "CRITICAL HIT!"
+            if (ability === "Lucky Stab") {
+                myCritMod = 10;
+            }
+    
         }
 
         // Reduce enemy health by myAttack value
-        enemyHealth -= myAttack * myCritMod;
+        enemyHealth -= myNewAttack * myCritMod;
 
-        // check if enemy died before he counter-attacks
-        if (enemyHealth <= 0) {
-            // hides the game and shows the winscreen
-            if (enemyName === "Lich King") {
-                $("#game-screen").hide();
-                $("#win-screen").show();
-            }
-            spawnEnemy();
-        };
-
+      
         // check if enemy survived my attack
         if (enemyHealth > 0) {
             // reduce my health by enemyAttack
@@ -147,17 +157,21 @@ $(document).ready(function () {
             // update console lines
             $("#console-log-1").append(timestamp)
                 .append(`<p>\n${myCritNote}\n</p>`)
-                .append(`\n<p>You attacked for ${myAttack * myCritMod} damage.</p>\n`)
+                .append(`\n<p>You attacked for ${myNewAttack * myCritMod} damage.</p>\n`)
                 .append(`\n<p>The enemy hits you back for ${enemyAttack} damage!</p>\n<br>`);
         };
     }
 
     let scrollToBottom = function scrollToBottom() {
+
+        
         var elem = document.getElementById(`console-box`);
         elem.scrollTop = elem.scrollHeight;
     };
 
-    let enemyDeathLogic = function enemyDeathLogic() {
+    let myDeathLogic = function myDeathLogic() {
+
+
         // after enemy counter-attack, check if my characer died
         if (myHealth <= 0) {
 
@@ -183,6 +197,22 @@ $(document).ready(function () {
             $("#game-screen").hide();
             $("#lose-screen").show();
         };
+    }
+
+    let enemyDeathLogic = function enemyDeathlogic() {
+          // check if enemy died before he counter-attacks
+          if (enemyHealth <= 0) {
+            // hides the game and shows the winscreen
+            if (enemyName === "Lich King") {
+                $("#game-screen").hide();
+                $("#win-screen").show();
+            }
+            spawnEnemy();
+        
+        // Sets current round back to 1 when new enemy spawns
+            round = 1;
+        };
+
     }
 
     let hpBarUpdate = function hpBarUpdate() {
