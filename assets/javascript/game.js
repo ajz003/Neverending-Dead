@@ -171,11 +171,11 @@ $(document).ready(function () {
     }
 
     let scrollToBottom = function scrollToBottom() {
-        window.setInterval(function () {
+     
             var elem = document.getElementById(`console-box`);
             elem.scrollTop = elem.scrollHeight;
-        });
-    }
+
+    };
     
 
     let enemyDeathLogic = function enemyDeathLogic() {
