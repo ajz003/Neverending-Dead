@@ -12,19 +12,19 @@
 </head>
 
 <body>
-    <!-- Navigation Bar/Menu -->
-    <nav class="level" id="navigation">
-        <p class="level-item has-text-centered"></p>
-        <p class="level-item has-text-centered"></p>
-        <p class="level-item has-text-centered" id="game-title">
-            Journey to the Lich
-        </p>
-        <p class="level-item has-text-centered"></p>
-        <p class="level-item has-text-centered"></p>
-    </nav>
+    <section class="hero is-fullheight" id="hero-section">
+        <!-- Navigation Bar/Menu -->
+        <nav class="level" id="navigation">
+            <p class="level-item has-text-centered"></p>
+            <p class="level-item has-text-centered"></p>
+            <p class="level-item has-text-centered" id="game-title">
+                Journey to the Lich
+            </p>
+            <p class="level-item has-text-centered"></p>
+            <p class="level-item has-text-centered"></p>
+        </nav>
 
-    <div class="container" id="body-content">
-        <main>
+        <div class="container" id="body-content">
             <header>
                 <div id="lose-screen">
                     <img src="http://pixelartmaker.com/art/dabdcb017b41820.png">
@@ -62,7 +62,8 @@
 
                 <p class="has-text-centered">
                     <span id="summary">
-                        You've come far to face the Lich. Strike down all his minions and slay him. Die and you'll become a part of his undead army.
+                        You've come far to face the Lich. Strike down all his minions and slay him. Die and you'll
+                        become a part of his undead army.
                     </span>
                 </p>
                 <br>
@@ -73,7 +74,7 @@
                             <div class="tile is-parent is-vertical">
                                 <div id="character-box">
                                     <p><span id="character-heading">Your Character</span></p>
-                                    <progress class="progress is-success" id="character-hp-bar" value="55" max="100"></progress>
+                                    <progress class="progress is-large is-success show-value" id="character-hp-bar" value="55" max="100"></progress>
                                     <div class="avatar-box" id="player-box">
                                         <img id="my-image" src="https://upload.wikimedia.org/wikipedia/en/e/e9/Rick_and_Morty_characters_-_Rick_Sanchez.jpg">
                                         <div class="stats">
@@ -85,9 +86,9 @@
                                 </div>
                             </div>
                             <div class="tile is-parent is-vertical">
-                                <div id="enemy-box">
+                                <div id="character-box">
                                     <p><span id="enemy-heading">Enemy</span></p>
-                                    <progress class="progress is-success" id="enemy-hp-bar" value="100" max="100"></progress>
+                                    <progress class="progress is-large is-success show-value" id="enemy-hp-bar" value="100" max="100"></progress>
                                     <div class="avatar-box" id="enemy-box">
                                         <img id="enemy-image" src="https://upload.wikimedia.org/wikipedia/en/d/d7/Rick_and_Morty_characters_-_Morty_Smith.jpg">
                                         <div class="stats">
@@ -100,26 +101,27 @@
                             </div>
                         </div>
                         <div class="tile">
-                            <div class="tile is-parent is-5">
-                                <article class="tile is-child notification is-primary has-text-centered">
-                                    <div id="attack-btn-wrapper">
-                                        <a class="button is-large is-danger" id="attack-btn">Attack</a>
-                                        <a class="button is-large is-danger" id="defend-btn">Defend</a>
-                                        <a class="button is-large is-danger" id="skills-btn">Skills</a>
-                                    </div>
+                            <div class="tile is-parent">
+                                <article class="tile is-child notification is-primary has-text-centered is-6">
+                                    <br>
+                                        <a class="button is-large is-danger" id="attack-btn">Attack</a><br><br>
+                                        <a class="button is-large is-danger" id="defend-btn">Defend</a><br><br>
+                                        <a class="button is-large is-danger" id="skills-btn">Skills</a><br><br>
                                 </article>
-                                <article class="tile is-child notification is-warning has-text-centered">
-                                    <h2 class="subtitle">Options</h2>
-                                    <a class="button is-large is-danger" id="#">Fire</a>
-                                    <a class="button is-large is-info" id="#">Water</a>
-                                    <a class="button is-large is-dark" id="#">Water</a>
+                                <article class="tile is-child notification is-warning has-text-centered is-6">
+                                    <br>
+                                    <!-- Button placeholders -->
+                                    <a class="button is-large is-danger" id="fire-attack">Fire</a><br><br>
+                                    <a class="button is-large is-info" id="water-attack">Water</a><br><br>
+                                    <a class="button is-large is-dark" id="void-attack">Void</a><br><br>
                                 </article>
                             </div>
-                            <div class="tile is-parent is-7">
-                                <article class="tile is-child notification is-danger has-text-centered" id="console-tile">
+                            <div class="tile is-parent">
+                                <article class="tile is-child notification has-text-centered" id="console-tile">
                                     <div id="console-box">
-                                        <p class="console-log-1">Console</p>
-                                        <p class="console-log-2"></p>
+                                        <div class="console-loggers" id="console-log-1"></div>
+                                        <div class="console-loggers" id="console-log-2"></div>
+                                        <div class="console-loggers" id="console-log-3"></div>
                                     </div>
                                 </article>
                             </div>
@@ -127,13 +129,9 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-    </div>
-    </main>
-    </div>
+        </div>
+        </div>
+    </section>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

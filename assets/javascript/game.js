@@ -1,70 +1,75 @@
-// initial stat values
-let myName = "";
-let myAttack = 30;
-let myHealth = 100;
-let myImg;
+$(document).ready(function () {
+    // initial stat values
+    let myName = "";
+    let myAttack = 15;
+    let myHealth = 100;
+    let myImg;
 
-let enemyName = "";
-let enemyImg = "";
-let enemyHealth;
-let enemyAttack;
-let myMaxHealth = myHealth;
-let enemyMaxHealth = enemyHealth;
+    let enemyName = "";
+    let enemyImg = "";
+    let enemyHealth;
+    let enemyAttack;
+    let myMaxHealth = myHealth;
+    let enemyMaxHealth = enemyHealth;
 
-let position = 0;
-
-
-
-
-// hide the gameover and winscreen when the game starts
-$("#lose-screen").hide();
-$("#win-screen").hide();
-
-// sets DOM text to initial values
-$("#my-health").text(myHealth);
-$("#my-attack").text(myAttack);
-$("#enemy-health").text(enemyHealth);
-$("#enemy-attack").text(enemyAttack);
-$("#enemy-name").text(enemyName);
-
-// Updates player's & enemy's hp bars when the battle starts
-$(`#character-hp-bar`).attr(`value`, `${myHealth}`);
-$(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+    let position = 0;
 
 
-// character creation logic
-$("#create-btn").click(function (event) {
 
-    // Make sure to preventDefault on a submit event.
-    event.preventDefault();
 
-    myName = $("#input-name").val().trim();
-    myImg = $("#input-imageUrl").val().trim();
+    // hide the gameover and winscreen when the game starts
+    $("#lose-screen").hide();
+    $("#win-screen").hide();
 
-    if (myName === "") {
-        $("#name-invalid").css("visibility", "visible");
-        return;
-    }
+    // sets DOM text to initial values
+    $("#my-health").text(myHealth);
+    $("#my-attack").text(myAttack);
+    $("#enemy-health").text(enemyHealth);
+    $("#enemy-attack").text(enemyAttack);
+    $("#enemy-name").text(enemyName);
 
-    if (myImg !== "") {
-        $("#my-image").attr("src", myImg)
-    };
+    // Updates player's & enemy's hp bars when the battle starts
+    $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+    $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
 
-    $("#my-name").text(myName);
+
+    // character creation logic
+    $("#create-btn").click(function (event) {
+
+        // Make sure to preventDefault on a submit event.
+        event.preventDefault();
+
+        myName = $("#input-name").val().trim();
+        myImg = $("#input-imageUrl").val().trim();
+
+        if (myName === "") {
+            $("#name-invalid").css("visibility", "visible");
+            return;
+        }
+
+        if (myImg !== "") {
+            $("#my-image").attr("src", myImg)
+        };
+
+        $("#my-name").text(myName);
+
 
 
     spawnEnemy();
     $("#character-creator").hide();
     $("#game-screen").show();
 
-});
 
 
-// Attack button calls attack function
-$("#attack-btn").click(function () {
+        spawnEnemy();
+        $("#character-creator").hide();
+        $("#game-screen").show();
 
-    // Reduce enemy health by myAttack value
-    enemyHealth -= myAttack;
+    });
+
+    // Attack button calls attack function
+    $("#attack-btn").click(function () {
+
 
     // check if enemy died before he counter-attacks
     if (enemyHealth <= 0) {
@@ -76,36 +81,54 @@ $("#attack-btn").click(function () {
         }
     };
 
+        let myCritRate = 0.75;
+        let enemyCritRate = 0.5;
 
-    if (enemyHealth <= (enemyMaxHealth * 0.5)) {
-        $(`#enemy-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
-        if (enemyHealth <= (enemyMaxHealth * 0.3)) {
-            $(`#enemy-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
-        }
-    };
+
+        let myCrit = Math.random();
+        let enemyCrit = Math.random();
+
+        let myCritMod = 1;
+        let enemyCritMod = 1;
+
+        let myCritNote = "";
+
+
 
     if (myHealth <= (myMaxHealth * 0.5)) {
 
         $(`#character-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
         if (myHealth <= (myMaxHealth * 0.3)) {
             $(`#character-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
+
+        if (myCrit <= myCritRate) {
+            myCritMod = 2;
+            myCritNote = "CRITICAL HIT!"
         }
-    };
 
-    // check if enemy survived my attack
-    if (enemyHealth > 0) {
+        // Reduce enemy health by myAttack value
+        enemyHealth -= myAttack * myCritMod;
 
-        // reduce my health by enemyAttack
-        myHealth -= enemyAttack;
+        // check if enemy died before he counter-attacks
+        if (enemyHealth <= 0) {
+            spawnEnemy();
+            // hides the game and shows the winscreen
+            if (position > 2) {
+                $("#game-screen").hide();
+                $("#win-screen").show();
+            }
+        };
 
-        // update console lines
-        $(".console-log-1").text("You attacked for " + myAttack + " damage!");
-        $(".console-log-2").text("Your opponent hit back for " + enemyAttack + " damage!");
 
-    };
+        if (enemyHealth <= (enemyMaxHealth * 0.5)) {
+            $(`#enemy-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
+            if (enemyHealth <= (enemyMaxHealth * 0.3)) {
+                $(`#enemy-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
+            }
+        };
 
-    // after enemy counter-attack, check if my characer died
-    if (myHealth <= 0) {
+        if (myHealth <= (myMaxHealth * 0.5)) {
+
 
 
 
@@ -132,32 +155,77 @@ $("#attack-btn").click(function () {
         $("#lose-screen").show();
     };
 
-    // Updates player's & enemy's hp bars as they damage each other
-    $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
-    $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+            $(`#character-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
+            if (myHealth <= (myMaxHealth * 0.3)) {
+                $(`#character-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
+            }
+        };
 
-    // if no one died, update the character stat boxes
-    $('#enemy-health').text(enemyHealth);
-    $('#my-health').text(myHealth);
 
+
+        // check if enemy survived my attack
+        if (enemyHealth > 0) {
+            // reduce my health by enemyAttack
+            myHealth -= enemyAttack;
+
+            // update console lines
+            $("#console-log-1").append(timestamp)
+            .append(`<p>\n${myCritNote}\n</p>`)
+            .append(`\n<p>You attacked for ${myAttack * myCritMod} damage.</p>\n`)
+            .append(`\n<p>The enemy hits you back for ${enemyAttack} damage!</p>\n<br>`);
+
+        };
+
+
+        // after enemy counter-attack, check if my characer died
+        if (myHealth <= 0) {
+
+            // hides the game and shows the gameover screen
+            $("#game-screen").hide();
+            $("#lose-screen").show();
+        };
+
+        // Updates player's & enemy's hp bars as they damage each other
+        $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+        $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+
+        // if no one died, update the character stat boxes
+        $('#enemy-health').text(enemyHealth);
+        $('#my-health').text(myHealth);
+
+    });
+
+
+    let spawnEnemy = function () {
+        $.get("/api/enemy/" + position, function (data) {
+            if (data) {
+                console.log(data.name);
+                // If this enemy exists, fill page with its stats
+                enemyName = data.name;
+                enemyImg = data.img;
+                enemyHealth = data.hp;
+                enemyAttack = data.attack;
+                enemyMaxHealth = enemyHealth;
+
+                $(`#enemy-hp-bar`).removeClass(`is-warning`).removeClass(`is-danger`).addClass(`is-success`);
+
+                $("#enemy-health").text(enemyHealth);
+                $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+                $(`#enemy-hp-bar`).attr(`max`, `${enemyMaxHealth}`);
+                $("#enemy-attack").text(enemyAttack);
+                $("#enemy-name").text(enemyName);
+                $("#enemy-image").attr("src", enemyImg);
+                position++;
+            }
+        })
+    }
+
+    let timestamp = function timeStamp() {
+        var date = new Date();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var s = date.getSeconds();
+        return `<p id="timestamp">${h}:${m}:${s}</p>`
+    }
 });
 
-
-let spawnEnemy = function () {
-    $.get("/api/enemy/" + position, function (data) {
-        if (data) {
-            console.log(data.name);
-            // If this enemy exists, fill page with its stats
-            enemyName = data.name;
-            enemyImg = data.img;
-            enemyHealth = data.hp;
-            enemyAttack = data.attack;
-            $("#enemy-health").text(enemyHealth);
-            $("#enemy-attack").text(enemyAttack);
-            $("#enemy-name").text(enemyName);
-            $("#enemy-image").attr("src", enemyImg);
-
-        }
-        position++;
-    })
-}
