@@ -26,6 +26,7 @@ module.exports = function (app) {
       });
   });
 
+
   // POST route for saving a new enemy
   app.post("/api/enemy", function (req, res) {
     let insertPosition = req.body.position - 1;
@@ -33,23 +34,24 @@ module.exports = function (app) {
     console.log(queryString);
 
     db.sequelize.query(queryString, function (err, result) {
-      if(err) {throw err;}
+      if (err) {
+        throw err;
+      }
       console.log(result);
 
-    });
+    }).then(setTimeout(function () {
+      db.Enemy.create({
+          name: req.body.name,
+          img: req.body.img,
+          hp: req.body.hp,
+          attack: req.body.attack,
+          position: req.body.position - 1
+        })
+        .then(function (newEnemy) {
+          res.json(newEnemy);
+        })
+    }, 250));
 
-    db.Enemy.create({
-        name: req.body.name,
-        img: req.body.img,
-        hp: req.body.hp,
-        attack: req.body.attack,
-        position: req.body.position - 1
-      })
-      .then(function (newEnemy) {
-        res.json(newEnemy);
-      });
+
   });
-
-
-
 };

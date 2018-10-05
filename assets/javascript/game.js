@@ -51,26 +51,22 @@ $(document).ready(function () {
             $("#my-image").attr("src", myImg)
         };
 
-        $("#my-name").text(myName);
-
         spawnEnemy();
+
+        $("#my-name").text(myName);
+        $("#my-health").text(myHealth);
+        $("#my-attack").text(myAttack);
+        $("#enemy-health").text(enemyHealth);
+        $("#enemy-attack").text(enemyAttack);
+        $("#enemy-name").text(enemyName);
+
+
         $("#character-creator").hide();
         $("#game-screen").show();
     });
 
     // Attack button calls attack function
     $("#attack-btn").click(function () {
-
-
-        // check if enemy died before he counter-attacks
-        if (enemyHealth <= 0) {
-            spawnEnemy();
-            // hides the game and shows the winscreen
-            if (position > 2) {
-                $("#game-screen").hide();
-                $("#win-screen").show();
-            }
-        };
 
         let myCritRate = 0.75;
         let enemyCritRate = 0.5;
@@ -98,12 +94,14 @@ $(document).ready(function () {
 
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
-            spawnEnemy();
             // hides the game and shows the winscreen
-            if (position > 2) {
+            if (enemyName === "Lich King") {
                 $("#game-screen").hide();
                 $("#win-screen").show();
             }
+            spawnEnemy();
+
+
         };
 
 
@@ -176,6 +174,7 @@ $(document).ready(function () {
                 }
             );
 
+
             // hides the game and shows the gameover screen
             $("#game-screen").hide();
             $("#lose-screen").show();
@@ -205,7 +204,7 @@ $(document).ready(function () {
                 enemyMaxHealth = enemyHealth;
 
                 $(`#enemy-hp-bar`).removeClass(`is-warning`).removeClass(`is-danger`).addClass(`is-success`);
-
+                $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
                 $("#enemy-health").text(enemyHealth);
                 $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
                 $(`#enemy-hp-bar`).attr(`max`, `${enemyMaxHealth}`);
@@ -224,4 +223,22 @@ $(document).ready(function () {
         var s = date.getSeconds();
         return `<p id="timestamp">${h}:${m}:${s}</p>`
     }
+
+
+
+    $("#restart-btn").click(function () {
+        $("#lose-screen").hide();
+        $("#character-creator").show();
+        position = 0;
+        myHealth = 100;
+        myAttack = 15;
+        myMaxHealth = myHealth;
+        enemyHealth = 100;
+        enemyAttack = 20;
+        $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+        $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+
+
+    })
+
 });
