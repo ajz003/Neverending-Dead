@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=K2D');
 @import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
 
+html {
+    /* Prevents overscrolling */
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
 p {
     font-family: Permanent Marker, 'Arial', sans-serif;
     font-size: 18px;
@@ -14,16 +21,24 @@ img {
 }
 
 body {
-    top: 0;
-    left: 0;
-    height: 1000px;
-    background: purple;
+    /* Prevents overscrolling */
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+
+    background-image: url("../img/noisy_net.png");
+    background-repeat: repeat;
+}
+
+#hero-section {
+    background-repeat: repeat;
 }
 
 #navigation {
     background-color: darkred;
     color: white;
     border-bottom: 1px solid rgb(43, 42, 42);
+    width: 100%;
 }
 
 #game-title {
@@ -34,101 +49,142 @@ body {
     background-color: rgb(112, 149, 252);
     color: white;
     padding: 20px;
+    margin: auto;
 }
 
 #lose-screen {
-    display:none
+    display: none
 }
 
 #win-screen {
-    display:none
+    display: none
 }
 
 #game-screen {
+    height: 100%;
     padding: 30px;
     display: none;
 }
 
 #character-heading {
-    font-size:25px;
+    font-size: 25px;
     color: rgb(21, 231, 21);
 }
 
 #enemy-heading {
-    font-size:25px;
+    font-size: 25px;
     color: rgb(255, 0, 0);
 }
 
 .avatar-box {
     position: relative;
-    display:  inline-block;
+    display: inline-block;
     width: 250px;
     height: 300px;
-    background-color:white;
+    background-color: white;
     border: 1px solid red;
     margin: 20px 20px;
     overflow: hidden;
     border-radius: 30px;
-    z-index:99;
+    z-index: 99;
 }
 
 .stats {
-    float:left;
+    float: left;
     position: absolute;
-    left:30%;
-    bottom:5px;
-    color:green;
-    font-size:20px;
-    background-color:white;
-    padding:3px;
+    left: 30%;
+    bottom: 5px;
+    color: green;
+    font-size: 20px;
+    background-color: white;
+    padding: 3px;
     border: 1px solid green;
     border-radius: 9px;
     text-align: center;
 }
 
 #instructions {
-    font-size:25px;
-    color:red;
+    font-size: 25px;
+    color: red;
 }
 
+
 button {
-    margin: 0 0 10px 0; 
+    margin: 0 0 10px 0;
     border-right: 2px solid black;
     border-bottom: 2px solid black;
 }
 
 #character-box {
     background-color: goldenrod;
-    padding:10px 0px;
+    padding: 10px 0px;
     margin: 20px;
-    text-align:center;
+    text-align: center;
     height: 500px;
+}
+
+progress.show-value {
+    position: relative;
+}
+
+progress.show-value:after {
+    content: attr(value) " / " attr(max) " HP";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: calc(1rem / 1.5);
+    line-height: 1rem;
+}
+
+progress.show-value.is-large:after {
+    font-size: calc(1.5rem / 1.5);
+    line-height: 1.5rem;
 }
 
 #enemy-box {
     background-color: rgb(23, 219, 233);
-    padding:0px 0px;
+    padding: 0px 0px;
     margin: 20px;
-    text-align:center;
+    text-align: center;
 }
 
 #console-tile {
     border-right: 1px solid rgb(50, 50, 51);
     border-bottom: 1px solid rgb(50, 50, 51);
+
+    /* Will find a better picture */
+    background-image: url("../img/seamless-skulls.jpg");
+    background-size: contain;
+}
+
+#timestamp {
+    color: yellow;
 }
 
 #console-box {
     padding: 10px 10px;
-    background-color: gray;
-    margin:10px 0;
-}  
+    background-color: rgb(36, 36, 36);
+    border: 4px solid rgb(50, 56, 56);
+    margin: auto;
+
+    /* Adds scrollbar */
+    overflow: auto;
+    height: 300px;
+}
+
+.console-loggers p {
+    font-family: monospace;
+    text-align: left;
+    color: red;
+}
 
 .console-log-1 {
-    font-size:20px;
+    font-size: 20px;
 }
 
 .console-log-2 {
-    font-size:20px;
+    font-size: 20px;
 }
 
 #name-invalid {
