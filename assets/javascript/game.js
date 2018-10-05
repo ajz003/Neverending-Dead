@@ -103,7 +103,6 @@ $(document).ready(function () {
                 enemyMaxHealth = enemyHealth;
 
                 $(`#enemy-hp-bar`).removeClass(`is-warning`).removeClass(`is-danger`).addClass(`is-success`);
-                $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
                 $("#enemy-health").text(enemyHealth);
                 $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
                 $(`#enemy-hp-bar`).attr(`max`, `${enemyMaxHealth}`);
@@ -252,6 +251,7 @@ $(document).ready(function () {
     $("#restart-btn").click(function () {
         $("#lose-screen").hide();
         $("#character-creator").show();
+        $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
         position = 0;
         myHealth = 100;
         myAttack = 15;
