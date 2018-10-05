@@ -66,6 +66,7 @@ $(document).ready(function () {
         attackLogic();
         enemyDeathLogic();
         hpBarUpdate();
+        scrollToBottom();
 
     });
 
@@ -106,60 +107,68 @@ $(document).ready(function () {
     }
 
     let attackLogic = function attackLogic() {
-     // check if enemy died before he counter-attacks
-     if (enemyHealth <= 0) {
-        spawnEnemy();
-        // hides the game and shows the winscreen
-        if (position > 2) {
-            $("#game-screen").hide();
-            $("#win-screen").show();
+        // check if enemy died before he counter-attacks
+        if (enemyHealth <= 0) {
+            spawnEnemy();
+            // hides the game and shows the winscreen
+            if (position > 2) {
+                $("#game-screen").hide();
+                $("#win-screen").show();
+            }
+        };
+
+        let myCritRate = 0.75;
+        let enemyCritRate = 0.5;
+
+        let myCrit = Math.random();
+        let enemyCrit = Math.random();
+
+        let myCritMod = 1;
+        let enemyCritMod = 1;
+
+        let myCritNote = "";
+
+        if (myCrit <= myCritRate) {
+            myCritMod = 2;
+            myCritNote = "CRITICAL HIT!"
         }
-    };
 
-    let myCritRate = 0.75;
-    let enemyCritRate = 0.5;
+        // Reduce enemy health by myAttack value
+        enemyHealth -= myAttack * myCritMod;
 
-    let myCrit = Math.random();
-    let enemyCrit = Math.random();
+        // check if enemy died before he counter-attacks
+        if (enemyHealth <= 0) {
+            spawnEnemy();
+            // hides the game and shows the winscreen
+            if (position > 2) {
+                $("#game-screen").hide();
+                $("#win-screen").show();
+            }
+        };
 
-    let myCritMod = 1;
-    let enemyCritMod = 1;
 
-    let myCritNote = "";
 
-    if (myCrit <= myCritRate) {
-        myCritMod = 2;
-        myCritNote = "CRITICAL HIT!"
+        // check if enemy survived my attack
+        if (enemyHealth > 0) {
+            // reduce my health by enemyAttack
+            myHealth -= enemyAttack;
+
+            // update console lines
+            $("#console-log-1").append(timestamp)
+                .append(`<p>\n${myCritNote}\n</p>`)
+                .append(`\n<p>You attacked for ${myAttack * myCritMod} damage.</p>\n`)
+                .append(`\n<p>The enemy hits you back for ${enemyAttack} damage!</p>\n<br>`);
+
+        };
     }
 
-    // Reduce enemy health by myAttack value
-    enemyHealth -= myAttack * myCritMod;
-
-    // check if enemy died before he counter-attacks
-    if (enemyHealth <= 0) {
-        spawnEnemy();
-        // hides the game and shows the winscreen
-        if (position > 2) {
-            $("#game-screen").hide();
-            $("#win-screen").show();
-        }
-    };
-
-
-
-    // check if enemy survived my attack
-    if (enemyHealth > 0) {
-        // reduce my health by enemyAttack
-        myHealth -= enemyAttack;
-
-        // update console lines
-        $("#console-log-1").append(timestamp)
-            .append(`<p>\n${myCritNote}\n</p>`)
-            .append(`\n<p>You attacked for ${myAttack * myCritMod} damage.</p>\n`)
-            .append(`\n<p>The enemy hits you back for ${enemyAttack} damage!</p>\n<br>`);
-
-    };
+    let scrollToBottom = function scrollToBottom() {
+        window.setInterval(function () {
+            var elem = document.getElementById(`console-box`);
+            elem.scrollTop = elem.scrollHeight;
+        });
     }
+    
 
     let enemyDeathLogic = function enemyDeathLogic() {
         // after enemy counter-attack, check if my characer died
