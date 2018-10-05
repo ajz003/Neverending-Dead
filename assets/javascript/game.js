@@ -42,8 +42,16 @@ $(document).ready(function () {
         myName = $("#input-name").val().trim();
         myImg = $("#input-imageUrl").val().trim();
 
+        $("#name-invalid").css("visibility", "hidden");
+        $("#img-invalid").css("visibility", "hidden");
+
         if (myName === "") {
             $("#name-invalid").css("visibility", "visible");
+            return;
+        }
+
+        if (myImg === "") {
+            $("#img-invalid").css("visibility", "visible");
             return;
         }
 
@@ -53,12 +61,9 @@ $(document).ready(function () {
 
         $("#my-name").text(myName);
 
-
-
         spawnEnemy();
         $("#character-creator").hide();
         $("#game-screen").show();
-
 
     });
 
