@@ -115,13 +115,6 @@ $(document).ready(function () {
         })
     }
 
-    let timestamp = function timeStamp() {
-        var date = new Date();
-        var h = date.getHours();
-        var m = date.getMinutes();
-        var s = date.getSeconds();
-        return `<p id="timestamp">${h}:${m}:${s}</p>`
-    }
 
     let attackLogic = function attackLogic() {
         // check if enemy died before he counter-attacks
@@ -183,12 +176,12 @@ $(document).ready(function () {
     }
 
     let scrollToBottom = function scrollToBottom() {
-     
-            var elem = document.getElementById(`console-box`);
-            elem.scrollTop = elem.scrollHeight;
+
+        var elem = document.getElementById(`console-box`);
+        elem.scrollTop = elem.scrollHeight;
 
     };
-    
+
 
     let enemyDeathLogic = function enemyDeathLogic() {
         // after enemy counter-attack, check if my characer died
