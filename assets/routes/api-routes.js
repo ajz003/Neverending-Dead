@@ -28,8 +28,10 @@ module.exports = function (app) {
 
   // POST route for saving a new enemy
   app.post("/api/enemy", function (req, res) {
-    console.log(req.body.position);
-    let queryString = "UPDATE enemies SET position = position + 1 where position >= 1";
+    let insertPosition = req.body.position - 1;
+    let queryString = "UPDATE enemies SET position = position + 1 where position >= " + insertPosition.toString();
+    console.log(queryString);
+
     db.sequelize.query(queryString, function (err, result) {
       if(err) {throw err;}
       console.log(result);

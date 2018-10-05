@@ -53,13 +53,9 @@ $(document).ready(function () {
 
         $("#my-name").text(myName);
 
-
-
         spawnEnemy();
         $("#character-creator").hide();
         $("#game-screen").show();
-
-
     });
 
     // Attack button calls attack function
@@ -229,4 +225,3 @@ $(document).ready(function () {
         return `<p id="timestamp">${h}:${m}:${s}</p>`
     }
 });
-
