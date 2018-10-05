@@ -8,11 +8,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     img: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [10, 255]
-      }
+      type: DataTypes.STRING
     },
     hp: {
       type: DataTypes.INTEGER,
