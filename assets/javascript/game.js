@@ -2,7 +2,7 @@ $(document).ready(function () {
     // initial stat values
     let myName = "";
     let myAttack = 15;
-    let myHealth = 5000;
+    let myHealth = 100;
     let myImg;
 
     let enemyName = "";
