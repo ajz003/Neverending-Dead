@@ -187,7 +187,8 @@ progress.show-value.is-large:after {
     font-size: 20px;
 }
 
-#name-invalid {
+#name-invalid,
+#img-invalid {
     color: red;
     visibility: hidden;
 }
