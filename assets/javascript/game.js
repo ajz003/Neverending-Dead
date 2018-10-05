@@ -57,39 +57,27 @@ $(document).ready(function () {
 
         spawnEnemy();
 
-
         $("#my-name").text(myName);
         $("#my-health").text(myHealth);
         $("#my-attack").text(myAttack);
         $("#enemy-health").text(enemyHealth);
         $("#enemy-attack").text(enemyAttack);
         $("#enemy-name").text(enemyName);
-
-
         $("#character-creator").hide();
         $("#game-screen").show();
 
     });
 
-
-
     // ----------------------- Combat
-
-
     // Attack button calls attack function
     $("#attack-btn").click(function () {
-
-
         attackLogic();
         enemyDeathLogic();
         hpBarUpdate();
         scrollToBottom();
-
     });
 
-
     // -------------------- Functions
-
 
     let spawnEnemy = function () {
         $.get("/api/enemy/" + position, function (data) {
@@ -114,7 +102,6 @@ $(document).ready(function () {
         })
     }
 
-
     let attackLogic = function attackLogic() {
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
@@ -126,16 +113,12 @@ $(document).ready(function () {
             }
         };
 
-
         let myCritRate = 0.75;
         let enemyCritRate = 0.5;
-
         let myCrit = Math.random();
         let enemyCrit = Math.random();
-
         let myCritMod = 1;
         let enemyCritMod = 1;
-
         let myCritNote = "";
 
         if (myCrit <= myCritRate) {
@@ -154,11 +137,7 @@ $(document).ready(function () {
                 $("#win-screen").show();
             }
             spawnEnemy();
-
-
         };
-
-
 
         // check if enemy survived my attack
         if (enemyHealth > 0) {
@@ -170,17 +149,13 @@ $(document).ready(function () {
                 .append(`<p>\n${myCritNote}\n</p>`)
                 .append(`\n<p>You attacked for ${myAttack * myCritMod} damage.</p>\n`)
                 .append(`\n<p>The enemy hits you back for ${enemyAttack} damage!</p>\n<br>`);
-
         };
     }
 
     let scrollToBottom = function scrollToBottom() {
-
         var elem = document.getElementById(`console-box`);
         elem.scrollTop = elem.scrollHeight;
-
     };
-
 
     let enemyDeathLogic = function enemyDeathLogic() {
         // after enemy counter-attack, check if my characer died
@@ -204,14 +179,11 @@ $(document).ready(function () {
                 }
             );
 
-
             // hides the game and shows the gameover screen
             $("#game-screen").hide();
             $("#lose-screen").show();
-
         };
     }
-
 
     let hpBarUpdate = function hpBarUpdate() {
 
@@ -246,8 +218,6 @@ $(document).ready(function () {
         return `<p id="timestamp">${h}:${m}:${s}</p>`
     }
 
-
-
     $("#restart-btn").click(function () {
         $("#lose-screen").hide();
         $("#character-creator").show();
@@ -260,9 +230,5 @@ $(document).ready(function () {
         enemyAttack = 20;
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
-
-
     })
-
-    // Document Ready
 });
