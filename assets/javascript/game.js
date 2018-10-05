@@ -1,9 +1,9 @@
 $(document).ready(function () {
-// initial stat values
-let myName = "";
-let myAttack = 15;
-let myHealth = 100;
-let myImg;
+    // initial stat values
+    let myName = "";
+    let myAttack = 15;
+    let myHealth = 5000;
+    let myImg;
 
     let enemyName = "";
     let enemyImg = "";
@@ -64,7 +64,7 @@ let myImg;
         //         console.log("created new character");
         //     }
         // );
-        
+
         spawnEnemy();
         $("#character-creator").hide();
         $("#game-screen").show();
@@ -74,26 +74,26 @@ let myImg;
     // Attack button calls attack function
     $("#attack-btn").click(function () {
 
-  
-   let myCritRate = 0.75;
-    let enemyCritRate = 0.5;
 
-    let myCrit = Math.random();
-    let enemyCrit = Math.random();
+        let myCritRate = 0.75;
+        let enemyCritRate = 0.5;
 
-    let myCritMod = 1;
-    let enemyCritMod = 1;
+        let myCrit = Math.random();
+        let enemyCrit = Math.random();
 
-    let myCritNote = "";
+        let myCritMod = 1;
+        let enemyCritMod = 1;
+
+        let myCritNote = "";
 
 
-    if (myCrit <= myCritRate) {
-        myCritMod = 2;
-        myCritNote = "CRIT! "
-    }
+        if (myCrit <= myCritRate) {
+            myCritMod = 2;
+            myCritNote = "CRITICAL HIT!"
+        }
 
         // Reduce enemy health by myAttack value
-    enemyHealth -= myAttack * myCritMod;
+        enemyHealth -= myAttack * myCritMod;
 
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
@@ -127,9 +127,11 @@ let myImg;
             // reduce my health by enemyAttack
             myHealth -= enemyAttack;
 
-        // update console lines
-        $(".console-log-1").text(myCritNote + "You attacked for " + myAttack * myCritMod + " damage!");
-        $(".console-log-2").text("Your opponent hit back for " + enemyAttack + " damage!");
+            // update console lines
+            $("#console-log-1").append(timestamp)
+            .append(`<p>\n${myCritNote}\n</p>`)
+            .append(`\n<p>You attacked for ${myAttack * myCritMod} damage.</p>\n`)
+            .append(`\n<p>The enemy hits you back for ${enemyAttack} damage!</p>\n<br>`);
 
         };
 
@@ -167,11 +169,20 @@ let myImg;
 
                 $("#enemy-health").text(enemyHealth);
                 $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+                $(`#enemy-hp-bar`).attr(`max`, `${enemyMaxHealth}`);
                 $("#enemy-attack").text(enemyAttack);
                 $("#enemy-name").text(enemyName);
                 $("#enemy-image").attr("src", enemyImg);
                 position++;
             }
         })
+    }
+
+    let timestamp = function timeStamp() {
+        var date = new Date();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var s = date.getSeconds();
+        return `<p id="timestamp">${h}:${m}:${s}</p>`
     }
 });

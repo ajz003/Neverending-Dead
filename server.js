@@ -15,7 +15,9 @@ var PORT = process.env.PORT || 8080;
 var db = require("./models");
 
 // Sets up the Express app to handle data parsing
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+  extended: true
+}));
 app.use(express.json());
 
 // Static directory
@@ -28,10 +30,10 @@ require("./assets/routes/html-routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync().then(function() {
+db.sequelize.sync().then(function () {
   // db.Enemy.create({name:"Zombie", img:"https://c1.staticflickr.com/4/3084/2596483147_58d6bae3b1_b.jpg", hp:"100", attack:"20", position:"0"});
   // db.Enemy.create({name:"Lich King", img:"https://orig00.deviantart.net/b15b/f/2017/305/5/3/the_lich_king_by_ze_l-dbsdieg.jpg", hp:"1000", attack:"90", position:"1"});
-  app.listen(PORT, function() {
-    console.log("App listening on PORT " + PORT);
+  app.listen(PORT, function () {
+    console.log(`Server listening on: http://localhost:${PORT}`);
   });
 });
