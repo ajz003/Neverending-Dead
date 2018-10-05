@@ -55,9 +55,17 @@ $(document).ready(function () {
             $("#my-image").attr("src", myImg)
         };
 
-        $("#my-name").text(myName);
-
         spawnEnemy();
+
+
+        $("#my-name").text(myName);
+        $("#my-health").text(myHealth);
+        $("#my-attack").text(myAttack);
+        $("#enemy-health").text(enemyHealth);
+        $("#enemy-attack").text(enemyAttack);
+        $("#enemy-name").text(enemyName);
+
+
         $("#character-creator").hide();
         $("#game-screen").show();
 
@@ -70,6 +78,7 @@ $(document).ready(function () {
 
     // Attack button calls attack function
     $("#attack-btn").click(function () {
+
 
         attackLogic();
         enemyDeathLogic();
@@ -94,7 +103,7 @@ $(document).ready(function () {
                 enemyMaxHealth = enemyHealth;
 
                 $(`#enemy-hp-bar`).removeClass(`is-warning`).removeClass(`is-danger`).addClass(`is-success`);
-
+                $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
                 $("#enemy-health").text(enemyHealth);
                 $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
                 $(`#enemy-hp-bar`).attr(`max`, `${enemyMaxHealth}`);
@@ -106,13 +115,6 @@ $(document).ready(function () {
         })
     }
 
-    let timestamp = function timeStamp() {
-        var date = new Date();
-        var h = date.getHours();
-        var m = date.getMinutes();
-        var s = date.getSeconds();
-        return `<p id="timestamp">${h}:${m}:${s}</p>`
-    }
 
     let attackLogic = function attackLogic() {
         // check if enemy died before he counter-attacks
@@ -124,6 +126,7 @@ $(document).ready(function () {
                 $("#win-screen").show();
             }
         };
+
 
         let myCritRate = 0.75;
         let enemyCritRate = 0.5;
@@ -146,12 +149,14 @@ $(document).ready(function () {
 
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
-            spawnEnemy();
             // hides the game and shows the winscreen
-            if (position > 2) {
+            if (enemyName === "Lich King") {
                 $("#game-screen").hide();
                 $("#win-screen").show();
             }
+            spawnEnemy();
+
+
         };
 
 
@@ -171,12 +176,12 @@ $(document).ready(function () {
     }
 
     let scrollToBottom = function scrollToBottom() {
-     
-            var elem = document.getElementById(`console-box`);
-            elem.scrollTop = elem.scrollHeight;
+
+        var elem = document.getElementById(`console-box`);
+        elem.scrollTop = elem.scrollHeight;
 
     };
-    
+
 
     let enemyDeathLogic = function enemyDeathLogic() {
         // after enemy counter-attack, check if my characer died
@@ -200,6 +205,7 @@ $(document).ready(function () {
                 }
             );
 
+
             // hides the game and shows the gameover screen
             $("#game-screen").hide();
             $("#lose-screen").show();
@@ -222,7 +228,6 @@ $(document).ready(function () {
             $(`#character-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
             if (myHealth <= (myMaxHealth * 0.3)) {
                 $(`#character-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
-
             };
         };
 
@@ -234,16 +239,30 @@ $(document).ready(function () {
         };
     }
 
+    let timestamp = function timeStamp() {
+        var date = new Date();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var s = date.getSeconds();
+        return `<p id="timestamp">${h}:${m}:${s}</p>`
+    }
 
 
 
+    $("#restart-btn").click(function () {
+        $("#lose-screen").hide();
+        $("#character-creator").show();
+        position = 0;
+        myHealth = 100;
+        myAttack = 15;
+        myMaxHealth = myHealth;
+        enemyHealth = 100;
+        enemyAttack = 20;
+        $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+        $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
 
 
-
-
-
-
-
+    })
 
     // Document Ready
 });
