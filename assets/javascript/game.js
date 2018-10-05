@@ -55,15 +55,10 @@ $(document).ready(function () {
 
 
 
-    spawnEnemy();
-    $("#character-creator").hide();
-    $("#game-screen").show();
-
-
-
         spawnEnemy();
         $("#character-creator").hide();
         $("#game-screen").show();
+
 
     });
 
@@ -71,15 +66,15 @@ $(document).ready(function () {
     $("#attack-btn").click(function () {
 
 
-    // check if enemy died before he counter-attacks
-    if (enemyHealth <= 0) {
-        spawnEnemy();
-        // hides the game and shows the winscreen
-        if (position > 2) {
-            $("#game-screen").hide();
-            $("#win-screen").show();
-        }
-    };
+        // check if enemy died before he counter-attacks
+        if (enemyHealth <= 0) {
+            spawnEnemy();
+            // hides the game and shows the winscreen
+            if (position > 2) {
+                $("#game-screen").hide();
+                $("#win-screen").show();
+            }
+        };
 
         let myCritRate = 0.75;
         let enemyCritRate = 0.5;
@@ -95,12 +90,6 @@ $(document).ready(function () {
 
 
 
-    if (myHealth <= (myMaxHealth * 0.5)) {
-
-        $(`#character-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
-        if (myHealth <= (myMaxHealth * 0.3)) {
-            $(`#character-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
-
         if (myCrit <= myCritRate) {
             myCritMod = 2;
             myCritNote = "CRITICAL HIT!"
@@ -108,6 +97,8 @@ $(document).ready(function () {
 
         // Reduce enemy health by myAttack value
         enemyHealth -= myAttack * myCritMod;
+
+
 
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
@@ -120,40 +111,30 @@ $(document).ready(function () {
         };
 
 
-        if (enemyHealth <= (enemyMaxHealth * 0.5)) {
-            $(`#enemy-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
-            if (enemyHealth <= (enemyMaxHealth * 0.3)) {
-                $(`#enemy-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
-            }
-        };
+
 
         if (myHealth <= (myMaxHealth * 0.5)) {
 
+            $(`#character-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
+            if (myHealth <= (myMaxHealth * 0.3)) {
+                $(`#character-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
 
 
 
-        // Send the POST request to add character to DB
-        let newChar = {
-            name: myName,
-            img: myImg,
-            hp: myMaxHealth,
-            attack: myAttack,
-            position: position
 
-        };
-        $.ajax("/api/enemy", {
-            type: "POST",
-            data: newChar
-        }).then(
-            function () {
-                console.log("Added " + myName + " to the database");
-            }
-        );
+                if (enemyHealth <= (enemyMaxHealth * 0.5)) {
+                    $(`#enemy-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
+                    if (enemyHealth <= (enemyMaxHealth * 0.3)) {
+                        $(`#enemy-hp-bar`).removeClass(`is-warning`).addClass(`is-danger`);
+                    }
+                };
 
-        // hides the game and shows the gameover screen
-        $("#game-screen").hide();
-        $("#lose-screen").show();
-    };
+
+
+
+
+
+            };
 
             $(`#character-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
             if (myHealth <= (myMaxHealth * 0.3)) {
@@ -170,9 +151,9 @@ $(document).ready(function () {
 
             // update console lines
             $("#console-log-1").append(timestamp)
-            .append(`<p>\n${myCritNote}\n</p>`)
-            .append(`\n<p>You attacked for ${myAttack * myCritMod} damage.</p>\n`)
-            .append(`\n<p>The enemy hits you back for ${enemyAttack} damage!</p>\n<br>`);
+                .append(`<p>\n${myCritNote}\n</p>`)
+                .append(`\n<p>You attacked for ${myAttack * myCritMod} damage.</p>\n`)
+                .append(`\n<p>The enemy hits you back for ${enemyAttack} damage!</p>\n<br>`);
 
         };
 
@@ -180,9 +161,29 @@ $(document).ready(function () {
         // after enemy counter-attack, check if my characer died
         if (myHealth <= 0) {
 
+
+            // Send the POST request to add character to DB
+            let newChar = {
+                name: myName,
+                img: myImg,
+                hp: myMaxHealth,
+                attack: myAttack,
+                position: position
+
+            };
+            $.ajax("/api/enemy", {
+                type: "POST",
+                data: newChar
+            }).then(
+                function () {
+                    console.log("Added " + myName + " to the database");
+                }
+            );
+
             // hides the game and shows the gameover screen
             $("#game-screen").hide();
             $("#lose-screen").show();
+
         };
 
         // Updates player's & enemy's hp bars as they damage each other
