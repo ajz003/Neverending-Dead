@@ -171,6 +171,7 @@ $(document).ready(function () {
         let bonusDamage = 0;
         let myCritRate = 0.20;
         let myCritMod = 1;
+        // let myBleedRate = 0.17;
 
         let myCritNote = "";
 
@@ -207,17 +208,19 @@ $(document).ready(function () {
         }
 
         // status check
+        // if (myCrit <= myBleedRate) { 
+            if (enemyBleeding.status === true) {
 
-        if (enemyBleeding.status === true) {
-
-            bonusDamage += enemyBleeding.damage;
-            enemyBleeding.ticksLeft--;
-            myCritNote += "The enemy bled for " + enemyBleeding.damage + ". " + enemyBleeding.ticksLeft + " turns until normal."
-            if (enemyBleeding.ticksLeft === 0) {
-                enemyBleeding.status = false
+                bonusDamage += enemyBleeding.damage;
+                enemyBleeding.ticksLeft--;
+                myCritNote = "";
+                myCritNote += `<p>You slash their flesh, causing <span id="enemy-name">${enemyName}</span> to bleed for <span class="damage-numbers">${enemyBleeding.damage}</span> damage for the next <span class="damage-numbers">${enemyBleeding.ticksLeft}</span> round(s).</p>`
+                if (enemyBleeding.ticksLeft === 0) {
+                    enemyBleeding.status = false;
+                    myCritNote = "";
+                };
             };
-        };
-
+        // }
 
 
         // Actual attack happens here. 
@@ -233,8 +236,8 @@ $(document).ready(function () {
             // update console lines
             $("#console-log-1").append(`<p id="round">Round ${round}</p>`)
                 .append(myCritNote)
-                .append(`\n<p class="damage-numbers">&#9876 <span style="color:#00FFFF; font-family: Permanent Marker; font-size: 16px;">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
-                .append(`\n<p class="damage-numbers">&#9876 <span style="color:#FF00FF; font-family: Permanent Marker; font-size: 16px;">${enemyName}</span> counterattacks, inflicting you for <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
+                .append(`\n<p class="damage-numbers">&#9876 <span id="player-name">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
+                .append(`\n<p class="damage-numbers">&#9876 <span id="enemy-name">${enemyName}</span> counterattacks, inflicting you for <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
         };
     }
 

@@ -63,10 +63,8 @@ body {
 }
 
 #body-content {
-    /* background-color: rgb(112, 149, 252); */
     color: white;
-    padding: 20px;
-    margin: auto;
+    padding: 0 0 0 0;
     height: 610px;
     top: -20px;
     border: 2px solid white;
@@ -225,7 +223,7 @@ progress.show-value.is-large:after {
 
     /* Adds scrollbar */
     overflow: auto;
-    height: 150px;
+    height: 200px;
 }
 
 .console-loggers p {
@@ -241,6 +239,7 @@ progress.show-value.is-large:after {
     visibility: hidden;
 }
 
+/* HTML elements appended from game.js */
 #round {
     text-decoration: underline;
     color: yellow;
@@ -252,4 +251,17 @@ progress.show-value.is-large:after {
 
 .damage-numbers {
     color: white;
+}
+
+#player-name, #enemy-name {
+    font-family: Permanent Marker; 
+    font-size: 15px;
+}
+
+#player-name {
+    color:#00FFFF; 
+}
+
+#enemy-name {
+    color:#FF00FF; 
 }
