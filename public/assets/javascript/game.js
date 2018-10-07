@@ -27,6 +27,7 @@ $(document).ready(function () {
 
     // Updates player's & enemy's hp bars when the battle starts
     $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+    $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
     $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
 
     // character creation logic
@@ -101,9 +102,9 @@ $(document).ready(function () {
         $("#character-creator").show();
         $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
         position = 0;
-        myHealth = 100;
+        $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
+        myHealth = myMaxHealth;
         myAttack = 15;
-        myMaxHealth = myHealth;
         enemyHealth = 100;
         enemyAttack = 20;
         round = 0;
@@ -151,11 +152,13 @@ $(document).ready(function () {
         if (ability === "Lucky Stab") {
             var myCrit = Math.random();
             myNewAttack = myAttack * 0.5;
+            myCritNote = `<p>You awkwardly maneuver your attack.</p>`;
         }
 
         if (myCrit <= myCritRate) {
             myCritMod = 2;
-            myCritNote = "CRITICAL HIT!"
+            myCritNote = `<p id="critical-hit">CRITICAL HIT!</p>
+                            <p>You manage to target a gap in their armor.</p>`;
             if (ability === "Lucky Stab") {
                 myCritMod = 10;
             }
@@ -173,9 +176,9 @@ $(document).ready(function () {
 
             // update console lines
             $("#console-log-1").append(`<p id="round">Round ${round}</p>`)
-                .append(`<p>\n${myCritNote}\n</p>`)
-                .append(`\n<p>You attacked for ${myNewAttack * myCritMod} damage.</p>\n`)
-                .append(`\n<p>The enemy hits you back for ${enemyAttack} damage!</p>\n<br>`);
+                .append(myCritNote)
+                .append(`\n<p class="damage-numbers">&#9876 <span style="color:#00FFFF; font-family: Permanent Marker; font-size: 16px;">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
+                .append(`\n<p class="damage-numbers">&#9876 <span style="color:#FF00FF; font-family: Permanent Marker; font-size: 16px;">${enemyName}</span> counterattacks, inflicting you for <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
         };
     }
 
