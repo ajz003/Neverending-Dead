@@ -40,6 +40,7 @@ $(document).ready(function () {
 
     // Updates player's & enemy's hp bars when the battle starts
     $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+    $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
     $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
 
     // character creation logic
@@ -83,15 +84,14 @@ $(document).ready(function () {
 
     // ----------------------- Combat
 
-    var round = 1;
+    var round = 0;
 
     // Attack button calls attack function
     $("#attack-btn").click(function () {
         round++;
         attackLogic();
         console.log(round);
-        myDeathLogic();
-        enemyDeathLogic();
+        deathLogic();
         hpBarUpdate();
         scrollToBottom();
 
@@ -101,8 +101,7 @@ $(document).ready(function () {
     $("#lucky-stab-btn").click(function () {
         round++;
         attackLogic("Lucky Stab");
-        myDeathLogic();
-        enemyDeathLogic();
+        deathLogic();
         hpBarUpdate();
         scrollToBottom();
 
@@ -120,6 +119,24 @@ $(document).ready(function () {
 
 
 
+    // -------------------- Restart
+
+
+    $("#restart-btn").click(function () {
+        $("#lose-screen").hide();
+        $("#character-creator").show();
+        $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
+        position = 0;
+        $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
+        myHealth = myMaxHealth;
+        myAttack = 15;
+        enemyHealth = 100;
+        enemyAttack = 20;
+        round = 0;
+        $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+        $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+        $("#console-log-1").empty();
+    })
 
     // -------------------- Functions
 
@@ -166,6 +183,7 @@ $(document).ready(function () {
         if (ability === "Lucky Stab") {
             var myCrit = Math.random();
             myNewAttack = myAttack * 0.5;
+            myCritNote = `<p>You awkwardly maneuver your attack.</p>`;
         }
 
         if (ability === "Bleeding Attack") {
@@ -180,7 +198,8 @@ $(document).ready(function () {
         // crit check
         if (myCrit <= myCritRate) {
             myCritMod = 2;
-            myCritNote = "CRITICAL HIT!"
+            myCritNote = `<p id="critical-hit">CRITICAL HIT!</p>
+                            <p>You manage to target a gap in their armor.</p>`;
             if (ability === "Lucky Stab") {
                 myCritMod = 10;
             }
@@ -205,23 +224,32 @@ $(document).ready(function () {
         enemyHealth -= myNewAttack * myCritMod + bonusDamage;
 
 
+
         // check if enemy survived my attack
         if (enemyHealth > 0) {
             // reduce my health by enemyAttack
             myHealth -= enemyAttack;
 
             // update console lines
-            $("#console-log-1").append(timestamp)
-                .append(`<p>\n${myCritNote}\n</p>`)
-                .append(`\n<p>You attacked for ${myNewAttack * myCritMod} damage.</p>\n`)
-                .append(`\n<p>The enemy hits you back for ${enemyAttack} damage!</p>\n<br>`);
+            $("#console-log-1").append(`<p id="round">Round ${round}</p>`)
+                .append(myCritNote)
+                .append(`\n<p class="damage-numbers">&#9876 <span style="color:#00FFFF; font-family: Permanent Marker; font-size: 16px;">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
+                .append(`\n<p class="damage-numbers">&#9876 <span style="color:#FF00FF; font-family: Permanent Marker; font-size: 16px;">${enemyName}</span> counterattacks, inflicting you for <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
         };
     }
 
     let scrollToBottom = function scrollToBottom() {
+
+
         var elem = document.getElementById(`console-box`);
         elem.scrollTop = elem.scrollHeight;
     };
+
+
+    let deathLogic = function deathLogic() {
+        myDeathLogic();
+        enemyDeathLogic();
+    }
 
     let myDeathLogic = function myDeathLogic() {
 
@@ -255,6 +283,9 @@ $(document).ready(function () {
     let enemyDeathLogic = function enemyDeathlogic() {
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
+
+            $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>\n<br>`);
+
             // hides the game and shows the winscreen
             if (enemyName === "Lich King") {
                 $("#game-screen").hide();
@@ -262,8 +293,8 @@ $(document).ready(function () {
             }
             spawnEnemy();
 
-            // Sets current round back to 1 when new enemy spawns
-            round = 1;
+            // Sets current round when new enemy spawns
+            round = 0
         };
 
     }
@@ -293,25 +324,12 @@ $(document).ready(function () {
         };
     }
 
-    let timestamp = function timeStamp() {
-        var date = new Date();
-        var h = date.getHours();
-        var m = date.getMinutes();
-        var s = date.getSeconds();
-        return `<p id="timestamp">${h}:${m}:${s}</p>`
-    }
+    // let timestamp = function timeStamp() {
+    //     var date = new Date();
+    //     var h = date.getHours();
+    //     var m = date.getMinutes();
+    //     var s = date.getSeconds();
+    //     return `<p id="timestamp">${h}:${m}:${s}</p>`
+    // }
 
-    $("#restart-btn").click(function () {
-        $("#lose-screen").hide();
-        $("#character-creator").show();
-        $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
-        position = 0;
-        myHealth = 100;
-        myAttack = 15;
-        myMaxHealth = myHealth;
-        enemyHealth = 100;
-        enemyAttack = 20;
-        $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
-        $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
-    })
 });
