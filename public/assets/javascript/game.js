@@ -70,15 +70,14 @@ $(document).ready(function () {
 
     // ----------------------- Combat
 
-    var round = 1;
+    var round = 0;
 
     // Attack button calls attack function
     $("#attack-btn").click(function () {
         round++;
         attackLogic();
         console.log(round);
-        myDeathLogic();
-        enemyDeathLogic();
+        deathLogic();
         hpBarUpdate();
         scrollToBottom();
 
@@ -88,12 +87,30 @@ $(document).ready(function () {
     $("#lucky-stab-btn").click(function () {
         round++;
         attackLogic("Lucky Stab");
-        myDeathLogic();
-        enemyDeathLogic();
+        deathLogic();
         hpBarUpdate();
         scrollToBottom();
 
     });
+
+    // -------------------- Restart
+
+
+    $("#restart-btn").click(function () {
+        $("#lose-screen").hide();
+        $("#character-creator").show();
+        $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
+        position = 0;
+        myHealth = 100;
+        myAttack = 15;
+        myMaxHealth = myHealth;
+        enemyHealth = 100;
+        enemyAttack = 20;
+        round = 0;
+        $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+        $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+        $("#console-log-1").empty();
+    })
 
     // -------------------- Functions
 
@@ -124,12 +141,12 @@ $(document).ready(function () {
         let myNewAttack = myAttack;
 
         let myCritRate = 0.20;
-        // let enemyCritRate = 0.5;
-
-        // let enemyCrit = Math.random();
         let myCritMod = 1;
-        // let enemyCritMod = 1;
         let myCritNote = "";
+
+        // let enemyCritRate = 0.5;
+        // let enemyCrit = Math.random();
+        // let enemyCritMod = 1;
 
         if (ability === "Lucky Stab") {
             var myCrit = Math.random();
@@ -142,20 +159,20 @@ $(document).ready(function () {
             if (ability === "Lucky Stab") {
                 myCritMod = 10;
             }
-    
+
         }
 
         // Reduce enemy health by myAttack value
         enemyHealth -= myNewAttack * myCritMod;
 
-      
+
         // check if enemy survived my attack
         if (enemyHealth > 0) {
             // reduce my health by enemyAttack
             myHealth -= enemyAttack;
 
             // update console lines
-            $("#console-log-1").append(timestamp)
+            $("#console-log-1").append(`<p id="round">Round ${round}</p>`)
                 .append(`<p>\n${myCritNote}\n</p>`)
                 .append(`\n<p>You attacked for ${myNewAttack * myCritMod} damage.</p>\n`)
                 .append(`\n<p>The enemy hits you back for ${enemyAttack} damage!</p>\n<br>`);
@@ -164,10 +181,16 @@ $(document).ready(function () {
 
     let scrollToBottom = function scrollToBottom() {
 
-        
+
         var elem = document.getElementById(`console-box`);
         elem.scrollTop = elem.scrollHeight;
     };
+
+
+    let deathLogic = function deathLogic() {
+        myDeathLogic();
+        enemyDeathLogic();
+    }
 
     let myDeathLogic = function myDeathLogic() {
 
@@ -200,17 +223,20 @@ $(document).ready(function () {
     }
 
     let enemyDeathLogic = function enemyDeathlogic() {
-          // check if enemy died before he counter-attacks
-          if (enemyHealth <= 0) {
+        // check if enemy died before he counter-attacks
+        if (enemyHealth <= 0) {
+
+            $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>\n<br>`);
+
             // hides the game and shows the winscreen
             if (enemyName === "Lich King") {
                 $("#game-screen").hide();
                 $("#win-screen").show();
             }
             spawnEnemy();
-        
-        // Sets current round back to 1 when new enemy spawns
-            round = 1;
+
+            // Sets current round when new enemy spawns
+            round = 0
         };
 
     }
@@ -240,25 +266,12 @@ $(document).ready(function () {
         };
     }
 
-    let timestamp = function timeStamp() {
-        var date = new Date();
-        var h = date.getHours();
-        var m = date.getMinutes();
-        var s = date.getSeconds();
-        return `<p id="timestamp">${h}:${m}:${s}</p>`
-    }
+    // let timestamp = function timeStamp() {
+    //     var date = new Date();
+    //     var h = date.getHours();
+    //     var m = date.getMinutes();
+    //     var s = date.getSeconds();
+    //     return `<p id="timestamp">${h}:${m}:${s}</p>`
+    // }
 
-    $("#restart-btn").click(function () {
-        $("#lose-screen").hide();
-        $("#character-creator").show();
-        $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
-        position = 0;
-        myHealth = 100;
-        myAttack = 15;
-        myMaxHealth = myHealth;
-        enemyHealth = 100;
-        enemyAttack = 20;
-        $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
-        $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
-    })
 });
