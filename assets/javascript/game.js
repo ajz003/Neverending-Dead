@@ -97,6 +97,7 @@ $(document).ready(function () {
 
     });
 
+
     $("#lucky-stab-btn").click(function () {
         round++;
         attackLogic("Lucky Stab");
@@ -152,12 +153,13 @@ $(document).ready(function () {
         let myNewAttack = myAttack;
         let bonusDamage = 0;
         let myCritRate = 0.20;
-        // let enemyCritRate = 0.5;
-
-        // let enemyCrit = Math.random();
         let myCritMod = 1;
-        // let enemyCritMod = 1;
+
         let myCritNote = "";
+
+        // let enemyCritRate = 0.5;
+        // let enemyCrit = Math.random();
+        // let enemyCritRate = 0.5;
 
 
         // ability logic
@@ -222,7 +224,6 @@ $(document).ready(function () {
     };
 
     let myDeathLogic = function myDeathLogic() {
-
 
         // after enemy counter-attack, check if my characer died
         if (myHealth <= 0) {
