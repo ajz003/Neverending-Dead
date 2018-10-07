@@ -14,6 +14,19 @@ $(document).ready(function () {
 
     let position = 0;
 
+    // stat modifiers
+    let myBleeding = {
+        status: false,
+        ticksLeft: 0,
+        damage: 0
+    }
+    let enemyBleeding = {
+        status: false,
+        ticksLeft: 0,
+        damage: 0
+    }
+
+
     // hide the gameover and winscreen when the game starts
     $("#lose-screen").hide();
     $("#win-screen").hide();
@@ -95,6 +108,19 @@ $(document).ready(function () {
 
     });
 
+    $("#bleed-attack-btn").click(function () {
+        round++;
+        attackLogic("Bleeding Attack");
+        myDeathLogic();
+        enemyDeathLogic();
+        hpBarUpdate();
+        scrollToBottom();
+
+    });
+
+
+
+
     // -------------------- Functions
 
     let spawnEnemy = function () {
@@ -107,6 +133,9 @@ $(document).ready(function () {
                 enemyHealth = data.hp;
                 enemyAttack = data.attack;
                 enemyMaxHealth = enemyHealth;
+                enemyBleeding.status = false;
+                enemyBleeding.ticksLeft = 0;
+                enemyBleeding.damage = 0;
 
                 $(`#enemy-hp-bar`).removeClass(`is-warning`).removeClass(`is-danger`).addClass(`is-success`);
                 $("#enemy-health").text(enemyHealth);
@@ -122,33 +151,60 @@ $(document).ready(function () {
 
     let attackLogic = function attackLogic(ability) {
         let myNewAttack = myAttack;
-
+        let bonusDamage = 0;
         let myCritRate = 0.20;
-        // let enemyCritRate = 0.5;
-
-        // let enemyCrit = Math.random();
         let myCritMod = 1;
-        // let enemyCritMod = 1;
+
         let myCritNote = "";
 
+        // let enemyCritRate = 0.5;
+        // let enemyCrit = Math.random();
+        // let enemyCritRate = 0.5;
+
+
+        // ability logic
         if (ability === "Lucky Stab") {
             var myCrit = Math.random();
             myNewAttack = myAttack * 0.5;
         }
 
+        if (ability === "Bleeding Attack") {
+            var myCrit = Math.random();
+            myNewAttack = myAttack;
+            enemyBleeding.status = true;
+            enemyBleeding.ticksLeft = 3;
+            enemyBleeding.damage = myNewAttack;
+            console.log(enemyBleeding);
+        }
+
+        // crit check
         if (myCrit <= myCritRate) {
             myCritMod = 2;
             myCritNote = "CRITICAL HIT!"
             if (ability === "Lucky Stab") {
                 myCritMod = 10;
             }
-    
+
         }
 
-        // Reduce enemy health by myAttack value
-        enemyHealth -= myNewAttack * myCritMod;
+        // status check
 
-      
+        if (enemyBleeding.status === true) {
+
+            bonusDamage += enemyBleeding.damage;
+            enemyBleeding.ticksLeft--;
+            myCritNote += "The enemy bled for " + enemyBleeding.damage + ". " + enemyBleeding.ticksLeft + " turns until normal."
+            if (enemyBleeding.ticksLeft === 0) {
+                enemyBleeding.status = false
+            };
+        };
+
+
+
+        // Actual attack happens here. 
+        enemyHealth -= myNewAttack * myCritMod + bonusDamage;
+
+
         // check if enemy survived my attack
         if (enemyHealth > 0) {
             // reduce my health by enemyAttack
@@ -163,14 +219,11 @@ $(document).ready(function () {
     }
 
     let scrollToBottom = function scrollToBottom() {
-
-        
         var elem = document.getElementById(`console-box`);
         elem.scrollTop = elem.scrollHeight;
     };
 
     let myDeathLogic = function myDeathLogic() {
-
 
         // after enemy counter-attack, check if my characer died
         if (myHealth <= 0) {
@@ -200,16 +253,16 @@ $(document).ready(function () {
     }
 
     let enemyDeathLogic = function enemyDeathlogic() {
-          // check if enemy died before he counter-attacks
-          if (enemyHealth <= 0) {
+        // check if enemy died before he counter-attacks
+        if (enemyHealth <= 0) {
             // hides the game and shows the winscreen
             if (enemyName === "Lich King") {
                 $("#game-screen").hide();
                 $("#win-screen").show();
             }
             spawnEnemy();
-        
-        // Sets current round back to 1 when new enemy spawns
+
+            // Sets current round back to 1 when new enemy spawns
             round = 1;
         };
 
