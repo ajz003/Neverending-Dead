@@ -44,7 +44,7 @@
 
                         <div>
                             <label class="label" for="createName">Name:</label>
-                            <input class="input" type="text" id="input-name" name="playerName">
+                            <input class="input" type="text" id="input-name" name="playerName" maxlength="24">
                             <p id="name-invalid">Please enter a name.</p>
                         </div>
 
@@ -82,7 +82,7 @@
                                     </p>
                                     <div class="progress-wrappers">
                                         <div class="box-backdrop">
-                                            <progress class="progress is-large is-success show-value" id="character-hp-bar"
+                                            <progress class="progress is-medium is-success show-value" id="character-hp-bar"
                                                 value="55" max="100"></progress>
                                         </div>
                                     </div>
@@ -96,7 +96,6 @@
                                 </div>
                             </div>
                             <div class="tile is-parent is-vertical avatar-tiles">
-
                                 <div class="character-box">
                                     <p>
                                         <span id="enemy-heading">
@@ -105,7 +104,7 @@
                                     </p>
                                     <div class="progress-wrappers">
                                         <div class="box-backdrop">
-                                            <progress class="progress is-large is-success show-value" id="enemy-hp-bar"
+                                            <progress class="progress is-medium is-success show-value" id="enemy-hp-bar"
                                                 value="100" max="100"></progress>
                                         </div>
                                     </div>
@@ -121,18 +120,18 @@
                         </div>
                         <div class="tile">
                             <div class="tile is-parent" id="two-tiles">
-                                <article class="tile is-child notification is-primary has-text-centered is-6">
+                                <article class="tile is-child notification has-text-centered is-6 tile-neighbor">
                                     <br>
-                                    <a class="button is-large is-danger" id="attack-btn">Attack</a><br><br>
-                                    <a class="button is-large is-danger" id="defend-btn">Defend</a><br><br>
+                                    <a class="button is-small is-danger" id="attack-btn">Attack</a><br><br>
+                                    <a class="button is-small is-danger" id="defend-btn">Defend</a><br><br>
                                     <!-- <a class="button is-large is-danger" id="skills-btn">Skills</a><br><br> -->
                                 </article>
-                                <article class="tile is-child notification is-warning has-text-centered is-6">
+                                <article class="tile is-child notification has-text-centered is-6 tile-neighbor">
                                     <br>
                                     <!-- Button placeholders -->
-                                    <a class="button is-large is-danger" id="lucky-stab-btn">Lucky Stab</a><br><br>
-                                    <a class="button is-large is-info" id="water-attack">Water</a><br><br>
-                                    <a class="button is-large is-dark" id="void-attack">Void</a><br><br>
+                                    <a class="button is-small is-danger" id="lucky-stab-btn">Lucky Stab</a><br><br>
+                                    <a class="button is-small is-info" id="water-attack">Water</a><br><br>
+                                    <a class="button is-small is-dark" id="void-attack">Void</a>
                                 </article>
                             </div>
                             <div class="tile is-parent" id="console-box-wrapper">
