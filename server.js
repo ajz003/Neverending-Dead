@@ -21,7 +21,7 @@ app.use(express.urlencoded({
 app.use(express.json());
 
 // Static directory
-app.use(express.static("assets"));
+app.use(express.static("public"));
 
 // Routes
 // =============================================================
