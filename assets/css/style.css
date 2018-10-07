@@ -40,8 +40,11 @@ body {
     overflow: auto;
 
     background-image: url("../img/background.jpg");
-    background-size: auto;
-    /* background-repeat: repeat; */
+    background-size: cover;
+	height: 100vh;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin: 0;
 }
 
 #hero-section {
