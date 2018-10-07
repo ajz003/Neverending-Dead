@@ -233,3 +233,7 @@ progress.show-value.is-large:after {
     color: red;
     visibility: hidden;
 }
+
+#round {
+    text-decoration: underline;
+}
