@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.15/howler.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
     <title>Prototype</title>
@@ -96,6 +98,16 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- This should be a modal or something -->
+                            <div class="tile is-parent is-vertical avatar-tiles">
+                             <div class="levelup-box">
+                                 <a class="button level-up-option" id="attack-up-btn">+Attack</a>
+                                 <a class="button level-up-option" id="heal-btn">Heal</a>
+                             </div>
+                            </div>
+
+
                             <div class="tile is-parent is-vertical avatar-tiles">
                                 <div class="character-box">
                                     <p>
@@ -124,15 +136,33 @@
                                 <article class="tile is-child notification has-text-centered is-6 tile-neighbor">
                                     <br>
                                     <a class="button is-small is-danger" id="attack-btn">Attack</a><br><br>
-                                    <a class="button is-small is-danger" id="defend-btn">Defend</a><br><br>
-                                    <!-- <a class="button is-large is-danger" id="skills-btn">Skills</a><br><br> -->
+                                    <a class="button is-small is-warning"
+                                       data-balloon-length="large" 
+                                       data-balloon="WORK IN PROGRESS: Take reduced enemyAttack; chance to reflect reduced enemyAttack back at enemy?"
+                                       data-balloon-pos="up" 
+                                       id="defend-btn">Defend</a>
                                 </article>
                                 <article class="tile is-child notification has-text-centered is-6 tile-neighbor">
                                     <br>
                                     <!-- Button placeholders -->
-                                    <a class="button is-small is-danger" id="lucky-stab-btn">Lucky Stab</a><br><br>
-                                    <a class="button is-small is-info" id="bleed-attack-btn">Bleeding Attack</a><br><br>
-                                    <a class="button is-small is-dark" id="void-attack">Void</a><br><br>
+                                    <a class="button is-small is-danger" 
+                                       data-balloon-length="large" 
+                                       data-balloon="Chance to do critical hit, but do low damage if you miss." 
+                                       data-balloon-pos="up" 
+                                       id="lucky-stab-btn">Lucky Stab</a>
+                                    <br><br>
+                                    <a class="button is-small is-info"
+                                       data-balloon-length="large"
+                                       data-balloon="Chance to make the enemy bleed for the next two rounds."
+                                       data-balloon-pos="up"
+                                       id="bleed-attack-btn">Bleeding Attack</a>
+                                    <br><br>
+                                    <a class="button is-small is-dark"
+                                       data-balloon-length="large"
+                                       data-balloon="WORK IN PROGRESS:"
+                                       data-balloon-pos="up"
+                                       id="void-attack">Void</a>
+                                    <br><br>
                                 </article>
                             </div>
                             <div class="tile is-parent" id="console-box-wrapper">
