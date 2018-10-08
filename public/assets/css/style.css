@@ -168,12 +168,12 @@ body {
     text-align: center;
     max-height: 300px;
     max-width: 230px;
+    min-width: 350px;
     background-image: url("../img/Borders-black.png");
     background-size: cover;
     background-repeat: none;
     background-position: center;
     margin: 0;
-    height: 40vh;
 }
 
 .progress-wrappers {
