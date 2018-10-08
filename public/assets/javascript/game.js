@@ -4,10 +4,10 @@ $(document).ready(function () {
         autoplay: true,
         loop: true,
         volume: 0.3,
-        onend: function() {
-          console.log('Finished!');
+        onend: function () {
+            console.log('Finished!');
         }
-      });
+    });
 
     bgm.play();
 
@@ -34,7 +34,7 @@ $(document).ready(function () {
     var bleedingAttackSound = new Howl({
         src: ['../assets/audio/bleeding-attack.mp3'],
         volume: 0.3
-    }); 
+    });
 
     var bleedingOutSound = new Howl({
         src: ['../assets/audio/bleeding-out.mp3'],
@@ -45,10 +45,10 @@ $(document).ready(function () {
         src: ['../assets/audio/last-boss-bgm.mp3'],
         loop: true,
         volume: 0.3,
-        onend: function() {
-          console.log('Finished!');
+        onend: function () {
+            console.log('Finished!');
         }
-    }); 
+    });
 
     var gameOverSound = new Howl({
         src: ['../assets/audio/game-over.mp3'],
@@ -65,7 +65,7 @@ $(document).ready(function () {
         volume: 0.3
     });
 
-      
+
 
     // initial stat values
     let myName = "";
@@ -81,6 +81,8 @@ $(document).ready(function () {
     let enemyMaxHealth = enemyHealth;
 
     let position = 0;
+
+    let enemyCount = 0;
 
     // stat modifiers
     let myBleeding = {
@@ -137,7 +139,7 @@ $(document).ready(function () {
         if (myImg !== "") {
             $("#my-image").attr("src", myImg)
         };
-        
+
         spawnEnemy();
 
         $("#my-name").text(myName);
@@ -212,6 +214,12 @@ $(document).ready(function () {
     // -------------------- Functions
 
     let spawnEnemy = function () {
+
+        $.get("/api/enemy/count", function(data){
+            console.log(data);
+            enemyCount = data;
+        });
+
         $.get("/api/enemy/" + position, function (data) {
             if (data) {
                 console.log(data.name);
@@ -225,12 +233,16 @@ $(document).ready(function () {
                 enemyBleeding.ticksLeft = 0;
                 enemyBleeding.damage = 0;
 
+                $('#enemy-box').addClass('animated jackInTheBox').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                    $(this).removeClass('animated jackInTheBox');
+                });
+
                 if (data.name === `Lich King`) {
                     bgm.stop();
                     lastBossBgm.stop();
                     lastBossBgm.play();
                 };
-                
+
                 $(`#enemy-hp-bar`).removeClass(`is-warning`).removeClass(`is-danger`).addClass(`is-success`);
                 $("#enemy-health").text(enemyHealth);
                 $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
@@ -278,7 +290,7 @@ $(document).ready(function () {
         // crit check
         if (myCrit <= myCritRate) {
             myCritMod = 2;
-            luckyStabSound.play(); 
+            luckyStabSound.play();
             myCritNote = `<p id="critical-hit">CRITICAL HIT!</p>
                             <p>You manage to target a gap in their armor.</p>`;
             if (ability === "Lucky Stab") {
@@ -289,22 +301,27 @@ $(document).ready(function () {
 
         // status check
         // if (myCrit <= myBleedRate) { 
-            if (enemyBleeding.status === true) {
-                bonusDamage += enemyBleeding.damage;
-                enemyBleeding.ticksLeft--;
-                bleedingOutSound.play();
+        if (enemyBleeding.status === true) {
+            bonusDamage += enemyBleeding.damage;
+            enemyBleeding.ticksLeft--;
+            bleedingOutSound.play();
+            myCritNote = "";
+            myCritNote += `<p>You slash their flesh, causing <span id="enemy-name">${enemyName}</span> to bleed for <span class="damage-numbers">${enemyBleeding.damage}</span> damage for the next <span class="damage-numbers">${enemyBleeding.ticksLeft}</span> round(s).</p>`;
+            if (enemyBleeding.ticksLeft === 0) {
+                enemyBleeding.status = false;
                 myCritNote = "";
-                myCritNote += `<p>You slash their flesh, causing <span id="enemy-name">${enemyName}</span> to bleed for <span class="damage-numbers">${enemyBleeding.damage}</span> damage for the next <span class="damage-numbers">${enemyBleeding.ticksLeft}</span> round(s).</p>`;
-                if (enemyBleeding.ticksLeft === 0) {
-                    enemyBleeding.status = false;
-                    myCritNote = "";
-                };
             };
+        };
         // }
 
 
         // Actual attack happens here. 
         enemyHealth -= myNewAttack * myCritMod + bonusDamage;
+
+        // Attack animation
+        $('#enemy-box').addClass('animated wobble').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+            $(this).removeClass('animated wobble')
+        });
 
 
 
@@ -318,7 +335,7 @@ $(document).ready(function () {
                 .append(myCritNote)
                 .append(`\n<p class="damage-numbers">&#9876 <span id="player-name">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
                 .append(`\n<p class="damage-numbers">&#9876 <span id="enemy-name">${enemyName}</span> counterattacks, inflicting you for <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
-        };
+        }
     }
 
     let scrollToBottom = function scrollToBottom() {
@@ -360,9 +377,12 @@ $(document).ready(function () {
             );
 
             // hides the game and shows the gameover screen
-           
-            $("#game-screen").hide();
-            $("#lose-screen").show();
+            $('#player-box').addClass('animated hinge').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                $(this).removeClass('animated hinge');
+                $("#game-screen").hide();
+                $("#lose-screen").show();
+            });
+
         };
     }
 
@@ -370,17 +390,23 @@ $(document).ready(function () {
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
 
+
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>\n<br>`);
 
             // hides the game and shows the winscreen
-            if (enemyName === "Lich King") {
+            if (position === enemyCount) {
                 bgm.stop();
                 lastBossBgm.stop();
                 victorySound.play();
                 $("#game-screen").hide();
                 $("#win-screen").show();
-            }
-            spawnEnemy();
+            };
+
+            $('#enemy-box').addClass('animated hinge').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                $(this).removeClass('animated hinge');
+                spawnEnemy();
+            });
+
 
             // Sets current round when new enemy spawns
             round = 0
