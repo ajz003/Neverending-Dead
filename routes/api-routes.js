@@ -13,15 +13,20 @@ var Sequelize = require('sequelize');
 // =============================================================
 module.exports = function (app) {
 
-
+  app.get("/api/enemy/count", function (req, res) {
+    db.Enemy.count()
+    .then(function (count) {
+        res.json(count);
+      });
+  });
 
   // Get route for retrieving a single enemy
   app.get("/api/enemy/:position", function (req, res) {
     db.Enemy.findOne({
-      where: {
-        position: req.params.position
-      }
-    })
+        where: {
+          position: req.params.position
+        }
+      })
       .then(function (enemy) {
         res.json(enemy);
       });
@@ -31,12 +36,10 @@ module.exports = function (app) {
   // POST route for saving a new enemy
   app.post("/api/enemy", function (req, res) {
     let insertPosition = req.body.position - 1;
-    let queryString = "UPDATE enemies SET position = position + 1 where position >= " + insertPosition.toString();
-    console.log(queryString);
 
     db.Enemy.update({
-      position: Sequelize.literal('position + 1'),
-    }, {
+        position: Sequelize.literal('position + 1'),
+      }, {
         where: {
           position: {
             $gte: insertPosition

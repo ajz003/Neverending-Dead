@@ -79,9 +79,11 @@ $(document).ready(function () {
     let enemyAttack;
     let myMaxHealth = myHealth;
     let enemyMaxHealth = enemyHealth;
-    let enemyDefeated = false;
+    let isLevelUpOpen = false;
 
     let position = 0;
+
+    let enemyCount = 0;
 
     // stat modifiers
     let myBleeding = {
@@ -158,7 +160,7 @@ $(document).ready(function () {
 
     // Attack button calls attack function
     $("#attack-btn").click(function () {
-        if (enemyDefeated === false) {
+        if (isLevelUpOpen === false) {
             round++;
             attackLogic();
             attackSound.play();
@@ -170,7 +172,7 @@ $(document).ready(function () {
 
 
     $("#lucky-stab-btn").click(function () {
-        if (enemyDefeated === false) {
+        if (isLevelUpOpen === false) {
             round++;
             attackLogic("Lucky Stab");
             deathLogic();
@@ -180,7 +182,7 @@ $(document).ready(function () {
     });
 
     $("#bleed-attack-btn").click(function () {
-        if (enemyDefeated === false) {
+        if (isLevelUpOpen === false) {
             round++;
             attackLogic("Bleeding Attack");
             deathLogic();
@@ -224,7 +226,7 @@ $(document).ready(function () {
         enemyHealth = 100;
         enemyAttack = 20;
         round = 0;
-        enemyDefeated = false;
+        isLevelUpOpen = false;
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
         $("#console-log-1").empty();
@@ -236,6 +238,12 @@ $(document).ready(function () {
     // -------------------- Functions
 
     let spawnEnemy = function () {
+
+        $.get("/api/enemy/count", function(data){
+            console.log(data);
+            enemyCount = data;
+        });
+
         $.get("/api/enemy/" + position, function (data) {
             if (data) {
                 console.log(data.name);
@@ -248,6 +256,10 @@ $(document).ready(function () {
                 enemyBleeding.status = false;
                 enemyBleeding.ticksLeft = 0;
                 enemyBleeding.damage = 0;
+
+                $('#enemy-box').addClass('animated jackInTheBox').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                    $(this).removeClass('animated jackInTheBox');
+                });
 
                 if (data.name === `Lich King`) {
                     bgm.stop();
@@ -263,7 +275,7 @@ $(document).ready(function () {
                 $("#enemy-name").text(enemyName);
                 $("#enemy-image").attr("src", enemyImg);
                 position++;
-                enemyDefeated = false;
+                isLevelUpOpen = false;
             }
         })
     }
@@ -331,6 +343,11 @@ $(document).ready(function () {
         // Actual attack happens here. 
         enemyHealth -= myNewAttack * myCritMod + bonusDamage;
 
+        // Attack animation
+        $('#enemy-box').addClass('animated wobble').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+            $(this).removeClass('animated wobble')
+        });
+
 
 
         // check if enemy survived my attack
@@ -343,7 +360,7 @@ $(document).ready(function () {
                 .append(myCritNote)
                 .append(`\n<p class="damage-numbers">&#9876 <span id="player-name">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
                 .append(`\n<p class="damage-numbers">&#9876 <span id="enemy-name">${enemyName}</span> counterattacks, inflicting you for <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
-        };
+        }
     }
 
     let scrollToBottom = function scrollToBottom() {
@@ -386,15 +403,19 @@ $(document).ready(function () {
 
             // hides the game and shows the gameover screen
 
-            $("#game-screen").hide();
-            $("#lose-screen").show();
+            $('#player-box').addClass('animated hinge').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                $(this).removeClass('animated hinge');
+                $("#game-screen").hide();
+                $("#lose-screen").show();
+            });
+
         };
     }
 
     let enemyDeathLogic = function enemyDeathlogic() {
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
-            enemyDefeated = true;
+            isLevelUpOpen = true;
 
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
             $("#console-log-1").append(`<p>Please choose a level-up option!</p>\n<br>`);
@@ -402,13 +423,21 @@ $(document).ready(function () {
 
 
             // hides the game and shows the winscreen
-            if (enemyName === "Lich King") {
+            if (position === enemyCount) {
                 bgm.stop();
                 lastBossBgm.stop();
                 victorySound.play();
                 $("#game-screen").hide();
                 $("#win-screen").show();
-            }
+
+            };
+
+            $('#enemy-box').addClass('animated hinge').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                $(this).removeClass('animated hinge');
+                $("#enemy-image").attr("src", "assets/img/seamless-skulls.jpg");
+                // spawnEnemy();
+            });
+
 
             // Sets current round when new enemy spawns
             round = 0
