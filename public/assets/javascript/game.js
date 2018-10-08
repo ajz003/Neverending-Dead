@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var bgm = new Howl({
-        src: ['../bgm.mp3'],
+        src: ['../assets/audio/bgm.mp3'],
         autoplay: true,
         loop: true,
         volume: 0.3,
@@ -12,37 +12,37 @@ $(document).ready(function () {
     bgm.play();
 
     var attackSound = new Howl({
-        src: ['../attack.mp3'],
+        src: ['../assets/audio/attack.mp3'],
         volume: 0.3
     });
 
     var createSound = new Howl({
-        src: ['../create-character.mp3'],
+        src: ['../assets/audio/create-character.mp3'],
         volume: 0.3
     });
 
     var luckyStabSound = new Howl({
-        src: ['../lucky-stab.mp3'],
+        src: ['../assets/audio/lucky-stab.mp3'],
         volume: 0.3
     });
 
     var missLuckyStab = new Howl({
-        src: ['../miss-lucky-stab.mp3'],
+        src: ['../assets/audio/miss-lucky-stab.mp3'],
         volume: 0.3
     });
 
     var bleedingAttackSound = new Howl({
-        src: ['../bleeding-attack.mp3'],
+        src: ['../assets/audio/bleeding-attack.mp3'],
         volume: 0.3
     }); 
 
     var bleedingOutSound = new Howl({
-        src: ['../bleeding-out.mp3'],
+        src: ['../assets/audio/bleeding-out.mp3'],
         volume: 0.3
     });
 
     var lastBossBgm = new Howl({
-        src: ['../last-boss-bgm.mp3'],
+        src: ['../assets/audio/last-boss-bgm.mp3'],
         loop: true,
         volume: 0.3,
         onend: function() {
@@ -51,17 +51,17 @@ $(document).ready(function () {
     }); 
 
     var gameOverSound = new Howl({
-        src: ['../game-over.mp3'],
+        src: ['../assets/audio/game-over.mp3'],
         volume: 0.3
     });
 
     var victorySound = new Howl({
-        src: ['../victory.mp3'],
+        src: ['../assets/audio/victory.mp3'],
         volume: 0.3
     });
 
     var newMatchSound = new Howl({
-        src: ['../new-match.mp3'],
+        src: ['../assets/audio/new-match.mp3'],
         volume: 0.3
     });
 
