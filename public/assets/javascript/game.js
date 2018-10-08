@@ -79,7 +79,7 @@ $(document).ready(function () {
     let enemyAttack;
     let myMaxHealth = myHealth;
     let enemyMaxHealth = enemyHealth;
-    let isLevelUpOpen = false;
+    let isDefeated = false;
 
     let position = 0;
 
@@ -160,7 +160,7 @@ $(document).ready(function () {
 
     // Attack button calls attack function
     $("#attack-btn").click(function () {
-        if (isLevelUpOpen === false) {
+        if (isDefeated === false) {
             round++;
             attackLogic();
             attackSound.play();
@@ -172,7 +172,7 @@ $(document).ready(function () {
 
 
     $("#lucky-stab-btn").click(function () {
-        if (isLevelUpOpen === false) {
+        if (isDefeated === false) {
             round++;
             attackLogic("Lucky Stab");
             deathLogic();
@@ -182,7 +182,7 @@ $(document).ready(function () {
     });
 
     $("#bleed-attack-btn").click(function () {
-        if (isLevelUpOpen === false) {
+        if (isDefeated === false) {
             round++;
             attackLogic("Bleeding Attack");
             deathLogic();
@@ -226,7 +226,7 @@ $(document).ready(function () {
         enemyHealth = 100;
         enemyAttack = 20;
         round = 0;
-        isLevelUpOpen = false;
+        isDefeated = false;
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
         $("#console-log-1").empty();
@@ -275,7 +275,7 @@ $(document).ready(function () {
                 $("#enemy-name").text(enemyName);
                 $("#enemy-image").attr("src", enemyImg);
                 position++;
-                isLevelUpOpen = false;
+                isDefeated = false;
             }
         })
     }
@@ -380,6 +380,7 @@ $(document).ready(function () {
 
         // after enemy counter-attack, check if my characer died
         if (myHealth <= 0) {
+            isDefeated = true;
             bgm.stop();
             lastBossBgm.stop();
             gameOverSound.play();
@@ -415,7 +416,7 @@ $(document).ready(function () {
     let enemyDeathLogic = function enemyDeathlogic() {
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
-            isLevelUpOpen = true;
+            isDefeated = true;
 
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
             $("#console-log-1").append(`<p>Please choose a level-up option!</p>\n<br>`);
