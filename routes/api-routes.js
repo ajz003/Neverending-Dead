@@ -47,7 +47,7 @@ module.exports = function (app) {
         }
       }).then(function () {
         db.Enemy.create({
-          name: req.body.name,
+          name: "Zombie " + req.body.name,
           img: req.body.img,
           hp: req.body.hp,
           attack: req.body.attack,
