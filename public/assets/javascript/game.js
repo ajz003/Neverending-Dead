@@ -1,4 +1,72 @@
 $(document).ready(function () {
+    var bgm = new Howl({
+        src: ['../assets/audio/bgm.mp3'],
+        autoplay: true,
+        loop: true,
+        volume: 0.3,
+        onend: function() {
+          console.log('Finished!');
+        }
+      });
+
+    bgm.play();
+
+    var attackSound = new Howl({
+        src: ['../assets/audio/attack.mp3'],
+        volume: 0.3
+    });
+
+    var createSound = new Howl({
+        src: ['../assets/audio/create-character.mp3'],
+        volume: 0.3
+    });
+
+    var luckyStabSound = new Howl({
+        src: ['../assets/audio/lucky-stab.mp3'],
+        volume: 0.3
+    });
+
+    var missLuckyStab = new Howl({
+        src: ['../assets/audio/miss-lucky-stab.mp3'],
+        volume: 0.3
+    });
+
+    var bleedingAttackSound = new Howl({
+        src: ['../assets/audio/bleeding-attack.mp3'],
+        volume: 0.3
+    }); 
+
+    var bleedingOutSound = new Howl({
+        src: ['../assets/audio/bleeding-out.mp3'],
+        volume: 0.3
+    });
+
+    var lastBossBgm = new Howl({
+        src: ['../assets/audio/last-boss-bgm.mp3'],
+        loop: true,
+        volume: 0.3,
+        onend: function() {
+          console.log('Finished!');
+        }
+    }); 
+
+    var gameOverSound = new Howl({
+        src: ['../assets/audio/game-over.mp3'],
+        volume: 0.3
+    });
+
+    var victorySound = new Howl({
+        src: ['../assets/audio/victory.mp3'],
+        volume: 0.3
+    });
+
+    var newMatchSound = new Howl({
+        src: ['../assets/audio/new-match.mp3'],
+        volume: 0.3
+    });
+
+      
+
     // initial stat values
     let myName = "";
     let myAttack = 15;
@@ -48,6 +116,7 @@ $(document).ready(function () {
 
         // Make sure to preventDefault on a submit event.
         event.preventDefault();
+        createSound.play();
 
         myName = $("#input-name").val().trim();
         myImg = $("#input-imageUrl").val().trim();
@@ -68,7 +137,7 @@ $(document).ready(function () {
         if (myImg !== "") {
             $("#my-image").attr("src", myImg)
         };
-
+        
         spawnEnemy();
 
         $("#my-name").text(myName);
@@ -79,7 +148,6 @@ $(document).ready(function () {
         $("#enemy-name").text(enemyName);
         $("#character-creator").hide();
         $("#game-screen").show();
-
     });
 
     // ----------------------- Combat
@@ -90,6 +158,7 @@ $(document).ready(function () {
     $("#attack-btn").click(function () {
         round++;
         attackLogic();
+        attackSound.play();
         console.log(round);
         deathLogic();
         hpBarUpdate();
@@ -136,6 +205,8 @@ $(document).ready(function () {
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
         $("#console-log-1").empty();
+        newMatchSound.play();
+        bgm.play();
     })
 
     // -------------------- Functions
@@ -154,6 +225,12 @@ $(document).ready(function () {
                 enemyBleeding.ticksLeft = 0;
                 enemyBleeding.damage = 0;
 
+                if (data.name === `Lich King`) {
+                    bgm.stop();
+                    lastBossBgm.stop();
+                    lastBossBgm.play();
+                };
+                
                 $(`#enemy-hp-bar`).removeClass(`is-warning`).removeClass(`is-danger`).addClass(`is-success`);
                 $("#enemy-health").text(enemyHealth);
                 $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
@@ -171,6 +248,7 @@ $(document).ready(function () {
         let bonusDamage = 0;
         let myCritRate = 0.20;
         let myCritMod = 1;
+        // let myBleedRate = 0.17;
 
         let myCritNote = "";
 
@@ -183,11 +261,13 @@ $(document).ready(function () {
         if (ability === "Lucky Stab") {
             var myCrit = Math.random();
             myNewAttack = myAttack * 0.5;
+            missLuckyStab.play();
             myCritNote = `<p>You awkwardly maneuver your attack.</p>`;
         }
 
         if (ability === "Bleeding Attack") {
             var myCrit = Math.random();
+            bleedingAttackSound.play();
             myNewAttack = myAttack;
             enemyBleeding.status = true;
             enemyBleeding.ticksLeft = 3;
@@ -198,6 +278,7 @@ $(document).ready(function () {
         // crit check
         if (myCrit <= myCritRate) {
             myCritMod = 2;
+            luckyStabSound.play(); 
             myCritNote = `<p id="critical-hit">CRITICAL HIT!</p>
                             <p>You manage to target a gap in their armor.</p>`;
             if (ability === "Lucky Stab") {
@@ -207,17 +288,19 @@ $(document).ready(function () {
         }
 
         // status check
-
-        if (enemyBleeding.status === true) {
-
-            bonusDamage += enemyBleeding.damage;
-            enemyBleeding.ticksLeft--;
-            myCritNote += "The enemy bled for " + enemyBleeding.damage + ". " + enemyBleeding.ticksLeft + " turns until normal."
-            if (enemyBleeding.ticksLeft === 0) {
-                enemyBleeding.status = false
+        // if (myCrit <= myBleedRate) { 
+            if (enemyBleeding.status === true) {
+                bonusDamage += enemyBleeding.damage;
+                enemyBleeding.ticksLeft--;
+                bleedingOutSound.play();
+                myCritNote = "";
+                myCritNote += `<p>You slash their flesh, causing <span id="enemy-name">${enemyName}</span> to bleed for <span class="damage-numbers">${enemyBleeding.damage}</span> damage for the next <span class="damage-numbers">${enemyBleeding.ticksLeft}</span> round(s).</p>`;
+                if (enemyBleeding.ticksLeft === 0) {
+                    enemyBleeding.status = false;
+                    myCritNote = "";
+                };
             };
-        };
-
+        // }
 
 
         // Actual attack happens here. 
@@ -233,8 +316,8 @@ $(document).ready(function () {
             // update console lines
             $("#console-log-1").append(`<p id="round">Round ${round}</p>`)
                 .append(myCritNote)
-                .append(`\n<p class="damage-numbers">&#9876 <span style="color:#00FFFF; font-family: Permanent Marker; font-size: 16px;">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
-                .append(`\n<p class="damage-numbers">&#9876 <span style="color:#FF00FF; font-family: Permanent Marker; font-size: 16px;">${enemyName}</span> counterattacks, inflicting you for <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
+                .append(`\n<p class="damage-numbers">&#9876 <span id="player-name">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
+                .append(`\n<p class="damage-numbers">&#9876 <span id="enemy-name">${enemyName}</span> counterattacks, inflicting you for <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
         };
     }
 
@@ -255,7 +338,9 @@ $(document).ready(function () {
 
         // after enemy counter-attack, check if my characer died
         if (myHealth <= 0) {
-
+            bgm.stop();
+            lastBossBgm.stop();
+            gameOverSound.play();
             // Send the POST request to add character to DB
             let newChar = {
                 name: myName,
@@ -275,6 +360,7 @@ $(document).ready(function () {
             );
 
             // hides the game and shows the gameover screen
+           
             $("#game-screen").hide();
             $("#lose-screen").show();
         };
@@ -288,6 +374,9 @@ $(document).ready(function () {
 
             // hides the game and shows the winscreen
             if (enemyName === "Lich King") {
+                bgm.stop();
+                lastBossBgm.stop();
+                victorySound.play();
                 $("#game-screen").hide();
                 $("#win-screen").show();
             }
