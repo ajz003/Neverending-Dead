@@ -73,6 +73,7 @@ $(document).ready(function () {
     let myHealth = 500;
     let myImg;
 
+    let myPotions = 3;
     let enemyName = "";
     let enemyImg = "";
     let enemyHealth;
@@ -170,6 +171,21 @@ $(document).ready(function () {
         }
     });
 
+    $("#potion-btn").click(function () {
+        if (isDefeated === false && myPotions > 0) {
+            myPotions--;
+            round++;
+            attackLogic("Healing Potion");
+            attackSound.play();
+            deathLogic();
+            hpBarUpdate();
+            $("#console-log-1").append(`<p>You drank a healing potion, you have ` + myPotions + ` potions left.</p>`);
+            scrollToBottom();
+        } else if (isDefeated === false && myPotions === 0){
+            $("#console-log-1").append(`<p>You don't have any more potions!</p>`);
+            scrollToBottom();
+        }
+    });
 
     $("#lucky-stab-btn").click(function () {
         if (isDefeated === false) {
@@ -199,6 +215,7 @@ $(document).ready(function () {
         $(".levelup-box").hide();
         $("#my-attack").text(myAttack);
     })
+
     $("#heal-btn").on("click", function () {
         myHealth += myMaxHealth * 0.5;
         if (myHealth > myMaxHealth) {
@@ -226,6 +243,7 @@ $(document).ready(function () {
         enemyHealth = 100;
         enemyAttack = 20;
         round = 0;
+        myPotions = 3;
         isDefeated = false;
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
@@ -239,7 +257,7 @@ $(document).ready(function () {
 
     let spawnEnemy = function () {
 
-        $.get("/api/enemy/count", function(data){
+        $.get("/api/enemy/count", function (data) {
             console.log(data);
             enemyCount = data;
         });
@@ -302,6 +320,17 @@ $(document).ready(function () {
             myCritNote = `<p>You awkwardly maneuver your attack.</p>`;
         }
 
+        if (ability === "Healing Potion") {
+            var myCrit = 0;
+            myNewAttack = 0;
+            myHealth += myMaxHealth * 0.5;
+            if (myHealth > myMaxHealth) {
+                myHealth = myMaxHealth
+            }
+            hpBarUpdate();            
+            myCritNote = `<p>You take a moment to drink a revitalizing potion.</p>`;
+        }
+
         if (ability === "Bleeding Attack") {
             var myCrit = Math.random();
             bleedingAttackSound.play();
@@ -339,14 +368,17 @@ $(document).ready(function () {
         };
         // }
 
-
+        let totalAttack = myNewAttack * myCritMod + bonusDamage;
         // Actual attack happens here. 
-        enemyHealth -= myNewAttack * myCritMod + bonusDamage;
+        enemyHealth -= totalAttack;
 
         // Attack animation
-        $('#enemy-box').addClass('animated wobble').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-            $(this).removeClass('animated wobble')
-        });
+        if (totalAttack > 0) {
+            $('#enemy-box').addClass('animated wobble').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                $(this).removeClass('animated wobble')
+            });
+        };
+
 
 
 
@@ -359,7 +391,7 @@ $(document).ready(function () {
             $("#console-log-1").append(`<p id="round">Round ${round}</p>`)
                 .append(myCritNote)
                 .append(`\n<p class="damage-numbers">&#9876 <span id="player-name">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
-                .append(`\n<p class="damage-numbers">&#9876 <span id="enemy-name">${enemyName}</span> counterattacks, inflicting you for <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
+                .append(`\n<p class="damage-numbers">&#9876 <span id="enemy-name">${enemyName}</span> counterattacks, inflicting <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
         }
     }
 
