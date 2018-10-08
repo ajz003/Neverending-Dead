@@ -65,7 +65,7 @@ body {
 #body-content {
     color: white;
     padding: 0 0 0 0;
-    height: 610px;
+    height: auto;
     /* position: static; */
     /* top: -20px; */
     top: 50%;
@@ -166,8 +166,7 @@ body {
     padding: 10px 0px;
     margin: 20px;
     text-align: center;
-    max-height: 300px;
-    max-width: 230px;
+    min-height: 400px;
     min-width: 350px;
     background-image: url("../img/Borders-black.png");
     background-size: cover;
