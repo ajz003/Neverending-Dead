@@ -66,9 +66,10 @@ body {
     color: white;
     padding: 0 0 0 0;
     height: 610px;
-    top: -20px;
-    /* bottom: 20vh; */
-    /* border: 2px solid white; */
+    /* position: static; */
+    /* top: -20px; */
+    top: 50%;
+    border: 2px solid white;
 }
 
 #two-tiles {
@@ -165,8 +166,8 @@ body {
     padding: 10px 0px;
     margin: 20px;
     text-align: center;
-    height: 400px;
-    width: 230px;
+    max-height: 300px;
+    max-width: 230px;
     background-image: url("../img/Borders-black.png");
     background-size: cover;
     background-repeat: none;
