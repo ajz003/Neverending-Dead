@@ -227,6 +227,7 @@ $(document).ready(function () {
 
                 if (data.name === `Lich King`) {
                     bgm.stop();
+                    lastBossBgm.stop();
                     lastBossBgm.play();
                 };
                 
