@@ -79,7 +79,7 @@ $(document).ready(function () {
     let enemyAttack;
     let myMaxHealth = myHealth;
     let enemyMaxHealth = enemyHealth;
-    let enemyDefeated = false;
+    let isLevelUpOpen = false;
 
     let position = 0;
 
@@ -160,7 +160,7 @@ $(document).ready(function () {
 
     // Attack button calls attack function
     $("#attack-btn").click(function () {
-        if (enemyDefeated === false) {
+        if (isLevelUpOpen === false) {
             round++;
             attackLogic();
             attackSound.play();
@@ -172,7 +172,7 @@ $(document).ready(function () {
 
 
     $("#lucky-stab-btn").click(function () {
-        if (enemyDefeated === false) {
+        if (isLevelUpOpen === false) {
             round++;
             attackLogic("Lucky Stab");
             deathLogic();
@@ -182,7 +182,7 @@ $(document).ready(function () {
     });
 
     $("#bleed-attack-btn").click(function () {
-        if (enemyDefeated === false) {
+        if (isLevelUpOpen === false) {
             round++;
             attackLogic("Bleeding Attack");
             deathLogic();
@@ -226,7 +226,7 @@ $(document).ready(function () {
         enemyHealth = 100;
         enemyAttack = 20;
         round = 0;
-        enemyDefeated = false;
+        isLevelUpOpen = false;
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
         $("#console-log-1").empty();
@@ -275,7 +275,7 @@ $(document).ready(function () {
                 $("#enemy-name").text(enemyName);
                 $("#enemy-image").attr("src", enemyImg);
                 position++;
-                enemyDefeated = false;
+                isLevelUpOpen = false;
             }
         })
     }
@@ -415,7 +415,7 @@ $(document).ready(function () {
     let enemyDeathLogic = function enemyDeathlogic() {
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
-            enemyDefeated = true;
+            isLevelUpOpen = true;
 
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
             $("#console-log-1").append(`<p>Please choose a level-up option!</p>\n<br>`);
@@ -434,7 +434,8 @@ $(document).ready(function () {
 
             $('#enemy-box').addClass('animated hinge').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                 $(this).removeClass('animated hinge');
-                spawnEnemy();
+                $("#enemy-image").attr("src", "assets/img/seamless-skulls.jpg");
+                // spawnEnemy();
             });
 
 
