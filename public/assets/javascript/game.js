@@ -79,6 +79,7 @@ $(document).ready(function () {
     let enemyAttack;
     let myMaxHealth = myHealth;
     let enemyMaxHealth = enemyHealth;
+    let enemyDefeated = false;
 
     let position = 0;
 
@@ -157,7 +158,7 @@ $(document).ready(function () {
 
     // Attack button calls attack function
     $("#attack-btn").click(function () {
-        if (enemyHealth > 0) {
+        if (enemyDefeated === false) {
             round++;
             attackLogic();
             attackSound.play();
@@ -169,7 +170,7 @@ $(document).ready(function () {
 
 
     $("#lucky-stab-btn").click(function () {
-        if (enemyHealth > 0) {
+        if (enemyDefeated === false) {
             round++;
             attackLogic("Lucky Stab");
             deathLogic();
@@ -179,7 +180,7 @@ $(document).ready(function () {
     });
 
     $("#bleed-attack-btn").click(function () {
-        if (enemyHealth > 0) {
+        if (enemyDefeated === false) {
             round++;
             attackLogic("Bleeding Attack");
             deathLogic();
@@ -205,6 +206,10 @@ $(document).ready(function () {
         hpBarUpdate();
     })
 
+    $(document).on("click", ".level-up-option", function () {
+        spawnEnemy();
+    })
+
     // -------------------- Restart
 
 
@@ -219,6 +224,7 @@ $(document).ready(function () {
         enemyHealth = 100;
         enemyAttack = 20;
         round = 0;
+        enemyDefeated = false;
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
         $("#console-log-1").empty();
@@ -257,6 +263,7 @@ $(document).ready(function () {
                 $("#enemy-name").text(enemyName);
                 $("#enemy-image").attr("src", enemyImg);
                 position++;
+                enemyDefeated = false;
             }
         })
     }
@@ -387,6 +394,7 @@ $(document).ready(function () {
     let enemyDeathLogic = function enemyDeathlogic() {
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
+            enemyDefeated = true;
 
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
             $("#console-log-1").append(`<p>Please choose a level-up option!</p>\n<br>`);
@@ -408,9 +416,7 @@ $(document).ready(function () {
             $(".levelup-box").show();
 
             // Spawns enemy only after picking a level up option
-            $(document).on("click", ".level-up-option", function () {
-                spawnEnemy();
-            })
+
 
 
         };
