@@ -4,10 +4,10 @@ $(document).ready(function () {
         autoplay: true,
         loop: true,
         volume: 0.3,
-        onend: function() {
-          console.log('Finished!');
+        onend: function () {
+            console.log('Finished!');
         }
-      });
+    });
 
     bgm.play();
 
@@ -34,7 +34,7 @@ $(document).ready(function () {
     var bleedingAttackSound = new Howl({
         src: ['../assets/audio/bleeding-attack.mp3'],
         volume: 0.3
-    }); 
+    });
 
     var bleedingOutSound = new Howl({
         src: ['../assets/audio/bleeding-out.mp3'],
@@ -45,10 +45,10 @@ $(document).ready(function () {
         src: ['../assets/audio/last-boss-bgm.mp3'],
         loop: true,
         volume: 0.3,
-        onend: function() {
-          console.log('Finished!');
+        onend: function () {
+            console.log('Finished!');
         }
-    }); 
+    });
 
     var gameOverSound = new Howl({
         src: ['../assets/audio/game-over.mp3'],
@@ -65,12 +65,12 @@ $(document).ready(function () {
         volume: 0.3
     });
 
-      
+
 
     // initial stat values
     let myName = "";
     let myAttack = 15;
-    let myHealth = 2000;
+    let myHealth = 500;
     let myImg;
 
     let enemyName = "";
@@ -98,6 +98,7 @@ $(document).ready(function () {
     // hide the gameover and winscreen when the game starts
     $("#lose-screen").hide();
     $("#win-screen").hide();
+    $(".levelup-box").hide();
 
     // sets DOM text to initial values
     $("#my-health").text(myHealth);
@@ -137,7 +138,7 @@ $(document).ready(function () {
         if (myImg !== "") {
             $("#my-image").attr("src", myImg)
         };
-        
+
         spawnEnemy();
 
         $("#my-name").text(myName);
@@ -156,37 +157,53 @@ $(document).ready(function () {
 
     // Attack button calls attack function
     $("#attack-btn").click(function () {
-        round++;
-        attackLogic();
-        attackSound.play();
-        console.log(round);
-        deathLogic();
-        hpBarUpdate();
-        scrollToBottom();
-
+        if (enemyHealth > 0) {
+            round++;
+            attackLogic();
+            attackSound.play();
+            deathLogic();
+            hpBarUpdate();
+            scrollToBottom();
+        }
     });
 
 
     $("#lucky-stab-btn").click(function () {
-        round++;
-        attackLogic("Lucky Stab");
-        deathLogic();
-        hpBarUpdate();
-        scrollToBottom();
-
+        if (enemyHealth > 0) {
+            round++;
+            attackLogic("Lucky Stab");
+            deathLogic();
+            hpBarUpdate();
+            scrollToBottom();
+        }
     });
 
     $("#bleed-attack-btn").click(function () {
-        round++;
-        attackLogic("Bleeding Attack");
-        myDeathLogic();
-        enemyDeathLogic();
-        hpBarUpdate();
-        scrollToBottom();
-
+        if (enemyHealth > 0) {
+            round++;
+            attackLogic("Bleeding Attack");
+            deathLogic();
+            hpBarUpdate();
+            scrollToBottom();
+        }
     });
 
+    // -------------------- Level-up
 
+    $("#attack-up-btn").on("click", function () {
+        myAttack = Math.round(myAttack * 2);
+        console.log("trigger")
+        $(".levelup-box").hide();
+        $("#my-attack").text(myAttack);
+    })
+    $("#heal-btn").on("click", function () {
+        myHealth += myMaxHealth * 0.5;
+        if (myHealth > myMaxHealth) {
+            myHealth = myMaxHealth
+        }
+        $(".levelup-box").hide();
+        hpBarUpdate();
+    })
 
     // -------------------- Restart
 
@@ -205,6 +222,7 @@ $(document).ready(function () {
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
         $("#console-log-1").empty();
+        $(".levelup-box").hide();
         newMatchSound.play();
         bgm.play();
     })
@@ -230,7 +248,7 @@ $(document).ready(function () {
                     lastBossBgm.stop();
                     lastBossBgm.play();
                 };
-                
+
                 $(`#enemy-hp-bar`).removeClass(`is-warning`).removeClass(`is-danger`).addClass(`is-success`);
                 $("#enemy-health").text(enemyHealth);
                 $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
@@ -278,7 +296,7 @@ $(document).ready(function () {
         // crit check
         if (myCrit <= myCritRate) {
             myCritMod = 2;
-            luckyStabSound.play(); 
+            luckyStabSound.play();
             myCritNote = `<p id="critical-hit">CRITICAL HIT!</p>
                             <p>You manage to target a gap in their armor.</p>`;
             if (ability === "Lucky Stab") {
@@ -289,17 +307,17 @@ $(document).ready(function () {
 
         // status check
         // if (myCrit <= myBleedRate) { 
-            if (enemyBleeding.status === true) {
-                bonusDamage += enemyBleeding.damage;
-                enemyBleeding.ticksLeft--;
-                bleedingOutSound.play();
+        if (enemyBleeding.status === true) {
+            bonusDamage += enemyBleeding.damage;
+            enemyBleeding.ticksLeft--;
+            bleedingOutSound.play();
+            myCritNote = "";
+            myCritNote += `<p>You slash their flesh, causing <span id="enemy-name">${enemyName}</span> to bleed for <span class="damage-numbers">${enemyBleeding.damage}</span> damage for the next <span class="damage-numbers">${enemyBleeding.ticksLeft}</span> round(s).</p>`;
+            if (enemyBleeding.ticksLeft === 0) {
+                enemyBleeding.status = false;
                 myCritNote = "";
-                myCritNote += `<p>You slash their flesh, causing <span id="enemy-name">${enemyName}</span> to bleed for <span class="damage-numbers">${enemyBleeding.damage}</span> damage for the next <span class="damage-numbers">${enemyBleeding.ticksLeft}</span> round(s).</p>`;
-                if (enemyBleeding.ticksLeft === 0) {
-                    enemyBleeding.status = false;
-                    myCritNote = "";
-                };
             };
+        };
         // }
 
 
@@ -360,7 +378,7 @@ $(document).ready(function () {
             );
 
             // hides the game and shows the gameover screen
-           
+
             $("#game-screen").hide();
             $("#lose-screen").show();
         };
@@ -370,7 +388,10 @@ $(document).ready(function () {
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
 
-            $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>\n<br>`);
+            $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
+            $("#console-log-1").append(`<p>Please choose a level-up option!</p>\n<br>`);
+
+
 
             // hides the game and shows the winscreen
             if (enemyName === "Lich King") {
@@ -380,10 +401,18 @@ $(document).ready(function () {
                 $("#game-screen").hide();
                 $("#win-screen").show();
             }
-            spawnEnemy();
 
             // Sets current round when new enemy spawns
             round = 0
+
+            $(".levelup-box").show();
+
+            // Spawns enemy only after picking a level up option
+            $(document).on("click", ".level-up-option", function () {
+                spawnEnemy();
+            })
+
+
         };
 
     }
@@ -413,12 +442,8 @@ $(document).ready(function () {
         };
     }
 
-    // let timestamp = function timeStamp() {
-    //     var date = new Date();
-    //     var h = date.getHours();
-    //     var m = date.getMinutes();
-    //     var s = date.getSeconds();
-    //     return `<p id="timestamp">${h}:${m}:${s}</p>`
-    // }
+
+
+
 
 });
