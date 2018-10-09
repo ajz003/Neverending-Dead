@@ -93,6 +93,11 @@ body {
     height: 80%;
 }
 
+#victory-png {
+    width: 180vh !important;
+    height: 65vh !important;
+}
+
 #game-screen {
     height: 100%;
     padding-right: 30px;
@@ -271,3 +276,14 @@ progress.show-value.is-large:after {
 #enemy-name {
     color:#FF00FF; 
 }
+
+/* Modals */
+
+#shop-display {
+    top: 5vh;
+    width: 50%;
+}
+
+/* .modal {
+    position: fixed;
+} */
