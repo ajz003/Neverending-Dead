@@ -247,7 +247,7 @@ $(document).ready(function () {
     });
 
     $("#bleed-attack-btn").click(function () {
-        if (isDefeated === false  && isBleedLearned === true) {
+        if (isDefeated === false && isBleedLearned === true) {
             round++;
             attackLogic("Bleeding Attack");
             deathLogic();
@@ -261,58 +261,58 @@ $(document).ready(function () {
 
     // -------------------- Shop
 
-    $(document).on("click", ".shop-option", function() {
+    $(document).on("click", ".shop-option", function () {
         let shopOption = $(this).attr("id");
         switch (shopOption) {
 
             case "buy-pot-btn":
-            myPotions++;
-            $("#console-log-1").append(`<p>You take a moment to buy a revitalizing potion.</p>`);
-            coinFlip.play();
-            $("#buy-pot-btn").hide();
-            michaelWelcome1.stop();
-            michaelCompliment2.play();
-            break;
+                myPotions++;
+                $("#console-log-1").append(`<p>You take a moment to buy a revitalizing potion.</p>`);
+                coinFlip.play();
+                $("#buy-pot-btn").hide();
+                michaelWelcome1.stop();
+                michaelCompliment2.play();
+                break;
 
             case "buy-protein-btn":
-            $("#console-log-1").append(`<p>You chug your pre-fight protein potion and gain ${myAttack * 0.5} attack! LET'S GOOOOO!!</p>`);
-            coinFlip.play();
-            $("#buy-protein-btn").hide();
-            michaelWelcome1.stop();
-            michaelCompliment2.play();
-            myAttack = Math.round(myAttack * 1.5);
-            $("#my-attack").text(myAttack);
-            break;
+                $("#console-log-1").append(`<p>You chug your pre-fight protein potion and gain ${myAttack * 0.5} attack! LET'S GOOOOO!!</p>`);
+                coinFlip.play();
+                $("#buy-protein-btn").hide();
+                michaelWelcome1.stop();
+                michaelCompliment2.play();
+                myAttack = Math.round(myAttack * 1.5);
+                $("#my-attack").text(myAttack);
+                break;
 
             case "learn-lucky-btn":
-            if (isLuckyLearned === true) {
-                $("#console-log-1").append(`<p>You've already learned Lucky Stab.</p>`);
-            break;
-            } else {
-                isLuckyLearned = true;
-                $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
-                coinFlip.play();
-                $("#learn-lucky-btn").hide();
-                $("#lucky-stab-btn").show();
-                michaelWelcome1.stop();
-                michaelCompliment1.play();
-            }
-            break;
+                if (isLuckyLearned === true) {
+                    $("#console-log-1").append(`<p>You've already learned Lucky Stab.</p>`);
+                    break;
+                } else {
+                    isLuckyLearned = true;
+                    $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
+                    coinFlip.play();
+                    $("#learn-lucky-btn").hide();
+                    $("#lucky-stab-btn").show();
+                    michaelWelcome1.stop();
+                    michaelCompliment1.play();
+                }
+                break;
 
             case "learn-bleed-btn":
-            if (isBleedLearned === true) {
-                $("#console-log-1").append(`<p>You've already learned Bleeding Attack.</p>`);
-            break;
-            } else {
-                isBleedLearned = true;
-                $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
-                coinFlip.play();
-                $("#learn-bleed-btn").hide();
-                $("#bleed-attack-btn").show();
-                michaelWelcome1.stop();
-                michaelCompliment1.play();
-            }
-            break;
+                if (isBleedLearned === true) {
+                    $("#console-log-1").append(`<p>You've already learned Bleeding Attack.</p>`);
+                    break;
+                } else {
+                    isBleedLearned = true;
+                    $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
+                    coinFlip.play();
+                    $("#learn-bleed-btn").hide();
+                    $("#bleed-attack-btn").show();
+                    michaelWelcome1.stop();
+                    michaelCompliment1.play();
+                }
+                break;
 
             case "cancel-buy-btn":
                 nope.play();
@@ -325,10 +325,9 @@ $(document).ready(function () {
         // $(".shop").hide();
         $('.shop').addClass('animated slideOutUp').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
             // Animation bug
+            $(".shop").hide();
             $(this).removeClass('animated slideOutUp');
-            (setTimeout(function(){ 
-                $(".shop").hide();
-            }, 120));
+
 
             // Smooth animation but then it breaks the game after selecting an option
             // $(this).removeClass('animated slideOutUp');
@@ -360,6 +359,8 @@ $(document).ready(function () {
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
         $("#console-log-1").empty();
+        $("#learn-bleed-btn").show();
+        $("#learn-lucky-btn").show();
         newMatchSound.play();
         bgm.play();
     })
@@ -573,31 +574,36 @@ $(document).ready(function () {
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
             $("#console-log-1").append(`<p>You've leveled up! Your max health is now ${myMaxHealth} and your attack is now ${myAttack}!</p>\n<br>`);
 
-            // hides the game and shows the winscreen
-            if (position === enemyCount) {
-                bgm.stop();
-                lastBossBgm.stop();
-                victorySound.play();
-                michaelWelcome1.stop();
-                michaelWelcome2.stop();
-                michaelCompliment1.stop();
-                michaelCompliment2.stop();
-                michaelSad.stop();
-                levelUpSound.stop();
-                $("#game-screen").hide();
-                $("#win-screen").show();
-            } else {
-                $(".shop").show();
-                setTimeout(function() {
-                    michaelWelcome1.play();
-                }, 700);
-            }
-
             $('#enemy-box').addClass('animated hinge').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                 $(this).removeClass('animated hinge');
                 $("#enemy-image").attr("src", "assets/img/seamless-skulls.jpg");
-            });
 
+
+                // hides the game and shows the winscreen
+                if (position === enemyCount) {
+                    bgm.stop();
+                    lastBossBgm.stop();
+                    victorySound.play();
+                    michaelWelcome1.stop();
+                    michaelWelcome2.stop();
+                    michaelCompliment1.stop();
+                    michaelCompliment2.stop();
+                    michaelSad.stop();
+                    levelUpSound.stop();
+                    $("#game-screen").hide();
+                    $("#win-screen").show();
+                } else {
+                    $(".shop").show();
+                    $(".shop").addClass('animated slideInDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                        $(this).removeClass('animated slideInDown');
+                        $("#enemy-image").attr("src", "assets/img/seamless-skulls.jpg");
+                        setTimeout(function () {
+                            michaelWelcome1.play();
+                        }, 700);
+                    })
+                }
+
+            });
 
             // Sets current round when new enemy spawns
             round = 0

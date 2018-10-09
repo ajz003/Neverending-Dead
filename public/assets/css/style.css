@@ -119,10 +119,9 @@ body {
     color: #FF00FF;
 }
 
-/* .avatar-tiles {
-    text-align: center;
-    justify-content: center;
-} */
+.avatar-tiles {
+    z-index:0;
+}
 
 .avatar-box {
     position: relative;
