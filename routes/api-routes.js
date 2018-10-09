@@ -56,10 +56,10 @@ module.exports = function (app) {
         db.Enemy.create({
           name: "Zombie " + req.body.name,
           img: req.body.img,
-          hat: charOutfit.hat,
-          torso: charOutfit.torso,
-          leg: charOutfit.leg,
-          wings: charOutfit.wings,
+          hat: req.body.hat,
+          torso: req.body.torso,
+          leg: req.body.leg,
+          wings: req.body.wings,
           hp: req.body.hp,
           attack: req.body.attack,
           position: req.body.position - 1

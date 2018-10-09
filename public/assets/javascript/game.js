@@ -686,7 +686,10 @@ $(document).ready(function () {
         // Send the POST request to add character to DB
         let newChar = {
             name: myName,
-            img: myImg,
+            hat: hats,
+            torso: torso,
+            leg: leg,
+            wings: wings,
             hp: myMaxHealth,
             attack: myAttack,
             position: position + 1
