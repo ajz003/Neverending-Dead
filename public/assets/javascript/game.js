@@ -303,7 +303,6 @@ $(document).ready(function () {
                 myPotions++;
                 $("#console-log-1").append(`<p>You take a moment to buy a revitalizing potion.</p>`);
                 coinFlip.play();
-                $("#buy-pot-btn").hide();
                 michaelWelcome1.stop();
                 michaelCompliment2.play();
                 break;
@@ -311,7 +310,6 @@ $(document).ready(function () {
             case "buy-protein-btn":
                 $("#console-log-1").append(`<p>You chug your pre-fight protein potion and gain ${myAttack * 0.5} attack! LET'S GOOOOO!!</p>`);
                 coinFlip.play();
-                $("#buy-protein-btn").hide();
                 michaelWelcome1.stop();
                 michaelCompliment2.play();
                 myAttack = Math.round(myAttack * 1.5);
