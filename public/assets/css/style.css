@@ -93,6 +93,11 @@ body {
     height: 80%;
 }
 
+#victory-png {
+    width: 180vh !important;
+    height: 65vh !important;
+}
+
 #game-screen {
     height: 100%;
     padding-right: 30px;
@@ -114,16 +119,15 @@ body {
     color: #FF00FF;
 }
 
-/* .avatar-tiles {
-    text-align: center;
-    justify-content: center;
-} */
+.avatar-tiles {
+    z-index:0;
+}
 
 .avatar-box {
     position: relative;
     display: inline-block;
     width: 77%;
-    height: auto;
+    height: 100%;
     background-color: white;
     border: 1px solid black;
     margin: 20px 20px;
@@ -271,3 +275,14 @@ progress.show-value.is-large:after {
 #enemy-name {
     color:#FF00FF; 
 }
+
+/* Modals */
+
+#shop-display {
+    top: 5vh;
+    width: 50%;
+}
+
+/* .modal {
+    position: fixed;
+} */
