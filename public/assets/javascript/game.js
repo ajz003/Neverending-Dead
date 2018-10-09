@@ -424,7 +424,7 @@ $(document).ready(function () {
                     $(this).removeClass('animated jackInTheBox');
                 });
 
-                if (position === enemyCount) {
+                if (position + 1 === enemyCount) {
                     bgm.stop();
                     lastBossBgm.stop();
                     lastBossBgm.play();
@@ -628,7 +628,6 @@ $(document).ready(function () {
                     $(".shop").show();
                     $(".shop").addClass('animated slideInDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                         $(this).removeClass('animated slideInDown');
-                        $("#enemy-image").attr("src", "assets/img/seamless-skulls.jpg");
                         setTimeout(function () {
                             michaelWelcome1.play();
                         }, 700);
