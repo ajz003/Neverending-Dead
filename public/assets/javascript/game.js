@@ -196,21 +196,23 @@ $(document).ready(function () {
     });
 
     $("#create-btn").click(function (event) {
-
-        // Make sure to preventDefault on a submit event.
-        event.preventDefault();
-        createSound.play();
-
+        
         myName = $("#input-name").val().trim();
         // myImg = $("#input-imageUrl").val().trim();
 
         $("#name-invalid").css("visibility", "hidden");
         $("#img-invalid").css("visibility", "hidden");
 
+        // Make sure to preventDefault on a submit event.
+        event.preventDefault();
         if (myName === "") {
             $("#name-invalid").css("visibility", "visible");
             return;
-        }
+        } else {
+        createSound.play();
+
+
+
 
         // if (myImg === "") {
         //     $("#img-invalid").css("visibility", "visible");
@@ -233,6 +235,7 @@ $(document).ready(function () {
         $("#lucky-stab-btn").hide();
         $("#bleed-attack-btn").hide();
         $("#game-screen").show();
+        }
     });
 
     // ----------------------- Combat
@@ -378,10 +381,10 @@ $(document).ready(function () {
         $("#character-creator").show();
         $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
         position = 0;
-        myMaxHealth = 500;
+        myMaxHealth = 5000;
         $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
         myHealth = myMaxHealth;
-        myAttack = 15;
+        myAttack = 200;
         enemyHealth = 100;
         enemyAttack = 20;
         round = 0;
@@ -618,6 +621,7 @@ $(document).ready(function () {
                     michaelCompliment2.stop();
                     michaelSad.stop();
                     levelUpSound.stop();
+                    becomeLichKing();
                     $("#game-screen").hide();
                     $("#win-screen").show();
                 } else {
@@ -668,7 +672,26 @@ $(document).ready(function () {
         };
     }
 
+    function becomeLichKing () {
+          // Send the POST request to add character to DB
+          let newChar = {
+            name: myName,
+            img: myImg,
+            hp: myMaxHealth,
+            attack: myAttack,
+            position: position + 1
 
+        };
+        $.ajax("/api/enemy", {
+            type: "POST",
+            data: newChar
+        }).then(
+            function () {
+                console.log("Added " + myName + " to the database");
+            }
+        );
+
+    }
 
 
 
