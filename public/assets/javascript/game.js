@@ -196,6 +196,8 @@ $(document).ready(function () {
         $("#enemy-attack").text(enemyAttack);
         $("#enemy-name").text(enemyName);
         $("#character-creator").hide();
+        $("#lucky-stab-btn").hide();
+        $("#bleed-attack-btn").hide();
         $("#game-screen").show();
     });
 
@@ -267,6 +269,7 @@ $(document).ready(function () {
             myPotions++;
             $("#console-log-1").append(`<p>You take a moment to buy a revitalizing potion.</p>`);
             coinFlip.play();
+            $("#buy-pot-btn").hide();
             michaelWelcome1.stop();
             michaelCompliment2.play();
             break;
@@ -274,6 +277,7 @@ $(document).ready(function () {
             case "buy-protein-btn":
             $("#console-log-1").append(`<p>You chug your pre-fight protein potion and gain ${myAttack * 0.5} attack! LET'S GOOOOO!!</p>`);
             coinFlip.play();
+            $("#buy-protein-btn").hide();
             michaelWelcome1.stop();
             michaelCompliment2.play();
             myAttack = Math.round(myAttack * 1.5);
@@ -288,6 +292,8 @@ $(document).ready(function () {
                 isLuckyLearned = true;
                 $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
                 coinFlip.play();
+                $("#learn-lucky-btn").hide();
+                $("#lucky-stab-btn").show();
                 michaelWelcome1.stop();
                 michaelCompliment1.play();
             }
@@ -301,6 +307,8 @@ $(document).ready(function () {
                 isBleedLearned = true;
                 $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
                 coinFlip.play();
+                $("#learn-bleed-btn").hide();
+                $("#bleed-attack-btn").show();
                 michaelWelcome1.stop();
                 michaelCompliment1.play();
             }
