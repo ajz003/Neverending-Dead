@@ -169,34 +169,42 @@ $(document).ready(function () {
 
     $("#head").on("click", function () {
         hats = hats + 1;
-        if (hats === 12) { hats = 0; }
+        if (hats === 12) {
+            hats = 0;
+        }
         console.log(hats);
         document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#torso").on("click", function () {
         torso = torso + 1;
-        if (torso === 3) { torso = 0; }
+        if (torso === 3) {
+            torso = 0;
+        }
         console.log(torso);
         document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#leg").on("click", function () {
         leg = leg + 1;
-        if (leg === 5) { leg = 0; }
+        if (leg === 5) {
+            leg = 0;
+        }
         console.log(leg);
         document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#wings").on("click", function () {
         wings = wings + 1;
-        if (wings === 3) { wings = 0; }
+        if (wings === 3) {
+            wings = 0;
+        }
         console.log(wings);
         document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#create-btn").click(function (event) {
-        
+
         myName = $("#input-name").val().trim();
         // myImg = $("#input-imageUrl").val().trim();
 
@@ -209,32 +217,32 @@ $(document).ready(function () {
             $("#name-invalid").css("visibility", "visible");
             return;
         } else {
-        createSound.play();
+            createSound.play();
 
 
 
 
-        // if (myImg === "") {
-        //     $("#img-invalid").css("visibility", "visible");
-        //     return;
-        // }
-        // document.getElementById("one").innerHTML = `<img src=>`;
-        // if (myImg !== "") {
-        //     $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
-        // };
+            // if (myImg === "") {
+            //     $("#img-invalid").css("visibility", "visible");
+            //     return;
+            // }
+            // document.getElementById("one").innerHTML = `<img src=>`;
+            // if (myImg !== "") {
+            //     $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
+            // };
 
-        spawnEnemy();
-        $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
-        $("#my-name").text(myName);
-        $("#my-health").text(myHealth);
-        $("#my-attack").text(myAttack);
-        $("#enemy-health").text(enemyHealth);
-        $("#enemy-attack").text(enemyAttack);
-        $("#enemy-name").text(enemyName);
-        $("#character-creator").hide();
-        $("#lucky-stab-btn").hide();
-        $("#bleed-attack-btn").hide();
-        $("#game-screen").show();
+            spawnEnemy();
+            $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`);
+            $("#my-name").text(myName);
+            $("#my-health").text(myHealth);
+            $("#my-attack").text(myAttack);
+            $("#enemy-health").text(enemyHealth);
+            $("#enemy-attack").text(enemyAttack);
+            $("#enemy-name").text(enemyName);
+            $("#character-creator").hide();
+            $("#lucky-stab-btn").hide();
+            $("#bleed-attack-btn").hide();
+            $("#game-screen").show();
         }
     });
 
@@ -420,9 +428,11 @@ $(document).ready(function () {
 
         $.get("/api/enemy/" + position, function (data) {
             if (data) {
-                // If this enemy exists, fill page with its stats
+                console.log("hat: " + data.hat);
+                // If this enemy exists, fill page with its stat
                 enemyName = data.name;
                 enemyImg = data.img;
+                document.getElementById("enemy-pic").innerHTML = `<img src="/test?hat=${data.hat}&torso=${data.torso}&leg=${data.leg}&wings=${data.wings}">`
                 enemyHealth = data.hp;
                 enemyAttack = data.attack;
                 enemyMaxHealth = enemyHealth;
@@ -534,11 +544,11 @@ $(document).ready(function () {
         };
 
 
-            // update console lines
-            $("#console-log-1").append(`<p id="round">Round ${round}</p>`)
-                .append(myCritNote)
-                .append(`\n<p class="damage-numbers">&#9876 <span id="player-name">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
-                .append(`\n<p class="damage-numbers">&#9876 <span id="enemy-name">${enemyName}</span> counterattacks, inflicting <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
+        // update console lines
+        $("#console-log-1").append(`<p id="round">Round ${round}</p>`)
+            .append(myCritNote)
+            .append(`\n<p class="damage-numbers">&#9876 <span id="player-name">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
+            .append(`\n<p class="damage-numbers">&#9876 <span id="enemy-name">${enemyName}</span> counterattacks, inflicting <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
 
         // check if enemy survived my attack
         if (enemyHealth > 0) {
@@ -680,11 +690,14 @@ $(document).ready(function () {
         };
     }
 
-    function becomeLichKing () {
-          // Send the POST request to add character to DB
-          let newChar = {
+    function becomeLichKing() {
+        // Send the POST request to add character to DB
+        let newChar = {
             name: myName,
-            img: myImg,
+            hat: hats,
+            torso: torso,
+            leg: leg,
+            wings: wings,
             hp: myMaxHealth,
             attack: myAttack,
             position: position + 1
