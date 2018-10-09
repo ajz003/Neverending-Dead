@@ -9,6 +9,13 @@
 var db = require("../models");
 var connection = require("../config/connection.js");
 var Sequelize = require('sequelize');
+
+let charOutfit = {
+  hat: "",
+  torso: "",
+  leg: "",
+  wings: ""
+}
 // Routes
 // =============================================================
 module.exports = function (app) {
@@ -49,6 +56,10 @@ module.exports = function (app) {
         db.Enemy.create({
           name: "Zombie " + req.body.name,
           img: req.body.img,
+          hat: charOutfit.hat,
+          torso: charOutfit.torso,
+          leg: charOutfit.leg,
+          wings: charOutfit.wings,
           hp: req.body.hp,
           attack: req.body.attack,
           position: req.body.position - 1
@@ -65,6 +76,12 @@ module.exports = function (app) {
   // character creator
   app.get("/test", (req, res) => {
     console.log(req.query);
+
+    charOutfit.hat = req.query.hat;
+    charOutfit.torso = req.query.torso;
+    charOutfit.leg = req.query.leg;
+    charOutfit.wings = req.query.wings;
+
     var header;
     var torso;
     var leg;

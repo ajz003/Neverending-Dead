@@ -10,6 +10,18 @@ module.exports = function (sequelize, DataTypes) {
     img: {
       type: DataTypes.STRING
     },
+    hat: {
+      type: DataTypes.INTEGER
+    },
+    torso: {
+      type: DataTypes.INTEGER
+    },
+    leg: {
+      type: DataTypes.INTEGER
+    },
+    wings: {
+      type: DataTypes.INTEGER
+    },
     hp: {
       type: DataTypes.INTEGER,
       allowNull: false
