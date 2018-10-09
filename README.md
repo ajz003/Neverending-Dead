@@ -19,8 +19,8 @@
 ---------------
 
 ### The technologies we used to make this project:
-- [Bulma] (https://bulma.io/)
-- [HowlerJS] (https://howlerjs.com/)
-- [Animate.css] (https://daneden.github.io/animate.css/)
-- [The Character Creator] (https://charactercreator.org/)
+- [Bulma](https://bulma.io/)
+- [HowlerJS](https://howlerjs.com/)
+- [Animate.css](https://daneden.github.io/animate.css/)
+- [The Character Creator](https://charactercreator.org/)
 --------------
