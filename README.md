@@ -1,11 +1,11 @@
-# Title-in-Progress
+# Journey to the Lich
 
 #### Project-Two
 
 ---------------
 
 ## Instructions:
-* placeholder
+* Battle an undead army. If you die, you will join that army. Win, and you will become their leader.
 
 ---------------
 ## [Trello](https://trello.com/b/LNv4noea/project-two)
@@ -19,6 +19,8 @@
 ---------------
 
 ### The technologies we used to make this project:
-- Bulma
-
+- [Bulma] (https://bulma.io/)
+- [HowlerJS] (https://howlerjs.com/)
+- [Animate.css] (https://daneden.github.io/animate.css/)
+- [The Character Creator] (https://charactercreator.org/)
 --------------
