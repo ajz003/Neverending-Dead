@@ -5,13 +5,18 @@ CREATE TABLE enemies
 (
 id INTEGER NOT NULL AUTO_INCREMENT,
 name VARCHAR(255) NOT NULL,
-img VARCHAR(255) NOT NULL,
+img VARCHAR(255),
+hat	INTEGER,
+torso INTEGER,
+leg INTEGER,
+wings INTEGER,
 hp BIGINT NOT NULL,
 attack BIGINT NOT NULL,
 position INTEGER NOT NULL, 
+createdAt DATETIME NOT NULL,
+updatedAt DATETIME NOT NULL,
 PRIMARY KEY (id)
 );
-
 DESCRIBE enemies;
 
 INSERT INTO enemies (name, img, hp, attack, position) VALUES ("Zombie", "https://c1.staticflickr.com/4/3084/2596483147_58d6bae3b1_b.jpg", "100", "20", "0");

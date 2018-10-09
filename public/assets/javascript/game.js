@@ -179,28 +179,36 @@ $(document).ready(function () {
 
     $("#head").on("click", function () {
         hats = hats + 1;
-        if (hats === 12) { hats = 0; }
+        if (hats === 12) {
+            hats = 0;
+        }
         console.log(hats);
         document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#torso").on("click", function () {
         torso = torso + 1;
-        if (torso === 3) { torso = 0; }
+        if (torso === 3) {
+            torso = 0;
+        }
         console.log(torso);
         document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#leg").on("click", function () {
         leg = leg + 1;
-        if (leg === 5) { leg = 0; }
+        if (leg === 5) {
+            leg = 0;
+        }
         console.log(leg);
         document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#wings").on("click", function () {
         wings = wings + 1;
-        if (wings === 3) { wings = 0; }
+        if (wings === 3) {
+            wings = 0;
+        }
         console.log(wings);
         document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
@@ -234,7 +242,8 @@ $(document).ready(function () {
             // };
 
             spawnEnemy();
-            $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
+
+            $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`);
             $("#my-name").text(myName);
             $("#my-health").text(myHealth);
             $("#my-attack").text(myAttack);
@@ -304,6 +313,16 @@ $(document).ready(function () {
             alert("Bleeding Attack is still on cooldown!")
         }
     });
+
+
+    // -------------------- Button Delay
+
+    $(".button").click(function() {
+
+        $(".button").css("pointer-events", "none");
+        setTimeout(function(){$(".button").css("pointer-events", "auto")}, 1000)
+        
+     })
 
     // -------------------- Shop
 
@@ -414,9 +433,11 @@ $(document).ready(function () {
 
         $.get("/api/enemy/" + position, function (data) {
             if (data) {
-                // If this enemy exists, fill page with its stats
+                console.log("hat: " + data.hat);
+                // If this enemy exists, fill page with its stat
                 enemyName = data.name;
                 enemyImg = data.img;
+                document.getElementById("enemy-pic").innerHTML = `<img src="/test?hat=${data.hat}&torso=${data.torso}&leg=${data.leg}&wings=${data.wings}">`
                 enemyHealth = data.hp;
                 enemyAttack = data.attack;
                 enemyMaxHealth = enemyHealth;
@@ -677,7 +698,6 @@ $(document).ready(function () {
             round = 0
 
 
-
         };
 
     }
@@ -712,7 +732,10 @@ $(document).ready(function () {
         // Send the POST request to add character to DB
         let newChar = {
             name: myName,
-            img: myImg,
+            hat: hats,
+            torso: torso,
+            leg: leg,
+            wings: wings,
             hp: myMaxHealth,
             attack: myAttack,
             position: position + 1
