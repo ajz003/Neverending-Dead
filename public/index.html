@@ -37,6 +37,7 @@
 
                 <div id="win-screen">
                     <img src="https://ubisafe.org/images/transparent-png-victory-3.png">
+                    <a class="button is-large is-danger" id="restart-btn">Play Again</a>
                 </div>
             </header>
 
@@ -92,61 +93,73 @@
                     </span>
                 </p>
                 <br> -->
-
-
-            <div class="tile is-ancestor">
-                <div class="tile is-vertical is-12">
-                    <div class="tile">
-                        <div class="tile is-parent is-vertical avatar-tiles" style="flex-grow:0">
-                            <div class="character-box">
-                                <p>
-                                    <span id="character-heading">
-                                        <span id="my-name"></span>
-                                    </span>
-                                </p>
-                                <div class="progress-wrappers">
-                                    <div class="box-backdrop">
-                                        <progress class="progress is-medium is-success show-value" id="character-hp-bar"
-                                            value="55" max="100"></progress>
+          
+               <div class="tile is-ancestor">
+                    <div class="tile is-vertical is-12">
+                        <div class="tile">
+                            <div class="tile is-parent is-vertical avatar-tiles" style ="flex-grow:0">
+                                <div class="character-box">
+                                    <p>
+                                        <span id="character-heading">
+                                            <span id="my-name"></span>
+                                        </span>
+                                    </p>
+                                    <div class="progress-wrappers">
+                                        <div class="box-backdrop">
+                                            <progress 
+                                                class="progress is-medium is-success show-value" 
+                                                id="character-hp-bar" 
+                                                style="width: 91%;"
+                                                value="55" 
+                                                max="100">
+                                            </progress>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="avatar-box" id="player-box">
-                                    <img id="my-image" src="">
-                                    <div class="stats">
-                                        <!-- HP: <span id="my-health"></span><br> -->
-                                        Attack: <span id="my-attack"></span>
+                                    <div class="avatar-box" id="player-box">
+                                        <img id="my-image" src="">
+                                        <div class="stats">
+                                            <!-- HP: <span id="my-health"></span><br> -->
+                                            Attack: <span id="my-attack"></span>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- This should be a modal or something -->
-                        <div class="tile is-parent is-vertical avatar-tiles">
-                            <div class="levelup-box">
-                                <a class="button level-up-option" id="attack-up-btn">+Attack</a>
-                                <a class="button level-up-option" id="heal-btn">Heal</a>
-                            </div>
-                        </div>
-
-
-                        <div class="tile is-parent is-vertical avatar-tiles" style="flex-grow:0">
-                            <div class="character-box">
-                                <p>
-                                    <span id="enemy-heading">
-                                        <span id="enemy-name"></span>
-                                    </span>
-                                </p>
-                                <div class="progress-wrappers">
-                                    <div class="box-backdrop">
-                                        <progress class="progress is-medium is-success show-value" id="enemy-hp-bar"
-                                            value="100" max="100"></progress>
+                            <!-- Shop Stuff: This should be a modal or something -->
+                            <div class="tile is-parent is-vertical avatar-tiles">
+                                    <div class="shop">
+                                        <a class="button shop-option" id="buy-pot-btn">Healing Potion</a>
+                                        <a class="button shop-option" id="buy-protein-btn">Protein Potion</a>
+                                        <a class="button shop-option" id="learn-lucky-btn">Lucky Stab</a>
+                                        <a class="button shop-option" id="learn-bleed-btn">Bleeding Attack</a>
                                     </div>
-                                </div>
-                                <div class="avatar-box" id="enemy-box">
-                                    <img id="enemy-image" src="">
-                                    <div class="stats">
-                                        <!-- HP: <span id="enemy-health"></span><br> -->
-                                        Attack: <span id="enemy-attack"></span>
+                                   </div>
+
+
+                            <div class="tile is-parent is-vertical avatar-tiles" style ="flex-grow:0">
+                                <div class="character-box">
+                                    <p>
+                                        <span id="enemy-heading">
+                                            <span id="enemy-name"></span>
+                                        </span>
+                                    </p>
+                                    <div class="progress-wrappers">
+                                        <div class="box-backdrop">
+                                            <progress
+                                                class="progress is-medium is-success show-value" id="enemy-hp-bar"
+                                                style="width: 91%;"
+                                                value="100" 
+                                                max="100"></progress>
+                                        </div>
+                                    </div>
+                                    <div class="avatar-box" id="enemy-box">
+                                        <img id="enemy-image" src="">
+                                        <div class="stats">
+                                            <!-- HP: <span id="enemy-health"></span><br> -->
+                                            Attack: <span id="enemy-attack"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

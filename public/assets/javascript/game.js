@@ -87,6 +87,9 @@ $(document).ready(function () {
     let enemyMaxHealth = enemyHealth;
     let isDefeated = false;
 
+    let isLuckyLearned = false;
+    let isBleedLearned = false;
+
     let position = 0;
 
     let enemyCount = 0;
@@ -108,6 +111,7 @@ $(document).ready(function () {
     $("#lose-screen").hide();
     $("#win-screen").hide();
     $(".levelup-box").hide();
+    $(".shop").hide();
 
     // sets DOM text to initial values
     $("#my-health").text(myHealth);
@@ -222,46 +226,73 @@ $(document).ready(function () {
     });
 
     $("#lucky-stab-btn").click(function () {
-        if (isDefeated === false) {
+        if (isDefeated === false && isLuckyLearned === true) {
             round++;
             attackLogic("Lucky Stab");
             deathLogic();
             hpBarUpdate();
             scrollToBottom();
+        } else if (isLuckyLearned === false) {
+            $("#console-log-1").append(`<p>You haven't learned Lucky Stab yet!</p>`);
+            scrollToBottom();
         }
     });
 
     $("#bleed-attack-btn").click(function () {
-        if (isDefeated === false) {
+        if (isDefeated === false  && isBleedLearned === true) {
             round++;
             attackLogic("Bleeding Attack");
             deathLogic();
             hpBarUpdate();
             scrollToBottom();
+        } else if (isBleedLearned === false) {
+            $("#console-log-1").append(`<p>You haven't learned Bleeding Attack yet!</p>`);
+            scrollToBottom();
         }
     });
 
-    // -------------------- Level-up
+    // -------------------- Shop
 
-    $("#attack-up-btn").on("click", function () {
-        myAttack = Math.round(myAttack * 2);
-        console.log("trigger")
-        $(".levelup-box").hide();
-        $("#my-attack").text(myAttack);
-    })
+    $(document).on("click", ".shop-option", function() {
+        let shopOption = $(this).attr("id");
+        switch (shopOption) {
 
-    $("#heal-btn").on("click", function () {
-        myHealth += myMaxHealth * 0.5;
-        if (myHealth > myMaxHealth) {
-            myHealth = myMaxHealth
+            case "buy-pot-btn":
+            myPotions++;
+            $("#console-log-1").append(`<p>You take a moment to buy a revitalizing potion.</p>`)
+            break;
+
+            case "buy-protein-btn":
+            $("#console-log-1").append(`<p>You chug your pre-fight protein potion and gain ${myAttack * 0.5} attack! LET'S GOOOOO!!</p>`)
+            myAttack = Math.round(myAttack * 1.5);
+            $("#my-attack").text(myAttack);
+            break;
+
+            case "learn-lucky-btn":
+            if (isLuckyLearned === true) {
+                $("#console-log-1").append(`<p>You've already learned Lucky Stab.</p>`)
+            break;
+            } else {
+                isLuckyLearned = true;
+                $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`)
+            }
+            break;
+
+            case "learn-bleed-btn":
+            if (isBleedLearned === true) {
+                $("#console-log-1").append(`<p>You've already learned Bleeding Attack.</p>`)
+            break;
+            } else {
+                isBleedLearned = true;
+                $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`)
+            }
+            break;
         }
-        $(".levelup-box").hide();
-        hpBarUpdate();
-    })
 
-    $(document).on("click", ".level-up-option", function () {
         spawnEnemy();
-    })
+        $(".shop").hide();
+        scrollToBottom();
+    });
 
     // -------------------- Restart
 
@@ -271,6 +302,7 @@ $(document).ready(function () {
         $("#character-creator").show();
         $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
         position = 0;
+        myMaxHealth = 500;
         $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
         myHealth = myMaxHealth;
         myAttack = 15;
@@ -279,10 +311,10 @@ $(document).ready(function () {
         round = 0;
         myPotions = 3;
         isDefeated = false;
+        isLuckyLearned = false;
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
         $("#console-log-1").empty();
-        $(".levelup-box").hide();
         newMatchSound.play();
         bgm.play();
     })
@@ -311,7 +343,7 @@ $(document).ready(function () {
                     $(this).removeClass('animated jackInTheBox');
                 });
 
-                if (data.name === `Lich King`) {
+                if (position === enemyCount) {
                     bgm.stop();
                     lastBossBgm.stop();
                     lastBossBgm.play();
@@ -432,7 +464,15 @@ $(document).ready(function () {
 
         var elem = document.getElementById(`console-box`);
         elem.scrollTop = elem.scrollHeight;
+
     };
+
+    function levelUp() {
+        myAttack = Math.round(myAttack * 2);
+        $("#my-attack").text(myAttack);
+        myMaxHealth = Math.round(myMaxHealth * 1.25);
+        hpBarUpdate();
+    }
 
 
     let deathLogic = function deathLogic() {
@@ -477,15 +517,16 @@ $(document).ready(function () {
         };
     }
 
-    let enemyDeathLogic = function enemyDeathlogic() {
+    function enemyDeathLogic() {
         // check if enemy died before he counter-attacks
         if (enemyHealth <= 0) {
             isDefeated = true;
+            levelUp();
 
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
-            $("#console-log-1").append(`<p>Please choose a level-up option!</p>\n<br>`);
+            $("#console-log-1").append(`<p>You've leveled up! Your max health is now ${myMaxHealth} and your attack is now ${myAttack}!</p>\n<br>`);
 
-
+            $(".shop").show();
 
             // hides the game and shows the winscreen
             if (position === enemyCount) {
@@ -500,16 +541,11 @@ $(document).ready(function () {
             $('#enemy-box').addClass('animated hinge').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                 $(this).removeClass('animated hinge');
                 $("#enemy-image").attr("src", "assets/img/seamless-skulls.jpg");
-                // spawnEnemy();
             });
 
 
             // Sets current round when new enemy spawns
             round = 0
-
-            $(".levelup-box").show();
-
-            // Spawns enemy only after picking a level up option
 
 
 
@@ -522,6 +558,7 @@ $(document).ready(function () {
         // Updates player's & enemy's hp bars as they damage each other
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+        $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
 
         // if no one died, update the character stat boxes
         $('#enemy-health').text(enemyHealth);
