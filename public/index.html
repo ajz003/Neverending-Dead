@@ -29,6 +29,7 @@
         </nav>
 
         <div class="container" id="body-content">
+
             <header>
                 <div id="lose-screen">
                     <img src="./assets/img/game-over.png">
@@ -45,11 +46,6 @@
             <div id="character-creator">
                 <h1 class="title has-text-centered" id="header1">Create a Character</h1>
                 <div class="field">
-
-
-
-
-
 
                     <form class="create-form">
 
@@ -78,37 +74,11 @@
                             </div><br>
 
                             <a class="button is-large is-link" id="create-btn" type="submit">Create</a>
-
+                        </div>
                     </form>
                 </div>
             </div>
-        </div>
 
-        <div id="game-screen">
-
-            <!-- <p class="has-text-centered">
-                    <span id="summary">
-                        You've come far to face the Lich. Strike down all his minions and slay him. Die and you'll
-                        become a part of his undead army.
-                    </span>
-                </p>
-                <br> -->
-
-            <div class="tile is-ancestor">
-                <div class="tile is-vertical is-12">
-                    <div class="tile">
-                        <div class="tile is-parent is-vertical avatar-tiles" style="flex-grow:0">
-                            <div class="character-box">
-                                <p>
-                                    <span id="character-heading">
-                                        <span id="my-name"></span>
-                                    </span>
-                                </p>
-                                <div class="progress-wrappers">
-                                    <div class="box-backdrop">
-                                        <progress class="progress is-medium is-success show-value" id="character-hp-bar"
-                                            style="width: 91%;" value="55" max="100">
-                                        </progress>
             <div id="game-screen">
                 <div class="tile is-ancestor">
                     <div class="tile is-vertical is-12">
@@ -130,31 +100,13 @@
                                     <div class="avatar-box" id="player-box">
                                         <img id="my-image" src="">
                                         <div class="stats">
-                                            <!-- HP: <span id="my-health"></span><br> -->
                                             Attack: <span id="my-attack"></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="tile is-parent is-vertical avatar-tiles"></div>
 
-                            <div class="modal shop">
-                                <div class="modal-background"></div>
-                                <div class="modal-content" id="shop-display">
-                                    <img src="./assets/img/michael-shopkeeper1.png" alt="">
-                                    <section class="modal-card-body hero is-medium is-dark is-bold">
-                                        <a class="button shop-option" id="buy-pot-btn">Healing Potion</a>
-                                        <a class="button shop-option" id="buy-protein-btn">Protein Potion</a>
-                                        <a class="button shop-option" id="learn-lucky-btn">Lucky Stab</a>
-                                        <a class="button shop-option" id="learn-bleed-btn">Bleeding Attack</a>
-                                    </section>
-                                    <footer class="modal-card-foot">
-                                        <button class="button shop-option" id="cancel-buy-btn">Cancel</button>
-                                    </footer>
-                                </div>
-
-                            </div>
 
 
                             <div class="tile is-parent is-vertical avatar-tiles" style="flex-grow:0">
@@ -170,115 +122,81 @@
                                                 style="width: 91%;" value="100" max="100"></progress>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="avatar-box" id="player-box">
-                                    <img id="my-image" src="">
-                                    <div class="stats">
-                                        <!-- HP: <span id="my-health"></span><br> -->
-                                        Attack: <span id="my-attack"></span>
-                                    </div>
 
+                                    <div class="avatar-box" id="enemy-box">
+                                        <img id="enemy-image" src="">
+                                        <div class="stats">
+                                            Attack: <span id="enemy-attack"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="modal shop">
+                            <div class="modal-background"></div>
+                            <div class="modal-content" id="shop-display">
+                                <img src="./assets/img/michael-shopkeeper1.png" alt="">
+                                <section class="modal-card-body hero is-medium is-dark is-bold">
+                                    <a class="button shop-option" id="buy-pot-btn">Healing
+                                        Potion</a>
+                                    <a class="button shop-option" id="buy-protein-btn">Protein
+                                        Potion</a>
+                                    <a class="button shop-option" id="learn-lucky-btn">Lucky
+                                        Stab</a>
+                                    <a class="button shop-option" id="learn-bleed-btn">Bleeding
+                                        Attack</a>
+                                </section>
+                                <footer class="modal-card-foot">
+                                    <button class="button shop-option" id="cancel-buy-btn">Cancel</button>
+                                </footer>
+                            </div>
 
-                        <!-- Shop Stuff: This should be a modal or something -->
-                        <div class="tile is-parent is-vertical avatar-tiles">
-                            <div class="shop">
-                                <a class="button shop-option" id="buy-pot-btn">Healing Potion</a>
-                                <a class="button shop-option" id="buy-protein-btn">Protein Potion</a>
-                                <a class="button shop-option" id="learn-lucky-btn">Lucky Stab</a>
-                                <a class="button shop-option" id="learn-bleed-btn">Bleeding Attack</a>
+                        </div>
+
+
+
                         <div class="tile">
                             <div class="tile is-parent" id="two-tiles">
                                 <article class="tile is-child notification has-text-centered is-6 tile-neighbor">
                                     <br>
-                                    <!-- Options -->
                                     <a class="button is-small is-danger" id="attack-btn">Attack</a><br><br>
                                     <a class="button is-small is-warning" data-balloon-length="large" data-balloon="Drink a healing potion, recover 50% hp"
-                                        data-balloon-pos="up" id="potion-btn">Drink a Potion</a>
+                                        data-balloon-pos="up" id="potion-btn">Drink a
+                                        Potion</a>
                                 </article>
-                                <article class="tile is-child notification has-text-centered is-6 tile-neighbor" id="skills-tile">
+                                <article class="tile is-child notification has-text-centered is-6 tile-neighbor">
                                     <br>
-                                    <!-- Skill buttons -->
-                                    <a class="button is-small is-danger animated bounceIn" data-balloon-length="large" data-balloon="Chance to do critical hit, but do low damage if you miss."
-                                        data-balloon-pos="up" id="lucky-stab-btn">Lucky Stab</a>
+                                    <!-- Button placeholders -->
+                                    <a class="button is-small is-danger" data-balloon-length="large" data-balloon="Chance to do critical hit, but do low damage if you miss."
+                                        data-balloon-pos="up" id="lucky-stab-btn">Lucky
+                                        Stab</a>
                                     <br><br>
-                                    <a class="button is-small is-info animated bounceIn" data-balloon-length="large" data-balloon="Chance to make the enemy bleed for the next two rounds."
-                                        data-balloon-pos="up" id="bleed-attack-btn">Bleeding Attack</a>
+                                    <a class="button is-small is-info" data-balloon-length="large" data-balloon="Chance to make the enemy bleed for the next two rounds."
+                                        data-balloon-pos="up" id="bleed-attack-btn">Bleeding
+                                        Attack</a>
                                     <br><br>
-                                    <!-- <a class="button is-small is-dark" data-balloon-length="large" data-balloon="WORK IN PROGRESS:"
+                                    <a class="button is-small is-dark" data-balloon-length="large" data-balloon="WORK IN PROGRESS:"
                                         data-balloon-pos="up" id="void-attack">Void</a>
-                                    <br><br> -->
+                                    <br><br>
                                 </article>
                             </div>
-                        </div>
-
-
-                        <div class="tile is-parent is-vertical avatar-tiles" style="flex-grow:0">
-                            <div class="character-box">
-                                <p>
-                                    <span id="enemy-heading">
-                                        <span id="enemy-name"></span>
-                                    </span>
-                                </p>
-                                <div class="progress-wrappers">
-                                    <div class="box-backdrop">
-                                        <progress class="progress is-medium is-success show-value" id="enemy-hp-bar"
-                                            style="width: 91%;" value="100" max="100"></progress>
+                            <div class="tile is-parent" id="console-box-wrapper">
+                                <article class="tile is-child notification has-text-centered" id="console-tile">
+                                    <div id="console-box">
+                                        <div class="console-loggers" id="console-log-1"></div>
+                                        <div class="console-loggers" id="console-log-2"></div>
+                                        <div class="console-loggers" id="console-log-3"></div>
                                     </div>
-                                </div>
-                                <div class="avatar-box" id="enemy-box">
-                                    <img id="enemy-image" src="">
-                                    <div class="stats">
-                                        <!-- HP: <span id="enemy-health"></span><br> -->
-                                        Attack: <span id="enemy-attack"></span>
-                                    </div>
-                                </div>
+                                </article>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="tile">
-                <div class="tile is-parent" id="two-tiles">
-                    <article class="tile is-child notification has-text-centered is-6 tile-neighbor">
-                        <br>
-                        <a class="button is-small is-danger" id="attack-btn">Attack</a><br><br>
-                        <a class="button is-small is-warning" data-balloon-length="large" data-balloon="Drink a healing potion, recover 50% hp"
-                            data-balloon-pos="up" id="potion-btn">Drink a Potion</a>
-                    </article>
-                    <article class="tile is-child notification has-text-centered is-6 tile-neighbor">
-                        <br>
-                        <!-- Button placeholders -->
-                        <a class="button is-small is-danger" data-balloon-length="large" data-balloon="Chance to do critical hit, but do low damage if you miss."
-                            data-balloon-pos="up" id="lucky-stab-btn">Lucky Stab</a>
-                        <br><br>
-                        <a class="button is-small is-info" data-balloon-length="large" data-balloon="Chance to make the enemy bleed for the next two rounds."
-                            data-balloon-pos="up" id="bleed-attack-btn">Bleeding Attack</a>
-                        <br><br>
-                        <a class="button is-small is-dark" data-balloon-length="large" data-balloon="WORK IN PROGRESS:"
-                            data-balloon-pos="up" id="void-attack">Void</a>
-                        <br><br>
-                    </article>
-                </div>
-                <div class="tile is-parent" id="console-box-wrapper">
-                    <article class="tile is-child notification has-text-centered" id="console-tile">
-                        <div id="console-box">
-                            <div class="console-loggers" id="console-log-1"></div>
-                            <div class="console-loggers" id="console-log-2"></div>
-                            <div class="console-loggers" id="console-log-3"></div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
+
     </section>
 
 
