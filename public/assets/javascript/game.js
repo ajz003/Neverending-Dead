@@ -81,6 +81,7 @@ $(document).ready(function () {
     let myMaxHealth = myHealth;
     let enemyMaxHealth = enemyHealth;
     let isDefeated = false;
+    let isLuckyLearned = false;
 
     let position = 0;
 
@@ -103,6 +104,7 @@ $(document).ready(function () {
     $("#lose-screen").hide();
     $("#win-screen").hide();
     $(".levelup-box").hide();
+    $(".shop").hide();
 
     // sets DOM text to initial values
     $("#my-health").text(myHealth);
@@ -181,18 +183,21 @@ $(document).ready(function () {
             hpBarUpdate();
             $("#console-log-1").append(`<p>You drank a healing potion, you have ` + myPotions + ` potions left.</p>`);
             scrollToBottom();
-        } else if (isDefeated === false && myPotions === 0){
+        } else if (isDefeated === false && myPotions === 0) {
             $("#console-log-1").append(`<p>You don't have any more potions!</p>`);
             scrollToBottom();
         }
     });
 
     $("#lucky-stab-btn").click(function () {
-        if (isDefeated === false) {
+        if (isDefeated === false && isLuckyLearned === true) {
             round++;
             attackLogic("Lucky Stab");
             deathLogic();
             hpBarUpdate();
+            scrollToBottom();
+        } else if (isLuckyLearned === false) {
+            $("#console-log-1").append(`<p>You haven't learned Lucky Stab yet!</p>`);
             scrollToBottom();
         }
     });
@@ -226,8 +231,33 @@ $(document).ready(function () {
     })
 
     $(document).on("click", ".level-up-option", function () {
-        spawnEnemy();
+        $(".shop").show();
+        // spawnEnemy();
     })
+
+    // -------------------- Shop
+
+    $(document).on("click", "#buy-pot-btn", function () {
+        myPotions++;
+        $("#console-log-1").append(`<p>You take a moment to buy a revitalizing potion.</p>`)
+        spawnEnemy();
+        $(".shop").hide();
+        scrollToBottom();
+    })
+
+    $(document).on("click", "#learn-lucky-btn", function () {
+        if (isLuckyLearned === true) {
+            $("#console-log-1").append(`<p>You've already learned Lucky Stab.</p>`)
+            scrollToBottom();
+        } else {
+            isLuckyLearned = true;
+            $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`)
+            spawnEnemy();
+            $(".shop").hide();
+            scrollToBottom();
+        }
+    })
+
 
     // -------------------- Restart
 
@@ -245,6 +275,7 @@ $(document).ready(function () {
         round = 0;
         myPotions = 3;
         isDefeated = false;
+        isLuckyLearned = false;
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
         $("#console-log-1").empty();
@@ -327,7 +358,7 @@ $(document).ready(function () {
             if (myHealth > myMaxHealth) {
                 myHealth = myMaxHealth
             }
-            hpBarUpdate();            
+            hpBarUpdate();
             myCritNote = `<p>You take a moment to drink a revitalizing potion.</p>`;
         }
 
