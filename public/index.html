@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.15/howler.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
@@ -28,6 +29,7 @@
         </nav>
 
         <div class="container" id="body-content">
+
             <header>
                 <div id="lose-screen">
                     <img src="./assets/img/game-over.png">
@@ -44,6 +46,7 @@
             <div id="character-creator">
                 <h1 class="title has-text-centered" id="header1">Create a Character</h1>
                 <div class="field">
+
                     <form class="create-form">
 
                         <div>
@@ -52,14 +55,26 @@
                             <p id="name-invalid">Please enter a name.</p>
                         </div>
 
-                        <div>
-                            <label class="label" for="createImg">Image Address URL:</label>
-                            <input class="input" type="text" id="input-imageUrl" name="playerImage">
-                            <p id="img-invalid">Please enter an image.</p>
-                        </div><br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <a id="head" class="btn btn-primary btn-lg btn-block" href="#" role="button">head</a>
+                                    <a id="torso" class="btn btn-primary btn-lg btn-block" href="#" role="button">torso</a>
+                                    <a id="leg" class="btn btn-primary btn-lg btn-block" href="#" role="button">leg</a>
+                                    <a id="wings" class="btn btn-primary btn-lg btn-block" href="#" role="button">wings</a>
+                                </div>
 
-                        <a class="button is-large is-link" id="create-btn" type="submit">Create</a>
+                                <div class="col-sm">
+                                    <div id="one"></div>;
+                                </div>
 
+                                <!-- <label class="label" for="createImg">Image URL:</label>
+                                <input class="input" type="text" id="input-imageUrl" name="playerImage">
+                                <p id="img-invalid">Please enter an image.</p> -->
+                            </div><br>
+
+                            <a class="button is-large is-link" id="create-btn" type="submit">Create</a>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -85,31 +100,13 @@
                                     <div class="avatar-box" id="player-box">
                                         <img id="my-image" src="">
                                         <div class="stats">
-                                            <!-- HP: <span id="my-health"></span><br> -->
                                             Attack: <span id="my-attack"></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="tile is-parent is-vertical avatar-tiles"></div>
 
-                            <div class="modal shop">
-                                <div class="modal-background"></div>
-                                <div class="modal-content" id="shop-display">
-                                    <img src="./assets/img/michael-shopkeeper1.png" alt="">
-                                    <section class="modal-card-body hero is-medium is-dark is-bold">
-                                        <a class="button shop-option" id="buy-pot-btn">Healing Potion</a>
-                                        <a class="button shop-option" id="buy-protein-btn">Protein Potion</a>
-                                        <a class="button shop-option" id="learn-lucky-btn">Lucky Stab</a>
-                                        <a class="button shop-option" id="learn-bleed-btn">Bleeding Attack</a>
-                                    </section>
-                                    <footer class="modal-card-foot">
-                                        <button class="button shop-option" id="cancel-buy-btn">Cancel</button>
-                                    </footer>
-                                </div>
-
-                            </div>
 
 
                             <div class="tile is-parent is-vertical avatar-tiles" style="flex-grow:0">
@@ -125,37 +122,63 @@
                                                 style="width: 91%;" value="100" max="100"></progress>
                                         </div>
                                     </div>
+
                                     <div class="avatar-box" id="enemy-box">
                                         <img id="enemy-image" src="">
                                         <div class="stats">
-                                            <!-- HP: <span id="enemy-health"></span><br> -->
                                             Attack: <span id="enemy-attack"></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="modal shop">
+                            <div class="modal-background"></div>
+                            <div class="modal-content" id="shop-display">
+                                <img src="./assets/img/michael-shopkeeper1.png" alt="">
+                                <section class="modal-card-body hero is-medium is-dark is-bold">
+                                    <a class="button shop-option" id="buy-pot-btn">Healing
+                                        Potion</a>
+                                    <a class="button shop-option" id="buy-protein-btn">Protein
+                                        Potion</a>
+                                    <a class="button shop-option" id="learn-lucky-btn">Lucky
+                                        Stab</a>
+                                    <a class="button shop-option" id="learn-bleed-btn">Bleeding
+                                        Attack</a>
+                                </section>
+                                <footer class="modal-card-foot">
+                                    <button class="button shop-option" id="cancel-buy-btn">Cancel</button>
+                                </footer>
+                            </div>
+
+                        </div>
+
+
+
                         <div class="tile">
                             <div class="tile is-parent" id="two-tiles">
                                 <article class="tile is-child notification has-text-centered is-6 tile-neighbor">
                                     <br>
-                                    <!-- Options -->
                                     <a class="button is-small is-danger" id="attack-btn">Attack</a><br><br>
                                     <a class="button is-small is-warning" data-balloon-length="large" data-balloon="Drink a healing potion, recover 50% hp"
-                                        data-balloon-pos="up" id="potion-btn">Drink a Potion</a>
+                                        data-balloon-pos="up" id="potion-btn">Drink a
+                                        Potion</a>
                                 </article>
-                                <article class="tile is-child notification has-text-centered is-6 tile-neighbor" id="skills-tile">
+                                <article class="tile is-child notification has-text-centered is-6 tile-neighbor">
                                     <br>
-                                    <!-- Skill buttons -->
-                                    <a class="button is-small is-danger animated bounceIn" data-balloon-length="large" data-balloon="Chance to do critical hit, but do low damage if you miss."
-                                        data-balloon-pos="up" id="lucky-stab-btn">Lucky Stab</a>
+                                    <!-- Button placeholders -->
+                                    <a class="button is-small is-danger" data-balloon-length="large" data-balloon="Chance to do critical hit, but do low damage if you miss."
+                                        data-balloon-pos="up" id="lucky-stab-btn">Lucky
+                                        Stab</a>
                                     <br><br>
-                                    <a class="button is-small is-info animated bounceIn" data-balloon-length="large" data-balloon="Chance to make the enemy bleed for the next two rounds."
-                                        data-balloon-pos="up" id="bleed-attack-btn">Bleeding Attack</a>
+                                    <a class="button is-small is-info" data-balloon-length="large" data-balloon="Chance to make the enemy bleed for the next two rounds."
+                                        data-balloon-pos="up" id="bleed-attack-btn">Bleeding
+                                        Attack</a>
                                     <br><br>
-                                    <!-- <a class="button is-small is-dark" data-balloon-length="large" data-balloon="WORK IN PROGRESS:"
+                                    <a class="button is-small is-dark" data-balloon-length="large" data-balloon="WORK IN PROGRESS:"
                                         data-balloon-pos="up" id="void-attack">Void</a>
-                                    <br><br> -->
+                                    <br><br>
                                 </article>
                             </div>
                             <div class="tile is-parent" id="console-box-wrapper">
@@ -172,7 +195,8 @@
                 </div>
             </div>
         </div>
-        </div>
+
+
     </section>
 
 
