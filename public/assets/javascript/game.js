@@ -5,7 +5,7 @@ $(document).ready(function () {
         src: ['../assets/audio/bgm.mp3'],
         autoplay: true,
         loop: true,
-        volume: 0.3,
+        volume: 0.2,
         onend: function () {
             console.log('Finished!');
         }
@@ -109,8 +109,8 @@ $(document).ready(function () {
 
     // initial stat values
     let myName = "";
-    let myAttack = 15;
-    let myHealth = 500;
+    let myAttack = 150;
+    let myHealth = 5000;
     let myImg;
 
     let myPotions = 3;
@@ -333,7 +333,7 @@ $(document).ready(function () {
     // -------------------- Restart
 
 
-    $("#restart-btn").click(function () {
+    $(document).on("click", "#restart-btn", function () {
         $("#lose-screen").hide();
         $("#win-screen").hide(); // Not working
         $("#character-creator").show();
@@ -424,7 +424,6 @@ $(document).ready(function () {
         }
 
         if (ability === "Healing Potion") {
-            var myCrit = 0;
             myNewAttack = 0;
             myHealth += myMaxHealth * 0.5;
             if (myHealth > myMaxHealth) {
@@ -566,20 +565,25 @@ $(document).ready(function () {
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
             $("#console-log-1").append(`<p>You've leveled up! Your max health is now ${myMaxHealth} and your attack is now ${myAttack}!</p>\n<br>`);
 
-            $(".shop").show();
-            setTimeout(function() {
-                michaelWelcome1.play();
-            }, 700);
-
             // hides the game and shows the winscreen
             if (position === enemyCount) {
                 bgm.stop();
                 lastBossBgm.stop();
                 victorySound.play();
+                michaelWelcome1.stop();
+                michaelWelcome2.stop();
+                michaelCompliment1.stop();
+                michaelCompliment2.stop();
+                michaelSad.stop();
+                levelUpSound.stop();
                 $("#game-screen").hide();
                 $("#win-screen").show();
-
-            };
+            } else {
+                $(".shop").show();
+                setTimeout(function() {
+                    michaelWelcome1.play();
+                }, 700);
+            }
 
             $('#enemy-box').addClass('animated hinge').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                 $(this).removeClass('animated hinge');
