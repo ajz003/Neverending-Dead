@@ -36,6 +36,7 @@
 
                 <div id="win-screen">
                     <img src="https://ubisafe.org/images/transparent-png-victory-3.png">
+                    <a class="button is-large is-danger" id="restart-btn">Play Again</a>
                 </div>
             </header>
 
@@ -52,7 +53,7 @@
                         </div>
 
                         <div>
-                            <label class="label" for="createImg">Image URL:</label>
+                            <label class="label" for="createImg">Image Address URL:</label>
                             <input class="input" type="text" id="input-imageUrl" name="playerImage">
                             <p id="img-invalid">Please enter an image.</p>
                         </div><br>
@@ -86,12 +87,17 @@
                                     </p>
                                     <div class="progress-wrappers">
                                         <div class="box-backdrop">
-                                            <progress class="progress is-medium is-success show-value" id="character-hp-bar"
-                                                value="55" max="100"></progress>
+                                            <progress 
+                                                class="progress is-medium is-success show-value" 
+                                                id="character-hp-bar" 
+                                                style="width: 91%;"
+                                                value="55" 
+                                                max="100">
+                                            </progress>
                                         </div>
                                     </div>
                                     <div class="avatar-box" id="player-box">
-                                        <img id="my-image" src="https://upload.wikimedia.org/wikipedia/en/e/e9/Rick_and_Morty_characters_-_Rick_Sanchez.jpg">
+                                        <img id="my-image" src="">
                                         <div class="stats">
                                             <!-- HP: <span id="my-health"></span><br> -->
                                             Attack: <span id="my-attack"></span>
@@ -100,13 +106,15 @@
                                 </div>
                             </div>
 
-                            <!-- This should be a modal or something -->
+                            <!-- Shop Stuff: This should be a modal or something -->
                             <div class="tile is-parent is-vertical avatar-tiles">
-                             <div class="levelup-box">
-                                 <a class="button level-up-option" id="attack-up-btn">+Attack</a>
-                                 <a class="button level-up-option" id="heal-btn">Heal</a>
-                             </div>
-                            </div>
+                                    <div class="shop">
+                                        <a class="button shop-option" id="buy-pot-btn">Healing Potion</a>
+                                        <a class="button shop-option" id="buy-protein-btn">Protein Potion</a>
+                                        <a class="button shop-option" id="learn-lucky-btn">Lucky Stab</a>
+                                        <a class="button shop-option" id="learn-bleed-btn">Bleeding Attack</a>
+                                    </div>
+                                   </div>
 
 
                             <div class="tile is-parent is-vertical avatar-tiles" style ="flex-grow:0">
@@ -118,12 +126,15 @@
                                     </p>
                                     <div class="progress-wrappers">
                                         <div class="box-backdrop">
-                                            <progress class="progress is-medium is-success show-value" id="enemy-hp-bar"
-                                                value="100" max="100"></progress>
+                                            <progress
+                                                class="progress is-medium is-success show-value" id="enemy-hp-bar"
+                                                style="width: 91%;"
+                                                value="100" 
+                                                max="100"></progress>
                                         </div>
                                     </div>
                                     <div class="avatar-box" id="enemy-box">
-                                        <img id="enemy-image" src="https://upload.wikimedia.org/wikipedia/en/d/d7/Rick_and_Morty_characters_-_Morty_Smith.jpg">
+                                        <img id="enemy-image" src="">
                                         <div class="stats">
                                             <!-- HP: <span id="enemy-health"></span><br> -->
                                             Attack: <span id="enemy-attack"></span>
