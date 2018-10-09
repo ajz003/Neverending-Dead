@@ -66,6 +66,11 @@ $(document).ready(function () {
     });
 
 
+    // character outfit values
+    var hats = 0;
+    var torso = 0;
+    var leg = 0;
+    var wings = 0;
 
     // initial stat values
     let myName = "";
@@ -117,6 +122,35 @@ $(document).ready(function () {
     $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
 
     // character creation logic
+
+    $("#head").on("click", function () {
+        hats = hats + 1;
+        if (hats === 12) { hats = 0; }
+        console.log(hats);
+        document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+    });
+
+    $("#torso").on("click", function () {
+        torso = torso + 1;
+        if (torso === 3) { torso = 0; }
+        console.log(torso);
+        document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+    });
+
+    $("#leg").on("click", function () {
+        leg = leg + 1;
+        if (leg === 5) { leg = 0; }
+        console.log(leg);
+        document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+    });
+
+    $("#wings").on("click", function () {
+        wings = wings + 1;
+        if (wings === 3) { wings = 0; }
+        console.log(wings);
+        document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+    });
+
     $("#create-btn").click(function (event) {
 
         // Make sure to preventDefault on a submit event.
@@ -124,7 +158,7 @@ $(document).ready(function () {
         createSound.play();
 
         myName = $("#input-name").val().trim();
-        myImg = $("#input-imageUrl").val().trim();
+        // myImg = $("#input-imageUrl").val().trim();
 
         $("#name-invalid").css("visibility", "hidden");
         $("#img-invalid").css("visibility", "hidden");
@@ -134,17 +168,17 @@ $(document).ready(function () {
             return;
         }
 
-        if (myImg === "") {
-            $("#img-invalid").css("visibility", "visible");
-            return;
-        }
-
-        if (myImg !== "") {
-            $("#my-image").attr("src", myImg)
-        };
+        // if (myImg === "") {
+        //     $("#img-invalid").css("visibility", "visible");
+        //     return;
+        // }
+        // document.getElementById("one").innerHTML = `<img src=>`;
+        // if (myImg !== "") {
+        //     $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
+        // };
 
         spawnEnemy();
-
+        $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
         $("#my-name").text(myName);
         $("#my-health").text(myHealth);
         $("#my-attack").text(myAttack);
@@ -181,7 +215,7 @@ $(document).ready(function () {
             hpBarUpdate();
             $("#console-log-1").append(`<p>You drank a healing potion, you have ` + myPotions + ` potions left.</p>`);
             scrollToBottom();
-        } else if (isDefeated === false && myPotions === 0){
+        } else if (isDefeated === false && myPotions === 0) {
             $("#console-log-1").append(`<p>You don't have any more potions!</p>`);
             scrollToBottom();
         }
@@ -258,13 +292,11 @@ $(document).ready(function () {
     let spawnEnemy = function () {
 
         $.get("/api/enemy/count", function (data) {
-            console.log(data);
             enemyCount = data;
         });
 
         $.get("/api/enemy/" + position, function (data) {
             if (data) {
-                console.log(data.name);
                 // If this enemy exists, fill page with its stats
                 enemyName = data.name;
                 enemyImg = data.img;
@@ -327,7 +359,7 @@ $(document).ready(function () {
             if (myHealth > myMaxHealth) {
                 myHealth = myMaxHealth
             }
-            hpBarUpdate();            
+            hpBarUpdate();
             myCritNote = `<p>You take a moment to drink a revitalizing potion.</p>`;
         }
 

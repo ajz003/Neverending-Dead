@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": null,
+    "password": "Pa55werd",
     "database": "zombie_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
