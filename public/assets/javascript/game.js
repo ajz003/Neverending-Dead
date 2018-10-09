@@ -279,7 +279,7 @@ $(document).ready(function () {
                     $(this).removeClass('animated jackInTheBox');
                 });
 
-                if (data.name === `Lich King`) {
+                if (position === enemyCount) {
                     bgm.stop();
                     lastBossBgm.stop();
                     lastBossBgm.play();
