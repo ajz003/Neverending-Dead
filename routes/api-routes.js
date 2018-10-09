@@ -961,7 +961,7 @@ module.exports = function (app) {
 
     // I added viewBox="0 0 1500 1000" preserveAspectRatio="none" this will help wit sizing 
 
-    res.send(`<svg xmlns="http://www.w3.org/2000/svg" id="character" width="400" height="400" viewBox="0 0 500 500" preserveAspectRatio="none">
+    res.send(`<svg xmlns="http://www.w3.org/2000/svg" id="character" width="400" height="400" viewBox="25 50 500 500" preserveAspectRatio="none">
 Character ${wings} ${baseCharacterString} ${header} ${torso} ${leg} </svg> `);
   });
 

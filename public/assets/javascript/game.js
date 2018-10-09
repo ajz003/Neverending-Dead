@@ -88,28 +88,28 @@ $(document).ready(function () {
     });
 
     var michaelWelcome1 = new Howl({
-        src: ['../assets/audio/michael-welcome1.mp3'],
-        volume: 2.0
+        src: ['../assets/audio/michael-welcome.wav', '../assets/audio/michael-welcome.mp3'],
+        volume: 0.9
     });
 
     var michaelWelcome2 = new Howl({
         src: ['../assets/audio/michael-welcome2.mp3'],
-        volume: 2.0
+        volume: 0.9
     });
 
     var michaelCompliment1 = new Howl({
-        src: ['../assets/audio/michael-compliment1.mp3'],
-        volume: 2.0
+        src: ['../assets/audio/michael-compliment1.wav', '../assets/audio/michael-compliment1.mp3'],
+        volume: 0.9
     });
 
     var michaelCompliment2 = new Howl({
-        src: ['../assets/audio/michael-compliment2.mp3'],
-        volume: 2.0
+        src: ['../assets/audio/michael-compliment2.wav', '../assets/audio/michael-compliment2.mp3'],
+        volume: 0.9
     });
 
     var michaelSad = new Howl({
-        src: ['../assets/audio/michael-sad.mp3'],
-        volume: 2.0
+        src: ['../assets/audio/michael-sad.wav', '../assets/audio/michael-sad.mp3'],
+        volume: 0.9
     });
 
     // initial stat values
@@ -183,7 +183,7 @@ $(document).ready(function () {
             hats = 0;
         }
         console.log(hats);
-        document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#torso").on("click", function () {
@@ -192,7 +192,7 @@ $(document).ready(function () {
             torso = 0;
         }
         console.log(torso);
-        document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#leg").on("click", function () {
@@ -201,7 +201,7 @@ $(document).ready(function () {
             leg = 0;
         }
         console.log(leg);
-        document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#wings").on("click", function () {
@@ -210,7 +210,7 @@ $(document).ready(function () {
             wings = 0;
         }
         console.log(wings);
-        document.getElementById("one").innerHTML = `<img src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#create-btn").click(function (event) {
@@ -232,14 +232,16 @@ $(document).ready(function () {
 
 
 
-            // if (myImg === "") {
-            //     $("#img-invalid").css("visibility", "visible");
-            //     return;
-            // }
-            // document.getElementById("one").innerHTML = `<img src=>`;
-            // if (myImg !== "") {
-            //     $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
-            // };
+
+        // if (myImg === "") {
+        //     $("#img-invalid").css("visibility", "visible");
+        //     return;
+        // }
+        // document.getElementById("insert-avatar").innerHTML = `<img src=>`;
+        // if (myImg !== "") {
+        //     $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
+        // };
+
 
             spawnEnemy();
 
@@ -674,7 +676,6 @@ $(document).ready(function () {
                     lastBossBgm.stop();
                     victorySound.play();
                     michaelWelcome1.stop();
-                    michaelWelcome2.stop();
                     michaelCompliment1.stop();
                     michaelCompliment2.stop();
                     michaelSad.stop();
@@ -686,12 +687,13 @@ $(document).ready(function () {
                     $(".shop").show();
                     $(".shop").addClass('animated slideInDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                         $(this).removeClass('animated slideInDown');
-                        setTimeout(function () {
-                            michaelWelcome1.play();
-                        }, 700);
-                    })
-                }
 
+                        $("#enemy-image").attr("src", "assets/img/seamless-skulls.jpg");
+                      
+                            michaelWelcome1.play();
+
+                    });
+                }
             });
 
             // Sets current round when new enemy spawns
