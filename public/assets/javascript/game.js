@@ -296,6 +296,16 @@ $(document).ready(function () {
         }
     });
 
+
+    // -------------------- Button Delay
+
+    $(".button").click(function() {
+
+        $(".button").css("pointer-events", "none");
+        setTimeout(function(){$(".button").css("pointer-events", "auto")}, 1000)
+        
+     })
+
     // -------------------- Shop
 
     $(document).on("click", ".shop-option", function () {
@@ -638,7 +648,6 @@ $(document).ready(function () {
 
             // Sets current round when new enemy spawns
             round = 0
-
 
 
         };
