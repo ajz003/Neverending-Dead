@@ -114,8 +114,8 @@ $(document).ready(function () {
 
     // initial stat values
     let myName = "";
-    let myAttack = 150;
-    let myHealth = 5000;
+    let myAttack = 25;
+    let myHealth = 10000;
     let myImg;
 
     let myPotions = 3;
@@ -142,8 +142,15 @@ $(document).ready(function () {
     }
     let enemyBleeding = {
         status: false,
+        onCD: false,
         ticksLeft: 0,
+        ticksLeftCD: 0,
         damage: 0
+    }
+
+    let luckyCD = {
+        onCD: false,
+        ticksLeft: 0
     }
 
 
@@ -165,38 +172,49 @@ $(document).ready(function () {
     $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
     $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
 
+    // Starting potions
+    $("#potion-btn").html(`Drink a Potion (${myPotions})`)
+
     // character creation logic
 
     $("#head").on("click", function () {
         hats = hats + 1;
-        if (hats === 12) { hats = 0; }
+        if (hats === 12) {
+            hats = 0;
+        }
         console.log(hats);
         document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#torso").on("click", function () {
         torso = torso + 1;
-        if (torso === 3) { torso = 0; }
+        if (torso === 3) {
+            torso = 0;
+        }
         console.log(torso);
         document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#leg").on("click", function () {
         leg = leg + 1;
-        if (leg === 5) { leg = 0; }
+        if (leg === 5) {
+            leg = 0;
+        }
         console.log(leg);
         document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#wings").on("click", function () {
         wings = wings + 1;
-        if (wings === 3) { wings = 0; }
+        if (wings === 3) {
+            wings = 0;
+        }
         console.log(wings);
         document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#create-btn").click(function (event) {
-        
+
         myName = $("#input-name").val().trim();
         // myImg = $("#input-imageUrl").val().trim();
 
@@ -209,7 +227,8 @@ $(document).ready(function () {
             $("#name-invalid").css("visibility", "visible");
             return;
         } else {
-        createSound.play();
+            createSound.play();
+
 
 
 
@@ -223,18 +242,20 @@ $(document).ready(function () {
         //     $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
         // };
 
-        spawnEnemy();
-        $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
-        $("#my-name").text(myName);
-        $("#my-health").text(myHealth);
-        $("#my-attack").text(myAttack);
-        $("#enemy-health").text(enemyHealth);
-        $("#enemy-attack").text(enemyAttack);
-        $("#enemy-name").text(enemyName);
-        $("#character-creator").hide();
-        $("#lucky-stab-btn").hide();
-        $("#bleed-attack-btn").hide();
-        $("#game-screen").show();
+
+            spawnEnemy();
+
+            $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`);
+            $("#my-name").text(myName);
+            $("#my-health").text(myHealth);
+            $("#my-attack").text(myAttack);
+            $("#enemy-health").text(enemyHealth);
+            $("#enemy-attack").text(enemyAttack);
+            $("#enemy-name").text(enemyName);
+            $("#character-creator").hide();
+            $("#lucky-stab-btn").hide();
+            $("#bleed-attack-btn").hide();
+            $("#game-screen").show();
         }
     });
 
@@ -263,6 +284,7 @@ $(document).ready(function () {
             deathLogic();
             hpBarUpdate();
             $("#console-log-1").append(`<p>You drank a healing potion, you have ` + myPotions + ` potions left.</p>`);
+            $("#potion-btn").html(`Drink a Potion (${myPotions})`)
             scrollToBottom();
         } else if (isDefeated === false && myPotions === 0) {
             $("#console-log-1").append(`<p>You don't have any more potions!</p>`);
@@ -271,30 +293,38 @@ $(document).ready(function () {
     });
 
     $("#lucky-stab-btn").click(function () {
-        if (isDefeated === false && isLuckyLearned === true) {
+        if (isDefeated === false && luckyCD.onCD === false) {
             round++;
             attackLogic("Lucky Stab");
             deathLogic();
             hpBarUpdate();
             scrollToBottom();
-        } else if (isLuckyLearned === false) {
-            $("#console-log-1").append(`<p>You haven't learned Lucky Stab yet!</p>`);
-            scrollToBottom();
+        } else {
+            alert("Lucky Stab is still on cooldown!")
         }
     });
 
     $("#bleed-attack-btn").click(function () {
-        if (isDefeated === false && isBleedLearned === true) {
+        if (isDefeated === false && enemyBleeding.onCD === false) {
             round++;
             attackLogic("Bleeding Attack");
             deathLogic();
             hpBarUpdate();
             scrollToBottom();
-        } else if (isBleedLearned === false) {
-            $("#console-log-1").append(`<p>You haven't learned Bleeding Attack yet!</p>`);
-            scrollToBottom();
+        } else {
+            alert("Bleeding Attack is still on cooldown!")
         }
     });
+
+
+    // -------------------- Button Delay
+
+    $(".button").click(function() {
+
+        $(".button").css("pointer-events", "none");
+        setTimeout(function(){$(".button").css("pointer-events", "auto")}, 1000)
+        
+     })
 
     // -------------------- Shop
 
@@ -305,6 +335,7 @@ $(document).ready(function () {
             case "buy-pot-btn":
                 myPotions++;
                 $("#console-log-1").append(`<p>You take a moment to buy a revitalizing potion.</p>`);
+                $("#potion-btn").html(`Drink a Potion (${myPotions})`)
                 coinFlip.play();
                 michaelWelcome1.stop();
                 michaelCompliment2.play();
@@ -357,16 +388,10 @@ $(document).ready(function () {
         }
 
         spawnEnemy();
-        // $(".shop").hide();
+
         $('.shop').addClass('animated slideOutUp').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-            // Animation bug
             $(".shop").hide();
             $(this).removeClass('animated slideOutUp');
-
-
-            // Smooth animation but then it breaks the game after selecting an option
-            // $(this).removeClass('animated slideOutUp');
-            // $(this).hide();
         });
 
         scrollToBottom();
@@ -377,7 +402,7 @@ $(document).ready(function () {
 
     $(document).on("click", "#restart-btn", function () {
         $("#lose-screen").hide();
-        $("#win-screen").hide(); // Not working
+        $("#win-screen").hide();
         $("#character-creator").show();
         $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
         position = 0;
@@ -410,9 +435,11 @@ $(document).ready(function () {
 
         $.get("/api/enemy/" + position, function (data) {
             if (data) {
-                // If this enemy exists, fill page with its stats
+                console.log("hat: " + data.hat);
+                // If this enemy exists, fill page with its stat
                 enemyName = data.name;
                 enemyImg = data.img;
+                document.getElementById("enemy-pic").innerHTML = `<img src="/test?hat=${data.hat}&torso=${data.torso}&leg=${data.leg}&wings=${data.wings}">`
                 enemyHealth = data.hp;
                 enemyAttack = data.attack;
                 enemyMaxHealth = enemyHealth;
@@ -424,7 +451,7 @@ $(document).ready(function () {
                     $(this).removeClass('animated jackInTheBox');
                 });
 
-                if (position === enemyCount) {
+                if (position + 1 === enemyCount) {
                     bgm.stop();
                     lastBossBgm.stop();
                     lastBossBgm.play();
@@ -456,13 +483,49 @@ $(document).ready(function () {
         // let enemyCrit = Math.random();
         // let enemyCritRate = 0.5;
 
+        if (luckyCD.onCD === true) {
+            luckyCD.ticksLeft--;
+            $("#lucky-stab-btn").css("opacity", (-luckyCD.ticksLeft / 3) + 1)
+        }
+        if (luckyCD.ticksLeft === 0) {
+            luckyCD.onCD = false;
+        }
+
+        if (enemyBleeding.onCD === true) {
+            enemyBleeding.ticksLeftCD--;
+            console.log(enemyBleeding.ticksLeftCD)
+            $("#bleed-attack-btn").css("opacity", (-enemyBleeding.ticksLeftCD / 3) + 1)
+        }
+        if (enemyBleeding.ticksLeftCD === 0) {
+            enemyBleeding.onCD = false;
+        }
+
+
 
         // ability logic
         if (ability === "Lucky Stab") {
-            var myCrit = Math.random();
-            myNewAttack = myAttack * 0.5;
-            missLuckyStab.play();
-            myCritNote = `<p>You awkwardly maneuver your attack.</p>`;
+            if (luckyCD.onCD === false) {
+                luckyCD.onCD = true;
+                luckyCD.ticksLeft = 3;
+                $("#lucky-stab-btn").css("opacity", 0.1)
+                var myCrit = Math.random();
+
+                if (myCrit > myCritRate) {
+                    myNewAttack = myAttack * 0.5;
+                    missLuckyStab.play();
+                    myCritNote = `<p>You awkwardly maneuver your attack.</p>`;
+                }
+                else {
+                    myCritMod = 2;
+                    luckyStabSound.play();
+                    myCritNote = `<p id="critical-hit">CRITICAL HIT!</p>
+                                <p>You manage to target a gap in their armor.</p>`;
+                    if (ability === "Lucky Stab") {
+                        myCritMod = 10;
+                    }
+
+                }
+            }
         }
 
         if (ability === "Healing Potion") {
@@ -476,29 +539,24 @@ $(document).ready(function () {
         }
 
         if (ability === "Bleeding Attack") {
-            var myCrit = Math.random();
-            bleedingAttackSound.play();
-            myNewAttack = myAttack;
-            enemyBleeding.status = true;
-            enemyBleeding.ticksLeft = 3;
-            enemyBleeding.damage = myNewAttack;
-            console.log(enemyBleeding);
-        }
+            if (enemyBleeding.onCD === false) {
+                enemyBleeding.onCD = true;
+                enemyBleeding.ticksLeft = 3;
+                enemyBleeding.ticksLeftCD = 3;
+                // var myCrit = Math.random();
+                bleedingAttackSound.play();
+                myNewAttack = myAttack;
+                enemyBleeding.status = true;
 
-        // crit check
-        if (myCrit <= myCritRate) {
-            myCritMod = 2;
-            luckyStabSound.play();
-            myCritNote = `<p id="critical-hit">CRITICAL HIT!</p>
-                            <p>You manage to target a gap in their armor.</p>`;
-            if (ability === "Lucky Stab") {
-                myCritMod = 10;
+                $("#bleed-attack-btn").css("opacity", 0.1)
+                enemyBleeding.damage = myNewAttack;
+                console.log(enemyBleeding);
             }
-
         }
 
         // status check
         // if (myCrit <= myBleedRate) { 
+        console.log("enemybleeding.status: " + enemyBleeding.status)
         if (enemyBleeding.status === true) {
             bonusDamage += enemyBleeding.damage;
             enemyBleeding.ticksLeft--;
@@ -507,9 +565,10 @@ $(document).ready(function () {
             myCritNote += `<p>You slash their flesh, causing <span id="enemy-name">${enemyName}</span> to bleed for <span class="damage-numbers">${enemyBleeding.damage}</span> damage for the next <span class="damage-numbers">${enemyBleeding.ticksLeft}</span> round(s).</p>`;
             if (enemyBleeding.ticksLeft === 0) {
                 enemyBleeding.status = false;
-                myCritNote = "";
+                myCritNote += `<p><span id="enemy-name">${enemyName}</span> is no longer bleeding.</p>`;
             };
         };
+
         // }
 
         let totalAttack = myNewAttack * myCritMod + bonusDamage;
@@ -524,17 +583,18 @@ $(document).ready(function () {
         };
 
 
-            // update console lines
-            $("#console-log-1").append(`<p id="round">Round ${round}</p>`)
-                .append(myCritNote)
-                .append(`\n<p class="damage-numbers">&#9876 <span id="player-name">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
-                .append(`\n<p class="damage-numbers">&#9876 <span id="enemy-name">${enemyName}</span> counterattacks, inflicting <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
+        // update console lines
+        $("#console-log-1").append(`<p id="round">Round ${round}</p>`)
+            .append(myCritNote)
+            .append(`\n<p class="damage-numbers">&#9876 <span id="player-name">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
+            .append(`\n<p class="damage-numbers">&#9876 <span id="enemy-name">${enemyName}</span> counterattacks, inflicting <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
 
         // check if enemy survived my attack
         if (enemyHealth > 0) {
             // reduce my health by enemyAttack
             myHealth -= enemyAttack;
         }
+
     }
 
     let scrollToBottom = function scrollToBottom() {
@@ -627,17 +687,17 @@ $(document).ready(function () {
                     $(".shop").show();
                     $(".shop").addClass('animated slideInDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                         $(this).removeClass('animated slideInDown');
+
                         $("#enemy-image").attr("src", "assets/img/seamless-skulls.jpg");
-                        // setTimeout(function () {
+                      
                             michaelWelcome1.play();
-                        // }, 500);
+
                     });
                 }
             });
 
             // Sets current round when new enemy spawns
             round = 0
-
 
 
         };
@@ -670,11 +730,14 @@ $(document).ready(function () {
         };
     }
 
-    function becomeLichKing () {
-          // Send the POST request to add character to DB
-          let newChar = {
+    function becomeLichKing() {
+        // Send the POST request to add character to DB
+        let newChar = {
             name: myName,
-            img: myImg,
+            hat: hats,
+            torso: torso,
+            leg: leg,
+            wings: wings,
             hp: myMaxHealth,
             attack: myAttack,
             position: position + 1
