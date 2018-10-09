@@ -69,7 +69,7 @@ body {
     /* position: static; */
     /* top: -20px; */
     top: 50%;
-    border: 2px solid white;
+    /* border: 2px solid white; */
 }
 
 #game-cards {
@@ -166,8 +166,8 @@ body {
 
 
 .button {
-    border-right: 3px solid black;
-    border-bottom: 3px solid black;
+    border-right: 1px solid black !important;
+    border-bottom: 2px solid black !important;
     font-family: Permanent Marker, 'Arial', sans-serif;
 }
 
@@ -294,3 +294,20 @@ progress.show-value.is-large:after {
 /* .modal {
     position: fixed;
 } */
+
+/* Avatar Maker */
+
+#avatar-image {
+    background-color: black;
+    border: 1px solid brown;
+    width: 80%;
+    height: 76%;
+    left: 11%;
+}
+
+footer {
+    height: 50px; 
+    background-color: darkred; 
+    padding-top: 10px;
+    margin-top: 20px;
+}
