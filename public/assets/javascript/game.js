@@ -256,7 +256,7 @@ $(document).ready(function () {
             myPotions--;
             round++;
             attackLogic("Healing Potion");
-            attackSound.play();
+            // attackSound.play(); Make this the potion drinking sound
             deathLogic();
             hpBarUpdate();
             $("#console-log-1").append(`<p>You drank a healing potion, you have ` + myPotions + ` potions left.</p>`);
@@ -521,18 +521,16 @@ $(document).ready(function () {
         };
 
 
-
-
-        // check if enemy survived my attack
-        if (enemyHealth > 0) {
-            // reduce my health by enemyAttack
-            myHealth -= enemyAttack;
-
             // update console lines
             $("#console-log-1").append(`<p id="round">Round ${round}</p>`)
                 .append(myCritNote)
                 .append(`\n<p class="damage-numbers">&#9876 <span id="player-name">You</span> inflict <span class="damage-numbers">${myNewAttack * myCritMod}</span> damage.</p>\n`)
                 .append(`\n<p class="damage-numbers">&#9876 <span id="enemy-name">${enemyName}</span> counterattacks, inflicting <span class="damage-numbers">${enemyAttack}</span> damage!</p>\n<br>`);
+
+        // check if enemy survived my attack
+        if (enemyHealth > 0) {
+            // reduce my health by enemyAttack
+            myHealth -= enemyAttack;
         }
     }
 
