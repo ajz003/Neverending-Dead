@@ -1,9 +1,11 @@
 $(document).ready(function () {
+
+    // May want to transform these as an object and put them in a separate JS file
     var bgm = new Howl({
         src: ['../assets/audio/bgm.mp3'],
         autoplay: true,
         loop: true,
-        volume: 0.3,
+        volume: 0.2,
         onend: function () {
             console.log('Finished!');
         }
@@ -57,7 +59,7 @@ $(document).ready(function () {
 
     var victorySound = new Howl({
         src: ['../assets/audio/victory.mp3'],
-        volume: 0.3
+        volume: 0.5
     });
 
     var newMatchSound = new Howl({
@@ -65,12 +67,50 @@ $(document).ready(function () {
         volume: 0.3
     });
 
+    var coinFlip = new Howl({
+        src: ['../assets/audio/coinflip.mp3'],
+        volume: 0.3
+    });
 
+    var nope = new Howl({
+        src: ['../assets/audio/nope.mp3'],
+        volume: 0.3
+    });
+
+    var levelUpSound = new Howl({
+        src: ['../assets/audio/level-up.mp3'],
+        volume: 0.2
+    });
+
+    var michaelWelcome1 = new Howl({
+        src: ['../assets/audio/michael-welcome1.mp3'],
+        volume: 2.0
+    });
+
+    var michaelWelcome2 = new Howl({
+        src: ['../assets/audio/michael-welcome2.mp3'],
+        volume: 2.0
+    });
+
+    var michaelCompliment1 = new Howl({
+        src: ['../assets/audio/michael-compliment1.mp3'],
+        volume: 2.0
+    });
+
+    var michaelCompliment2 = new Howl({
+        src: ['../assets/audio/michael-compliment2.mp3'],
+        volume: 2.0
+    });
+
+    var michaelSad = new Howl({
+        src: ['../assets/audio/michael-sad.mp3'],
+        volume: 2.0
+    });
 
     // initial stat values
     let myName = "";
-    let myAttack = 15;
-    let myHealth = 500;
+    let myAttack = 150;
+    let myHealth = 5000;
     let myImg;
 
     let myPotions = 3;
@@ -156,6 +196,8 @@ $(document).ready(function () {
         $("#enemy-attack").text(enemyAttack);
         $("#enemy-name").text(enemyName);
         $("#character-creator").hide();
+        $("#lucky-stab-btn").hide();
+        $("#bleed-attack-btn").hide();
         $("#game-screen").show();
     });
 
@@ -205,7 +247,7 @@ $(document).ready(function () {
     });
 
     $("#bleed-attack-btn").click(function () {
-        if (isDefeated === false  && isBleedLearned === true) {
+        if (isDefeated === false && isBleedLearned === true) {
             round++;
             attackLogic("Bleeding Attack");
             deathLogic();
@@ -219,52 +261,88 @@ $(document).ready(function () {
 
     // -------------------- Shop
 
-    $(document).on("click", ".shop-option", function() {
+    $(document).on("click", ".shop-option", function () {
         let shopOption = $(this).attr("id");
         switch (shopOption) {
 
             case "buy-pot-btn":
-            myPotions++;
-            $("#console-log-1").append(`<p>You take a moment to buy a revitalizing potion.</p>`)
-            break;
+                myPotions++;
+                $("#console-log-1").append(`<p>You take a moment to buy a revitalizing potion.</p>`);
+                coinFlip.play();
+                $("#buy-pot-btn").hide();
+                michaelWelcome1.stop();
+                michaelCompliment2.play();
+                break;
 
             case "buy-protein-btn":
-            $("#console-log-1").append(`<p>You chug your pre-fight protein potion and gain ${myAttack * 0.5} attack! LET'S GOOOOO!!</p>`)
-            myAttack = Math.round(myAttack * 1.5);
-            $("#my-attack").text(myAttack);
-            break;
+                $("#console-log-1").append(`<p>You chug your pre-fight protein potion and gain ${myAttack * 0.5} attack! LET'S GOOOOO!!</p>`);
+                coinFlip.play();
+                $("#buy-protein-btn").hide();
+                michaelWelcome1.stop();
+                michaelCompliment2.play();
+                myAttack = Math.round(myAttack * 1.5);
+                $("#my-attack").text(myAttack);
+                break;
 
             case "learn-lucky-btn":
-            if (isLuckyLearned === true) {
-                $("#console-log-1").append(`<p>You've already learned Lucky Stab.</p>`)
-            break;
-            } else {
-                isLuckyLearned = true;
-                $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`)
-            }
-            break;
+                if (isLuckyLearned === true) {
+                    $("#console-log-1").append(`<p>You've already learned Lucky Stab.</p>`);
+                    break;
+                } else {
+                    isLuckyLearned = true;
+                    $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
+                    coinFlip.play();
+                    $("#learn-lucky-btn").hide();
+                    $("#lucky-stab-btn").show();
+                    michaelWelcome1.stop();
+                    michaelCompliment1.play();
+                }
+                break;
 
             case "learn-bleed-btn":
-            if (isBleedLearned === true) {
-                $("#console-log-1").append(`<p>You've already learned Bleeding Attack.</p>`)
-            break;
-            } else {
-                isBleedLearned = true;
-                $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`)
-            }
-            break;
+                if (isBleedLearned === true) {
+                    $("#console-log-1").append(`<p>You've already learned Bleeding Attack.</p>`);
+                    break;
+                } else {
+                    isBleedLearned = true;
+                    $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
+                    coinFlip.play();
+                    $("#learn-bleed-btn").hide();
+                    $("#bleed-attack-btn").show();
+                    michaelWelcome1.stop();
+                    michaelCompliment1.play();
+                }
+                break;
+
+            case "cancel-buy-btn":
+                nope.play();
+                michaelWelcome1.stop();
+                michaelSad.play();
+                break;
         }
 
         spawnEnemy();
-        $(".shop").hide();
+        // $(".shop").hide();
+        $('.shop').addClass('animated slideOutUp').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+            // Animation bug
+            $(".shop").hide();
+            $(this).removeClass('animated slideOutUp');
+
+
+            // Smooth animation but then it breaks the game after selecting an option
+            // $(this).removeClass('animated slideOutUp');
+            // $(this).hide();
+        });
+
         scrollToBottom();
     });
 
     // -------------------- Restart
 
 
-    $("#restart-btn").click(function () {
+    $(document).on("click", "#restart-btn", function () {
         $("#lose-screen").hide();
+        $("#win-screen").hide(); // Not working
         $("#character-creator").show();
         $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
         position = 0;
@@ -281,6 +359,8 @@ $(document).ready(function () {
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
         $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
         $("#console-log-1").empty();
+        $("#learn-bleed-btn").show();
+        $("#learn-lucky-btn").show();
         newMatchSound.play();
         bgm.play();
     })
@@ -353,7 +433,6 @@ $(document).ready(function () {
         }
 
         if (ability === "Healing Potion") {
-            var myCrit = 0;
             myNewAttack = 0;
             myHealth += myMaxHealth * 0.5;
             if (myHealth > myMaxHealth) {
@@ -440,6 +519,7 @@ $(document).ready(function () {
         $("#my-attack").text(myAttack);
         myMaxHealth = Math.round(myMaxHealth * 1.25);
         hpBarUpdate();
+        levelUpSound.play();
     }
 
 
@@ -494,23 +574,36 @@ $(document).ready(function () {
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
             $("#console-log-1").append(`<p>You've leveled up! Your max health is now ${myMaxHealth} and your attack is now ${myAttack}!</p>\n<br>`);
 
-            $(".shop").show();
-
-            // hides the game and shows the winscreen
-            if (position === enemyCount) {
-                bgm.stop();
-                lastBossBgm.stop();
-                victorySound.play();
-                $("#game-screen").hide();
-                $("#win-screen").show();
-
-            };
-
             $('#enemy-box').addClass('animated hinge').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                 $(this).removeClass('animated hinge');
                 $("#enemy-image").attr("src", "assets/img/seamless-skulls.jpg");
-            });
 
+
+                // hides the game and shows the winscreen
+                if (position === enemyCount) {
+                    bgm.stop();
+                    lastBossBgm.stop();
+                    victorySound.play();
+                    michaelWelcome1.stop();
+                    michaelWelcome2.stop();
+                    michaelCompliment1.stop();
+                    michaelCompliment2.stop();
+                    michaelSad.stop();
+                    levelUpSound.stop();
+                    $("#game-screen").hide();
+                    $("#win-screen").show();
+                } else {
+                    $(".shop").show();
+                    $(".shop").addClass('animated slideInDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                        $(this).removeClass('animated slideInDown');
+                        $("#enemy-image").attr("src", "assets/img/seamless-skulls.jpg");
+                        setTimeout(function () {
+                            michaelWelcome1.play();
+                        }, 700);
+                    })
+                }
+
+            });
 
             // Sets current round when new enemy spawns
             round = 0
