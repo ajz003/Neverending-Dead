@@ -2,8 +2,8 @@
 
 ### Project-Two
 #### A simple RPG boss rush game where the player must defeat an army of other playesr who've died trying to reach the final boss.
-## If the player dies, he or she joins the line of enemies waiting to fight the next player. 
-## If the player wins, he or she will become the last boss.
+#### If the player dies, he or she joins the line of enemies waiting to fight the next player. 
+#### If the player wins, he or she will become the last boss.
 ---------------
 
 ## Instructions:
