@@ -92,11 +92,6 @@ $(document).ready(function () {
         volume: 0.9
     });
 
-    var michaelWelcome2 = new Howl({
-        src: ['../assets/audio/michael-welcome2.mp3'],
-        volume: 0.9
-    });
-
     var michaelCompliment1 = new Howl({
         src: ['../assets/audio/michael-compliment1.wav', '../assets/audio/michael-compliment1.mp3'],
         volume: 0.9
@@ -117,8 +112,18 @@ $(document).ready(function () {
         volume: 1.0
     });
 
-    var michaelAngry2 = new Howl({
-        src: ['../assets/audio/michael-angry2.mp3'],
+    var michaelCongratz2 = new Howl({
+        src: ['../assets/audio/michael-congratz2.mp3'],
+        volume: 1.0
+    });
+
+    var michaelCd1 = new Howl({
+        src: ['../assets/audio/michael-cooldown-1.mp3'],
+        volume: 1.0
+    });
+
+    var michaelCd4 = new Howl({
+        src: ['../assets/audio/michael-cooldown-4.mp3'],
         volume: 1.0
     });
 
@@ -312,7 +317,8 @@ $(document).ready(function () {
             hpBarUpdate();
             scrollToBottom();
         } else {
-            // alert("Lucky Stab is still on cooldown!")
+            michaelCompliment1.stop();
+            michaelCd1.play();
         }
     });
 
@@ -324,7 +330,8 @@ $(document).ready(function () {
             hpBarUpdate();
             scrollToBottom();
         } else {
-            // alert("Bleeding Attack is still on cooldown!")
+            michaelCompliment1.stop();
+            michaelCd4.play();
         }
     });
 
@@ -433,6 +440,7 @@ $(document).ready(function () {
         $("#console-log-1").empty();
         $("#learn-bleed-btn").show();
         $("#learn-lucky-btn").show();
+        michaelCongratz2.stop();
         newMatchSound.play();
         bgm.play();
     })
@@ -695,6 +703,7 @@ $(document).ready(function () {
                     becomeLichKing();
                     $("#game-screen").hide();
                     $("#win-screen").show();
+                    michaelCongratz2.play();
                 } else {
                     $(".shop").show();
                     $(".shop").addClass('animated slideInDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
