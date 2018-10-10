@@ -409,39 +409,39 @@ $(document).ready(function () {
                     $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
                     break;
                 }
-            
+
             case "learn-lucky-btn":
-            if (playerGold >= luckyStabCost) {
-                $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
-                coinFlip.play();
-                $("#learn-lucky-btn").hide();
-                $("#lucky-stab-btn").show();
-                michaelWelcome1.stop();
-                michaelCompliment1.play();
-                playerGold -= luckyStabCost;
-                $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
-                isChoiceMade = true;
-            }else {
-                $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
-            }
-            break;
-            
+                if (playerGold >= luckyStabCost) {
+                    $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
+                    coinFlip.play();
+                    $("#learn-lucky-btn").hide();
+                    $("#lucky-stab-btn").show();
+                    michaelWelcome1.stop();
+                    michaelCompliment1.play();
+                    playerGold -= luckyStabCost;
+                    $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
+                    isChoiceMade = true;
+                } else {
+                    $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
+                }
+                break;
+
             case "learn-bleed-btn":
-            if (playerGold >= bleedingAttackCost) {
-                $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
-                coinFlip.play();
-                $("#learn-bleed-btn").hide();
-                $("#bleed-attack-btn").show();
-                michaelWelcome1.stop();
-                michaelCompliment1.play();
-                playerGold -= bleedingAttackCost;
-                $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
-                isChoiceMade = true;
-                break;
-            } else {
-                $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
-                break;
-            }
+                if (playerGold >= bleedingAttackCost) {
+                    $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
+                    coinFlip.play();
+                    $("#learn-bleed-btn").hide();
+                    $("#bleed-attack-btn").show();
+                    michaelWelcome1.stop();
+                    michaelCompliment1.play();
+                    playerGold -= bleedingAttackCost;
+                    $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
+                    isChoiceMade = true;
+                    break;
+                } else {
+                    $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
+                    break;
+                }
 
             case "cancel-buy-btn":
                 nope.play();
@@ -517,8 +517,8 @@ $(document).ready(function () {
                 });
 
                 console.log("The data.boss value is " + data.boss);
-                
-                if(data.boss === 1){
+
+                if (data.boss === 1) {
                     document.getElementById("enemy-pic").innerHTML = `<img src="/boss">`
                 };
 
@@ -704,6 +704,10 @@ $(document).ready(function () {
             let newChar = {
                 name: myName,
                 img: myImg,
+                hat: hats,
+                torso: torso,
+                leg: leg,
+                wings: wings,
                 hp: myMaxHealth,
                 attack: myAttack,
                 position: position
@@ -736,7 +740,7 @@ $(document).ready(function () {
             levelUp();
 
             // Gold rewards
-            playerGold += 100 + Math.round(enemyMaxHealth/5) + Math.round(enemyAttack/2);
+            playerGold += 100 + Math.round(enemyMaxHealth / 5) + Math.round(enemyAttack / 2);
             $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
 
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
