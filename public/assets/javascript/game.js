@@ -154,6 +154,14 @@ $(document).ready(function () {
     let enemyMaxHealth = enemyHealth;
     let isDefeated = false;
 
+    // Shop Costs
+    const healingPotCost = 100;
+    const proteinPotCost = 300;
+    const luckyStabCost = 500;
+    const bleedingAttackCost = 600;
+
+    let playerGold = 0;
+
     let position = 0;
 
     let enemyCount = 0;
@@ -359,66 +367,95 @@ $(document).ready(function () {
 
     $(document).on("click", ".shop-option", function () {
         let shopOption = $(this).attr("id");
+        let isChoiceMade = false;
         switch (shopOption) {
 
             case "buy-pot-btn":
-                myPotions++;
-                $("#console-log-1").append(`<p>You take a moment to buy a revitalizing potion.</p>`);
-                $("#potion-btn").html(`Drink a Potion (${myPotions})`)
-                coinFlip.play();
-                michaelWelcome1.stop();
-                michaelCompliment2.play();
-                break;
+                if (playerGold >= healingPotCost) {
+                    myPotions++;
+                    $("#console-log-1").append(`<p>You take a moment to buy a revitalizing potion.</p>`);
+                    $("#potion-btn").html(`Drink a Potion (${myPotions})`)
+                    coinFlip.play();
+                    michaelWelcome1.stop();
+                    michaelCompliment2.play();
+                    playerGold -= healingPotCost;
+                    isChoiceMade = true;
+                    break;
+                } else {
+                    $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
+                    break;
+                }
 
             case "buy-protein-btn":
-                $("#console-log-1").append(`<p>You chug your pre-fight protein potion and gain ${myAttack * 0.5} attack! LET'S GOOOOO!!</p>`);
-                coinFlip.play();
-                michaelWelcome1.stop();
-                michaelCompliment2.play();
-                myAttack = Math.round(myAttack * 1.5);
-                $("#my-attack").text(myAttack);
-                break;
-
+                if (playerGold >= proteinPotCost) {
+                    $("#console-log-1").append(`<p>You chug your pre-fight protein potion and gain ${myAttack * 0.5} attack! LET'S GOOOOO!!</p>`);
+                    coinFlip.play();
+                    michaelWelcome1.stop();
+                    michaelCompliment2.play();
+                    playerGold -= proteinPotCost;
+                    myAttack = Math.round(myAttack * 1.5);
+                    $("#my-attack").text(myAttack);
+                    isChoiceMade = true;
+                    break;
+                } else {
+                    $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
+                    break;
+                }
             case "learn-lucky-btn":
-                    $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
-                    coinFlip.play();
-                    $("#learn-lucky-btn").hide();
-                    $("#lucky-stab-btn").show();
-                    michaelWelcome1.stop();
-                    michaelCompliment1.play();
+            if (playerGold >= luckyStabCost) {
+                $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
+                coinFlip.play();
+                $("#learn-lucky-btn").hide();
+                $("#lucky-stab-btn").show();
+                michaelWelcome1.stop();
+                michaelCompliment1.play();
+                playerGold -= luckyStabCost;
+                isChoiceMade = true;
                 break;
-
+            }else {
+                $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
+                break;
+            }
             case "learn-bleed-btn":
-                    $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
-                    coinFlip.play();
-                    $("#learn-bleed-btn").hide();
-                    $("#bleed-attack-btn").show();
-                    michaelWelcome1.stop();
-                    michaelCompliment1.play();
-
+            if (playerGold >= bleedingAttackCost) {
+                $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
+                coinFlip.play();
+                $("#learn-bleed-btn").hide();
+                $("#bleed-attack-btn").show();
+                michaelWelcome1.stop();
+                michaelCompliment1.play();
+                playerGold -= bleedingAttackCost;
+                isChoiceMade = true;
                 break;
+            } else {
+                $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
+                break;
+            }
 
             case "cancel-buy-btn":
                 nope.play();
                 michaelWelcome1.stop();
                 michaelSad.play();
+                isChoiceMade = true;
                 break;
         }
+        if (isChoiceMade === true) {
+            spawnEnemy();
 
-        spawnEnemy();
+            $('.shop').addClass('animated slideOutUp').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                $(".shop").hide();
+                $(this).removeClass('animated slideOutUp');
+            });
 
-        $('.shop').addClass('animated slideOutUp').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-            $(".shop").hide();
-            $(this).removeClass('animated slideOutUp');
-        });
-
-        scrollToBottom();
+            scrollToBottom();
+        }
+        console.log("Player gold after: " + playerGold)
     });
 
     // -------------------- Restart
 
 
-    $(document).on("click", "#restart-btn", function () {
+    $(document).on("click", "#restart-btn", function restart() {
         $("#lose-screen").hide();
         $("#win-screen").hide();
         $("#character-creator").show();
@@ -427,11 +464,12 @@ $(document).ready(function () {
         myMaxHealth = 5000;
         $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
         myHealth = myMaxHealth;
-        myAttack = 200;
+        myAttack = 100;
         enemyHealth = 100;
         enemyAttack = 20;
         round = 0;
         myPotions = 3;
+        playerGold = 0;
         isDefeated = false;
         isLuckyLearned = false;
         $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
@@ -685,6 +723,9 @@ $(document).ready(function () {
             isDefeated = true;
             levelUp();
 
+            // Gold rewards
+            playerGold += 100 + Math.round(enemyMaxHealth/5) + Math.round(enemyAttack/2);
+
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
             $("#console-log-1").append(`<p>You've leveled up! Your max health is now <span class="damage-numbers">${myMaxHealth}</span> and your attack is now <span class="damage-numbers">${myAttack}</span>!</p>\n<br>`);
 
@@ -709,6 +750,7 @@ $(document).ready(function () {
                     michaelCongratz2.play();
                 } else {
                     $(".shop").show();
+                    console.log("Player Gold: " + playerGold);
                     $(".shop").addClass('animated slideInDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                         $(this).removeClass('animated slideInDown');
 
