@@ -252,6 +252,7 @@ $(document).ready(function () {
         event.preventDefault();
         if (myName === "") {
             $("#name-invalid").css("visibility", "visible");
+            michaelAngry1.stop();
             michaelAngry1.play();
             return;
         } else {
