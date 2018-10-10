@@ -23,6 +23,11 @@ $(document).ready(function () {
         volume: 0.3
     });
 
+    var drinkPotion = new Howl({
+        src: ['../assets/audio/drink-potion.mp3'],
+        volume: 0.3
+    });
+
     var luckyStabSound = new Howl({
         src: ['../assets/audio/lucky-stab.mp3'],
         volume: 0.3
@@ -72,11 +77,6 @@ $(document).ready(function () {
         volume: 0.3
     });
 
-    // character outfit values
-    var hats = 0;
-    var torso = 0;
-    var leg = 0;
-    var wings = 0;
     var nope = new Howl({
         src: ['../assets/audio/nope.mp3'],
         volume: 0.3
@@ -89,11 +89,6 @@ $(document).ready(function () {
 
     var michaelWelcome1 = new Howl({
         src: ['../assets/audio/michael-welcome.wav', '../assets/audio/michael-welcome.mp3'],
-        volume: 0.9
-    });
-
-    var michaelWelcome2 = new Howl({
-        src: ['../assets/audio/michael-welcome2.mp3'],
         volume: 0.9
     });
 
@@ -111,6 +106,38 @@ $(document).ready(function () {
         src: ['../assets/audio/michael-sad.wav', '../assets/audio/michael-sad.mp3'],
         volume: 0.9
     });
+
+    var michaelAngry1 = new Howl({
+        src: ['../assets/audio/michael-angry1.mp3'],
+        volume: 1.0
+    });
+
+    var michaelCongratz2 = new Howl({
+        src: ['../assets/audio/michael-congratz2.mp3'],
+        volume: 1.0
+    });
+
+    var michaelCd1 = new Howl({
+        src: ['../assets/audio/michael-cooldown-1.mp3'],
+        volume: 1.0
+    });
+
+    var michaelCd4 = new Howl({
+        src: ['../assets/audio/michael-cooldown-4.mp3'],
+        volume: 1.0
+    });
+
+    var michaelAddict = new Howl({
+        src: ['../assets/audio/michael-addict.mp3'],
+        volume: 1.0
+    });
+
+    // character outfit values
+    var hats = 0;
+    var torso = 0;
+    var leg = 0;
+    var wings = 0;
+        
 
     // initial stat values
     let myName = "";
@@ -183,7 +210,7 @@ $(document).ready(function () {
             hats = 0;
         }
         console.log(hats);
-        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image animated flip" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#torso").on("click", function () {
@@ -192,7 +219,7 @@ $(document).ready(function () {
             torso = 0;
         }
         console.log(torso);
-        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image animated flip" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#leg").on("click", function () {
@@ -201,7 +228,7 @@ $(document).ready(function () {
             leg = 0;
         }
         console.log(leg);
-        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image animated flip" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#wings").on("click", function () {
@@ -210,7 +237,7 @@ $(document).ready(function () {
             wings = 0;
         }
         console.log(wings);
-        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image animated flip" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#create-btn").click(function (event) {
@@ -225,8 +252,10 @@ $(document).ready(function () {
         event.preventDefault();
         if (myName === "") {
             $("#name-invalid").css("visibility", "visible");
+            michaelAngry1.play();
             return;
         } else {
+            michaelAngry1.stop();
             createSound.play();
 
 
@@ -280,13 +309,13 @@ $(document).ready(function () {
             myPotions--;
             round++;
             attackLogic("Healing Potion");
-            // attackSound.play(); Make this the potion drinking sound
             deathLogic();
             hpBarUpdate();
             $("#console-log-1").append(`<p>You drank a healing potion, you have ` + myPotions + ` potions left.</p>`);
             $("#potion-btn").html(`Drink a Potion (${myPotions})`)
             scrollToBottom();
         } else if (isDefeated === false && myPotions === 0) {
+            michaelAddict.play();
             $("#console-log-1").append(`<p>You don't have any more potions!</p>`);
             scrollToBottom();
         }
@@ -300,7 +329,8 @@ $(document).ready(function () {
             hpBarUpdate();
             scrollToBottom();
         } else {
-            alert("Lucky Stab is still on cooldown!")
+            michaelCompliment1.stop();
+            michaelCd1.play();
         }
     });
 
@@ -312,7 +342,8 @@ $(document).ready(function () {
             hpBarUpdate();
             scrollToBottom();
         } else {
-            alert("Bleeding Attack is still on cooldown!")
+            michaelCompliment1.stop();
+            michaelCd4.play();
         }
     });
 
@@ -421,6 +452,7 @@ $(document).ready(function () {
         $("#console-log-1").empty();
         $("#learn-bleed-btn").show();
         $("#learn-lucky-btn").show();
+        michaelCongratz2.stop();
         newMatchSound.play();
         bgm.play();
     })
@@ -535,6 +567,7 @@ $(document).ready(function () {
                 myHealth = myMaxHealth
             }
             hpBarUpdate();
+            drinkPotion.play();
             myCritNote = `<p>You take a moment to drink a revitalizing potion.</p>`;
         }
 
@@ -683,6 +716,7 @@ $(document).ready(function () {
                     becomeLichKing();
                     $("#game-screen").hide();
                     $("#win-screen").show();
+                    michaelCongratz2.play();
                 } else {
                     $(".shop").show();
                     $(".shop").addClass('animated slideInDown').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
