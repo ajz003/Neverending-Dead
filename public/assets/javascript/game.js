@@ -640,6 +640,11 @@ $(document).ready(function () {
 
         // Attack animation
         if (totalAttack > 0) {
+
+            $('#player-box').addClass('animated bounce').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                $(this).removeClass('animated bounce')
+            });
+
             $('#enemy-box').addClass('animated wobble').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                 $(this).removeClass('animated wobble')
             });
