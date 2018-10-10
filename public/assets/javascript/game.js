@@ -467,7 +467,6 @@ $(document).ready(function () {
 
         $.get("/api/enemy/" + position, function (data) {
             if (data) {
-                console.log("hat: " + data.hat);
                 // If this enemy exists, fill page with its stat
                 enemyName = data.name;
                 enemyImg = data.img;
@@ -483,6 +482,12 @@ $(document).ready(function () {
                     $(this).removeClass('animated jackInTheBox');
                 });
 
+                console.log("The data.boss value is " + data.boss);
+                
+                if(data.boss === 1){
+                    document.getElementById("enemy-pic").innerHTML = `<img src="/boss">`
+                };
+
                 if (position + 1 === enemyCount) {
                     bgm.stop();
                     lastBossBgm.stop();
@@ -495,7 +500,6 @@ $(document).ready(function () {
                 $(`#enemy-hp-bar`).attr(`max`, `${enemyMaxHealth}`);
                 $("#enemy-attack").text(enemyAttack);
                 $("#enemy-name").text(enemyName);
-                $("#enemy-image").attr("src", enemyImg);
                 position++;
                 isDefeated = false;
             }
@@ -583,13 +587,11 @@ $(document).ready(function () {
 
                 $("#bleed-attack-btn").css("opacity", 0.1)
                 enemyBleeding.damage = myNewAttack;
-                console.log(enemyBleeding);
             }
         }
 
         // status check
         // if (myCrit <= myBleedRate) { 
-        console.log("enemybleeding.status: " + enemyBleeding.status)
         if (enemyBleeding.status === true) {
             bonusDamage += enemyBleeding.damage;
             enemyBleeding.ticksLeft--;
