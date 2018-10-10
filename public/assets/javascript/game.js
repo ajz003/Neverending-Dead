@@ -23,6 +23,11 @@ $(document).ready(function () {
         volume: 0.3
     });
 
+    var drinkPotion = new Howl({
+        src: ['../assets/audio/drink-potion.mp3'],
+        volume: 0.3
+    });
+
     var luckyStabSound = new Howl({
         src: ['../assets/audio/lucky-stab.mp3'],
         volume: 0.3
@@ -72,11 +77,6 @@ $(document).ready(function () {
         volume: 0.3
     });
 
-    // character outfit values
-    var hats = 0;
-    var torso = 0;
-    var leg = 0;
-    var wings = 0;
     var nope = new Howl({
         src: ['../assets/audio/nope.mp3'],
         volume: 0.3
@@ -126,6 +126,18 @@ $(document).ready(function () {
         src: ['../assets/audio/michael-cooldown-4.mp3'],
         volume: 1.0
     });
+
+    var michaelAddict = new Howl({
+        src: ['../assets/audio/michael-addict.mp3'],
+        volume: 1.0
+    });
+
+    // character outfit values
+    var hats = 0;
+    var torso = 0;
+    var leg = 0;
+    var wings = 0;
+        
 
     // initial stat values
     let myName = "";
@@ -297,13 +309,13 @@ $(document).ready(function () {
             myPotions--;
             round++;
             attackLogic("Healing Potion");
-            // attackSound.play(); Make this the potion drinking sound
             deathLogic();
             hpBarUpdate();
             $("#console-log-1").append(`<p>You drank a healing potion, you have ` + myPotions + ` potions left.</p>`);
             $("#potion-btn").html(`Drink a Potion (${myPotions})`)
             scrollToBottom();
         } else if (isDefeated === false && myPotions === 0) {
+            michaelAddict.play();
             $("#console-log-1").append(`<p>You don't have any more potions!</p>`);
             scrollToBottom();
         }
@@ -555,6 +567,7 @@ $(document).ready(function () {
                 myHealth = myMaxHealth
             }
             hpBarUpdate();
+            drinkPotion.play();
             myCritNote = `<p>You take a moment to drink a revitalizing potion.</p>`;
         }
 
