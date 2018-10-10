@@ -32,7 +32,7 @@ require("./routes/html-routes")(app);
 // =============================================================
 db.sequelize.sync({force:true}).then(function () {
   db.Enemy.create({name:"Naked Zombie", hp:"100", attack:"20", position:"0", boss: "0"});
-  db.Enemy.create({name:"King of the Undead", hp:"1000", attack:"90", position:"1", boss:"1"});
+  db.Enemy.create({name:"King of the Undead", hp:"10000", attack:"200", position:"1", boss:"1"});
   app.listen(PORT, function () {
     console.log(`\nServer listening on: http://localhost:${PORT}\n`);
   });
