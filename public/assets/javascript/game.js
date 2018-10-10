@@ -154,9 +154,6 @@ $(document).ready(function () {
     let enemyMaxHealth = enemyHealth;
     let isDefeated = false;
 
-    let isLuckyLearned = false;
-    let isBleedLearned = false;
-
     let position = 0;
 
     let enemyCount = 0;
@@ -383,33 +380,22 @@ $(document).ready(function () {
                 break;
 
             case "learn-lucky-btn":
-                if (isLuckyLearned === true) {
-                    $("#console-log-1").append(`<p>You've already learned Lucky Stab.</p>`);
-                    break;
-                } else {
-                    isLuckyLearned = true;
                     $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
                     coinFlip.play();
                     $("#learn-lucky-btn").hide();
                     $("#lucky-stab-btn").show();
                     michaelWelcome1.stop();
                     michaelCompliment1.play();
-                }
                 break;
 
             case "learn-bleed-btn":
-                if (isBleedLearned === true) {
-                    $("#console-log-1").append(`<p>You've already learned Bleeding Attack.</p>`);
-                    break;
-                } else {
-                    isBleedLearned = true;
                     $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
                     coinFlip.play();
                     $("#learn-bleed-btn").hide();
                     $("#bleed-attack-btn").show();
                     michaelWelcome1.stop();
                     michaelCompliment1.play();
-                }
+
                 break;
 
             case "cancel-buy-btn":
@@ -734,6 +720,20 @@ $(document).ready(function () {
             // Sets current round when new enemy spawns
             round = 0
 
+            enemyBleeding = {
+                status: false,
+                onCD: false,
+                ticksLeft: 0,
+                ticksLeftCD: 0,
+                damage: 0
+            }
+            luckyCD = {
+                onCD: false,
+                ticksLeft: 0
+            }
+
+            $("#lucky-stab-btn").css("opacity", 1)
+            $("#bleed-attack-btn").css("opacity", 1)
 
         };
 
