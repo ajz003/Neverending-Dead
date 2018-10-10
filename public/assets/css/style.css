@@ -379,3 +379,11 @@ footer {
     padding-top: 10px;
     margin-top: 20px;
 }
+
+#player-gold-header {
+    height: 15px;
+}
+
+.gold {
+    color: goldenrod;
+}

@@ -205,7 +205,7 @@ $(document).ready(function () {
     $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
 
     // Starting potions
-    $("#potion-btn").html(`Drink a Potion (${myPotions})`)
+    $("#potion-btn").html(`Drink a Potion (${myPotions})`);
 
     // character creation logic
 
@@ -280,6 +280,7 @@ $(document).ready(function () {
 
             spawnEnemy();
 
+            $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
             $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`);
             $("#my-name").text(myName);
             $("#my-health").text(myHealth);
@@ -364,6 +365,11 @@ $(document).ready(function () {
     })
 
     // -------------------- Shop
+    $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
+    $(`#potion-price`).html(`&nbsp${healingPotCost}&nbsp<i class="fas fa-coins"></i>`);
+    $(`#protein-price`).html(`&nbsp${proteinPotCost}&nbsp<i class="fas fa-coins"></i>`);
+    $(`#stab-price`).html(`&nbsp${luckyStabCost}&nbsp<i class="fas fa-coins"></i>`);
+    $(`#bleeding-price`).html(`&nbsp${bleedingAttackCost}&nbsp<i class="fas fa-coins"></i>`);
 
     $(document).on("click", ".shop-option", function () {
         let shopOption = $(this).attr("id");
@@ -379,6 +385,7 @@ $(document).ready(function () {
                     michaelWelcome1.stop();
                     michaelCompliment2.play();
                     playerGold -= healingPotCost;
+                    $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
                     isChoiceMade = true;
                     break;
                 } else {
@@ -393,6 +400,7 @@ $(document).ready(function () {
                     michaelWelcome1.stop();
                     michaelCompliment2.play();
                     playerGold -= proteinPotCost;
+                    $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
                     myAttack = Math.round(myAttack * 1.5);
                     $("#my-attack").text(myAttack);
                     isChoiceMade = true;
@@ -411,6 +419,7 @@ $(document).ready(function () {
                 michaelWelcome1.stop();
                 michaelCompliment1.play();
                 playerGold -= luckyStabCost;
+                $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
                 isChoiceMade = true;
             }else {
                 $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
@@ -426,6 +435,7 @@ $(document).ready(function () {
                 michaelWelcome1.stop();
                 michaelCompliment1.play();
                 playerGold -= bleedingAttackCost;
+                $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
                 isChoiceMade = true;
                 break;
             } else {
@@ -729,6 +739,7 @@ $(document).ready(function () {
 
             // Gold rewards
             playerGold += 100 + Math.round(enemyMaxHealth/5) + Math.round(enemyAttack/2);
+            $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
 
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
             $("#console-log-1").append(`<p>You've leveled up! Your max health is now <span class="damage-numbers">${myMaxHealth}</span> and your attack is now <span class="damage-numbers">${myAttack}</span>!</p>\n<br>`);
