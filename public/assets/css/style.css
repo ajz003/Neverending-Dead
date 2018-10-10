@@ -297,11 +297,11 @@ progress.show-value.is-large:after {
 
 /* Avatar Maker */
 
-#avatar-image {
+#avatar-background {
     background-color: black;
     border: 1px solid brown;
     width: 80%;
-    height: 76%;
+    height: 100%;
     left: 11%;
 }
 

@@ -112,6 +112,16 @@ $(document).ready(function () {
         volume: 0.9
     });
 
+    var michaelAngry1 = new Howl({
+        src: ['../assets/audio/michael-angry1.mp3'],
+        volume: 1.0
+    });
+
+    var michaelAngry2 = new Howl({
+        src: ['../assets/audio/michael-angry2.mp3'],
+        volume: 1.0
+    });
+
     // initial stat values
     let myName = "";
     let myAttack = 25;
@@ -183,7 +193,7 @@ $(document).ready(function () {
             hats = 0;
         }
         console.log(hats);
-        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image animated flip" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#torso").on("click", function () {
@@ -192,7 +202,7 @@ $(document).ready(function () {
             torso = 0;
         }
         console.log(torso);
-        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image animated flip" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#leg").on("click", function () {
@@ -201,7 +211,7 @@ $(document).ready(function () {
             leg = 0;
         }
         console.log(leg);
-        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image animated flip" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#wings").on("click", function () {
@@ -210,7 +220,7 @@ $(document).ready(function () {
             wings = 0;
         }
         console.log(wings);
-        document.getElementById("insert-avatar").innerHTML = `<img class="image" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
+        document.getElementById("insert-avatar").innerHTML = `<img class="image animated flip" id="avatar-image" src="/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}">`;
     });
 
     $("#create-btn").click(function (event) {
@@ -225,8 +235,10 @@ $(document).ready(function () {
         event.preventDefault();
         if (myName === "") {
             $("#name-invalid").css("visibility", "visible");
+            michaelAngry1.play();
             return;
         } else {
+            michaelAngry1.stop();
             createSound.play();
 
 
