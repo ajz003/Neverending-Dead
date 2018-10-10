@@ -312,7 +312,7 @@ $(document).ready(function () {
             hpBarUpdate();
             scrollToBottom();
         } else {
-            alert("Lucky Stab is still on cooldown!")
+            // alert("Lucky Stab is still on cooldown!")
         }
     });
 
@@ -324,7 +324,7 @@ $(document).ready(function () {
             hpBarUpdate();
             scrollToBottom();
         } else {
-            alert("Bleeding Attack is still on cooldown!")
+            // alert("Bleeding Attack is still on cooldown!")
         }
     });
 
