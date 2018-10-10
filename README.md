@@ -1,4 +1,4 @@
-# Neverending Dead
+# The Neverending Dead
 
 ### Project-Two
 #### A simple RPG boss rush game where the player must defeat an army of other playesr who've died trying to reach the final boss.
