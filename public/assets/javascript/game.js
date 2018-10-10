@@ -360,9 +360,14 @@ $(document).ready(function () {
     $(".button").click(function () {
 
         $(".button").css("pointer-events", "none");
-        setTimeout(function () { $(".button").css("pointer-events", "auto") }, 1000)
+        setTimeout(function () { 
+            $(".button").css("pointer-events", "auto");
+            $(".locked-btn").css("pointer-events", "none"); 
+        }, 1000)
 
     })
+
+    $(".locked-btn").css("pointer-events", "none");
 
     // -------------------- Shop
     $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
