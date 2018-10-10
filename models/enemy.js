@@ -33,6 +33,9 @@ module.exports = function (sequelize, DataTypes) {
     position: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    boss:{
+      type: DataTypes.INTEGER
     }
   });
   return Enemy;
