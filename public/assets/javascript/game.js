@@ -113,7 +113,7 @@ $(document).ready(function () {
     });
 
     var michaelCongratz2 = new Howl({
-        src: ['../assets/audio/michael-congratz2.mp3'],
+        src: ['../assets/audio/michael-congratz-2.mp3'],
         volume: 1.0
     });
 
@@ -141,8 +141,8 @@ $(document).ready(function () {
 
     // initial stat values
     let myName = "";
-    let myAttack = 100;
-    let myHealth = 5000;
+    let myAttack = 25;
+    let myHealth = 300;
     let myImg;
 
     let myPotions = 3;
@@ -472,12 +472,10 @@ $(document).ready(function () {
         $("#character-creator").show();
         $(`#character-hp-bar`).removeClass(`is-warning`).removeClass('is-danger').addClass(`is-success`);
         position = 0;
-        myMaxHealth = 5000;
+        myMaxHealth = 300;
         $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
         myHealth = myMaxHealth;
-        myAttack = 100;
-        enemyHealth = 100;
-        enemyAttack = 20;
+        myAttack = 25;
         round = 0;
         myPotions = 3;
         playerGold = 0;
@@ -680,7 +678,7 @@ $(document).ready(function () {
 
     function levelUp() {
         if (position !== enemyCount) {
-            myAttack = Math.round(myAttack * 2);
+            myAttack = Math.round(myAttack * 1.5);
             $("#my-attack").text(myAttack);
             myMaxHealth = Math.round(myMaxHealth * 1.25);
             hpBarUpdate();
