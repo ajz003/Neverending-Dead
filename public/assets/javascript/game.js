@@ -137,11 +137,11 @@ $(document).ready(function () {
     var torso = 0;
     var leg = 0;
     var wings = 0;
-        
+
 
     // initial stat values
     let myName = "";
-    let myAttack = 25;
+    let myAttack = 100;
     let myHealth = 10000;
     let myImg;
 
@@ -262,14 +262,14 @@ $(document).ready(function () {
 
 
 
-        // if (myImg === "") {
-        //     $("#img-invalid").css("visibility", "visible");
-        //     return;
-        // }
-        // document.getElementById("insert-avatar").innerHTML = `<img src=>`;
-        // if (myImg !== "") {
-        //     $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
-        // };
+            // if (myImg === "") {
+            //     $("#img-invalid").css("visibility", "visible");
+            //     return;
+            // }
+            // document.getElementById("insert-avatar").innerHTML = `<img src=>`;
+            // if (myImg !== "") {
+            //     $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`)
+            // };
 
 
             spawnEnemy();
@@ -350,12 +350,12 @@ $(document).ready(function () {
 
     // -------------------- Button Delay
 
-    $(".button").click(function() {
+    $(".button").click(function () {
 
         $(".button").css("pointer-events", "none");
-        setTimeout(function(){$(".button").css("pointer-events", "auto")}, 1000)
-        
-     })
+        setTimeout(function () { $(".button").css("pointer-events", "auto") }, 1000)
+
+    })
 
     // -------------------- Shop
 
@@ -579,11 +579,12 @@ $(document).ready(function () {
                 // var myCrit = Math.random();
                 bleedingAttackSound.play();
                 myNewAttack = myAttack;
-                enemyBleeding.status = true;
-
-                $("#bleed-attack-btn").css("opacity", 0.1)
-                enemyBleeding.damage = myNewAttack;
+                enemyBleeding.damage = Math.floor(myNewAttack * 0.25);
                 console.log(enemyBleeding);
+                myCritNote = "";
+                myCritNote += `<p>You slash their flesh, causing <span id="enemy-name">${enemyName}</span> to bleed each round for <span class="damage-numbers">${enemyBleeding.damage}</span> damage for the next <span class="damage-numbers">${enemyBleeding.ticksLeft}</span> round(s).</p>`;
+                enemyBleeding.status = true;
+                $("#bleed-attack-btn").css("opacity", 0.1)
             }
         }
 
@@ -594,12 +595,12 @@ $(document).ready(function () {
             bonusDamage += enemyBleeding.damage;
             enemyBleeding.ticksLeft--;
             bleedingOutSound.play();
-            myCritNote = "";
-            myCritNote += `<p>You slash their flesh, causing <span id="enemy-name">${enemyName}</span> to bleed for <span class="damage-numbers">${enemyBleeding.damage}</span> damage for the next <span class="damage-numbers">${enemyBleeding.ticksLeft}</span> round(s).</p>`;
             if (enemyBleeding.ticksLeft === 0) {
                 enemyBleeding.status = false;
-                myCritNote += `<p><span id="enemy-name">${enemyName}</span> is no longer bleeding.</p>`;
-            };
+                myCritNote += `<p><span id="enemy-name">${enemyName}</span> bleeds for <span class="damage-numbers">${enemyBleeding.damage}</span> damage.<span id="enemy-name"> ${enemyName}</span> is no longer bleeding.</p>`;
+            } else {
+                myCritNote += `<p><span id="enemy-name">${enemyName}</span> bleeds for <span class="damage-numbers">${enemyBleeding.damage}</span> damage.</p>`;
+            }
         };
 
         // }
@@ -639,11 +640,13 @@ $(document).ready(function () {
     };
 
     function levelUp() {
-        myAttack = Math.round(myAttack * 2);
-        $("#my-attack").text(myAttack);
-        myMaxHealth = Math.round(myMaxHealth * 1.25);
-        hpBarUpdate();
-        levelUpSound.play();
+        if (position !== enemyCount) {
+            myAttack = Math.round(myAttack * 2);
+            $("#my-attack").text(myAttack);
+            myMaxHealth = Math.round(myMaxHealth * 1.25);
+            hpBarUpdate();
+            levelUpSound.play();
+        }
     }
 
 
@@ -696,7 +699,7 @@ $(document).ready(function () {
             levelUp();
 
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
-            $("#console-log-1").append(`<p>You've leveled up! Your max health is now ${myMaxHealth} and your attack is now ${myAttack}!</p>\n<br>`);
+            $("#console-log-1").append(`<p>You've leveled up! Your max health is now <span class="damage-numbers">${myMaxHealth}</span> and your attack is now <span class="damage-numbers">${myAttack}</span>!</p>\n<br>`);
 
             $('#enemy-box').addClass('animated hinge').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                 $(this).removeClass('animated hinge');
@@ -723,8 +726,8 @@ $(document).ready(function () {
                         $(this).removeClass('animated slideInDown');
 
                         $("#enemy-image").attr("src", "assets/img/seamless-skulls.jpg");
-                      
-                            michaelWelcome1.play();
+
+                        michaelWelcome1.play();
 
                     });
                 }
