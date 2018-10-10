@@ -8,6 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.15/howler.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
     <link rel="icon" href="./assets/img/skull-favicon.png" type="image/png" sizes="16x16">
@@ -54,13 +55,13 @@
 
                                 <div class="tile is-vertical has-text-centered">
                                     <div class="onoffswitch">
-                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                                        <!-- <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
                                         <label class="onoffswitch-label" for="myonoffswitch">
                                             <span class="onoffswitch-inner"></span>
                                             <span class="onoffswitch-switch"></span>
                                         </label>
                                     </div>
-                                    <br>
+                                    <br> -->
 
                                     <a id="head" class="button is-danger is-link is-fullwidth" href="#" role="button">head</a><br>
                                     <a id="torso" class="button is-danger is-link is-fullwidth" href="#" role="button">torso</a><br>
@@ -137,17 +138,20 @@
 
                         <div class="modal shop">
                             <div class="modal-background"></div>
+                            <header class="modal-card-head has-text-centered" id="player-gold-header">
+                                <p class="modal-card-title">Your Gold: <span class="gold" id="player-gold"></span></p>
+                            </header>
                             <div class="modal-content" id="shop-display">
                                 <img src="./assets/img/michael-shopkeeper1.png" alt="">
                                 <section class="modal-card-body hero is-medium is-dark is-bold">
                                     <a class="button shop-option" id="buy-pot-btn">Healing
-                                        Potion</a>
+                                        Potion<span class="gold"id="potion-price"></span></a>
                                     <a class="button shop-option" id="buy-protein-btn">Protein
-                                        Potion</a>
+                                        Potion<span class="gold" id="protein-price"></span></a>
                                     <a class="button shop-option" id="learn-lucky-btn">Lucky
-                                        Stab</a>
+                                        Stab<span class="gold" id="stab-price"></span></a>
                                     <a class="button shop-option" id="learn-bleed-btn">Bleeding
-                                        Attack</a>
+                                        Attack<span class="gold" id="bleeding-price"></span></a>
                                 </section>
                                 <footer class="modal-card-foot">
                                     <button class="button shop-option" id="cancel-buy-btn">Cancel</button>
@@ -165,7 +169,8 @@
                                     <a class="button is-small is-danger" id="attack-btn">Attack</a><br><br>
                                     <a class="button is-small is-warning" data-balloon-length="large" data-balloon="Drink a healing potion, recover 50% hp"
                                         data-balloon-pos="up" id="potion-btn">Drink a
-                                        Potion</a>
+                                        Potion</a><br><br>
+                                    <a class="button is-small is-primary" id="attack-btn"><span id="player-gold"></span></a>
                                 </article>
                                 <article class="tile is-child notification has-text-centered is-6 tile-neighbor">
                                     <br>
