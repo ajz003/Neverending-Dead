@@ -387,3 +387,7 @@ footer {
 .gold {
     color: goldenrod;
 }
+
+.modal-card-foot {
+    margin-bottom: 50px;
+}
