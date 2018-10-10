@@ -142,7 +142,7 @@ $(document).ready(function () {
     // initial stat values
     let myName = "";
     let myAttack = 100;
-    let myHealth = 10000;
+    let myHealth = 5000;
     let myImg;
 
     let myPotions = 3;
@@ -401,6 +401,7 @@ $(document).ready(function () {
                     $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
                     break;
                 }
+            
             case "learn-lucky-btn":
             if (playerGold >= luckyStabCost) {
                 $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
@@ -411,11 +412,11 @@ $(document).ready(function () {
                 michaelCompliment1.play();
                 playerGold -= luckyStabCost;
                 isChoiceMade = true;
-                break;
             }else {
                 $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
-                break;
             }
+            break;
+            
             case "learn-bleed-btn":
             if (playerGold >= bleedingAttackCost) {
                 $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
@@ -787,8 +788,18 @@ $(document).ready(function () {
     let hpBarUpdate = function hpBarUpdate() {
 
         // Updates player's & enemy's hp bars as they damage each other
-        $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
-        $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+        if (enemyHealth < 0) {
+            $(`#enemy-hp-bar`).attr(`value`, `0`);
+        } else {
+            $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+        }
+
+        if (myHealth < 0) {
+            $(`#character-hp-bar`).attr(`value`, `0`);
+        } else {
+            $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+        }
+
         $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
 
         // if no one died, update the character stat boxes
