@@ -142,7 +142,7 @@ $(document).ready(function () {
     // initial stat values
     let myName = "";
     let myAttack = 100;
-    let myHealth = 10000;
+    let myHealth = 5000;
     let myImg;
 
     let myPotions = 3;
@@ -380,21 +380,21 @@ $(document).ready(function () {
                 break;
 
             case "learn-lucky-btn":
-                    $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
-                    coinFlip.play();
-                    $("#learn-lucky-btn").hide();
-                    $("#lucky-stab-btn").show();
-                    michaelWelcome1.stop();
-                    michaelCompliment1.play();
+                $("#console-log-1").append(`<p>You learn the secrets of Lucky Stab. Lucky you!</p>`);
+                coinFlip.play();
+                $("#learn-lucky-btn").hide();
+                $("#lucky-stab-btn").show();
+                michaelWelcome1.stop();
+                michaelCompliment1.play();
                 break;
 
             case "learn-bleed-btn":
-                    $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
-                    coinFlip.play();
-                    $("#learn-bleed-btn").hide();
-                    $("#bleed-attack-btn").show();
-                    michaelWelcome1.stop();
-                    michaelCompliment1.play();
+                $("#console-log-1").append(`<p>You learn the secrets of Bleeding Attack. Bloody good!</p>`);
+                coinFlip.play();
+                $("#learn-bleed-btn").hide();
+                $("#bleed-attack-btn").show();
+                michaelWelcome1.stop();
+                michaelCompliment1.play();
 
                 break;
 
@@ -745,8 +745,18 @@ $(document).ready(function () {
     let hpBarUpdate = function hpBarUpdate() {
 
         // Updates player's & enemy's hp bars as they damage each other
-        $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
-        $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+        if (enemyHealth < 0) {
+            $(`#enemy-hp-bar`).attr(`value`, `0`);
+        } else {
+            $(`#enemy-hp-bar`).attr(`value`, `${enemyHealth}`);
+        }
+
+        if (myHealth < 0) {
+            $(`#character-hp-bar`).attr(`value`, `0`);
+        } else {
+            $(`#character-hp-bar`).attr(`value`, `${myHealth}`);
+        }
+
         $(`#character-hp-bar`).attr(`max`, `${myMaxHealth}`);
 
         // if no one died, update the character stat boxes
