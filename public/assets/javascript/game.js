@@ -132,6 +132,11 @@ $(document).ready(function () {
         volume: 1.0
     });
 
+    var michaelNoMoney = new Howl({
+        src: ['../assets/audio/michael-no-money.mp3'],
+        volume: 1.0
+    });
+
     // character outfit values
     var hats = 0;
     var torso = 0;
@@ -395,6 +400,9 @@ $(document).ready(function () {
                     isChoiceMade = true;
                     break;
                 } else {
+                    michaelWelcome1.stop();
+                    michaelNoMoney.stop();
+                    michaelNoMoney.play();
                     $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
                     break;
                 }
@@ -412,6 +420,9 @@ $(document).ready(function () {
                     isChoiceMade = true;
                     break;
                 } else {
+                    michaelWelcome1.stop();
+                    michaelNoMoney.stop();
+                    michaelNoMoney.play();
                     $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
                     break;
                 }
@@ -428,6 +439,9 @@ $(document).ready(function () {
                     $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
                     isChoiceMade = true;
                 } else {
+                    michaelWelcome1.stop();
+                    michaelNoMoney.stop();
+                    michaelNoMoney.play();
                     $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
                 }
                 break;
@@ -445,6 +459,9 @@ $(document).ready(function () {
                     isChoiceMade = true;
                     break;
                 } else {
+                    michaelWelcome1.stop();
+                    michaelNoMoney.stop();
+                    michaelNoMoney.play();
                     $("#console-log-1").append(`<p>You don't have enough gold.</p>`);
                     break;
                 }
@@ -452,6 +469,7 @@ $(document).ready(function () {
             case "cancel-buy-btn":
                 nope.play();
                 michaelWelcome1.stop();
+                michaelNoMoney.stop();
                 michaelSad.play();
                 isChoiceMade = true;
                 break;
