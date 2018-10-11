@@ -30,7 +30,7 @@ require("./routes/html-routes")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({force:true}).then(function () {
+db.sequelize.sync().then(function () {
   db.Enemy.create({name:"Naked Zombie", hp:"100", attack:"20", position:"0", boss: "0"});
   db.Enemy.create({name:"King of the Undead", hp:"10000", attack:"200", position:"1", boss:"1"});
   app.listen(PORT, function () {
