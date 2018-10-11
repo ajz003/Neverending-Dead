@@ -840,6 +840,13 @@ $(document).ready(function () {
             };
         };
 
+        if (myHealth > (myMaxHealth * 0.3)) {
+            $(`#character-hp-bar`).removeClass(`is-danger`).addClass(`is-warning`);
+            if (myHealth > (myMaxHealth * 0.5)) {
+                $(`#character-hp-bar`).removeClass(`is-warning`).addClass(`is-success`);
+            }
+        }
+
         if (enemyHealth <= (enemyMaxHealth * 0.5)) {
             $(`#enemy-hp-bar`).removeClass(`is-success`).addClass(`is-warning`);
             if (enemyHealth <= (enemyMaxHealth * 0.3)) {
