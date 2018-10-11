@@ -281,6 +281,7 @@ $(document).ready(function () {
             spawnEnemy();
 
             $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
+            $("#potion-btn").html(`Drink a Potion (${myPotions})`);
             $("#my-image").attr("src", `/test?hat=${hats}&torso=${torso}&leg=${leg}&wings=${wings}`);
             $("#my-name").text(myName);
             $("#my-health").text(myHealth);
@@ -319,7 +320,7 @@ $(document).ready(function () {
             deathLogic();
             hpBarUpdate();
             $("#console-log-1").append(`<p>You drank a healing potion, you have ` + myPotions + ` potions left.</p>`);
-            $("#potion-btn").html(`Drink a Potion (${myPotions})`)
+            $("#potion-btn").html(`Drink a Potion (${myPotions})`);
             scrollToBottom();
         } else if (isDefeated === false && myPotions === 0) {
             michaelAddict.play();
