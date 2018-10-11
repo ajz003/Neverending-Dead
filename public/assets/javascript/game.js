@@ -328,6 +328,7 @@ $(document).ready(function () {
             $("#potion-btn").html(`Drink a Potion (${myPotions})`);
             scrollToBottom();
         } else if (isDefeated === false && myPotions === 0) {
+            michaelAddict.stop(); // Prevent spam and overlapping sounds
             michaelAddict.play();
             $("#console-log-1").append(`<p>You don't have any more potions!</p>`);
             scrollToBottom();
