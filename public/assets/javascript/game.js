@@ -108,27 +108,27 @@ $(document).ready(function () {
     });
 
     var michaelAngry1 = new Howl({
-        src: ['../assets/audio/michael-angry1.mp3'],
+        src: ['../assets/audio/michael-angry1.wav', '../assets/audio/michael-angry1.mp3'],
         volume: 1.0
     });
 
     var michaelCongratz2 = new Howl({
-        src: ['../assets/audio/michael-congratz-2.mp3'],
+        src: ['../assets/audio/michael-congratz-2.wav', '../assets/audio/michael-congratz-2.mp3'],
         volume: 1.0
     });
 
     var michaelCd1 = new Howl({
-        src: ['../assets/audio/michael-cooldown-1.mp3'],
+        src: ['../assets/audio/michael-cooldown-1.wav', '../assets/audio/michael-cooldown-1.mp3'],
         volume: 1.0
     });
 
     var michaelCd4 = new Howl({
-        src: ['../assets/audio/michael-cooldown-4.mp3'],
+        src: ['../assets/audio/michael-cooldown-4.wav', '../assets/audio/michael-cooldown-4.mp3'],
         volume: 1.0
     });
 
     var michaelAddict = new Howl({
-        src: ['../assets/audio/michael-addict.mp3'],
+        src: ['../assets/audio/michael-addict.wav', '../assets/audio/michael-addict.mp3'],
         volume: 1.0
     });
 
