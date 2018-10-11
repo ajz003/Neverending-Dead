@@ -568,7 +568,7 @@ $(document).ready(function () {
     let attackLogic = function attackLogic(ability) {
         let myNewAttack = myAttack;
         let bonusDamage = 0;
-        let myCritRate = 0.20;
+
         let myCritMod = 1;
         // let myBleedRate = 0.17;
 
@@ -605,6 +605,8 @@ $(document).ready(function () {
                 $("#lucky-stab-btn").css("opacity", 0.1)
                 var myCrit = Math.random();
 
+                let myCritRate = 0.25;
+
                 if (myCrit > myCritRate) {
                     myNewAttack = myAttack * 0.5;
                     missLuckyStab.play();
@@ -616,7 +618,7 @@ $(document).ready(function () {
                     myCritNote = `<p id="critical-hit">CRITICAL HIT!</p>
                                 <p>You manage to target a gap in their armor.</p>`;
                     if (ability === "Lucky Stab") {
-                        myCritMod = 10;
+                        myCritMod = 8;
                     }
 
                 }
@@ -642,7 +644,7 @@ $(document).ready(function () {
                 // var myCrit = Math.random();
                 bleedingAttackSound.play();
                 myNewAttack = myAttack;
-                enemyBleeding.damage = Math.floor(myNewAttack * 0.25);
+                enemyBleeding.damage = Math.floor(myNewAttack * 0.30);
                 console.log(enemyBleeding);
                 myCritNote = "";
                 myCritNote += `<p>You slash their flesh, causing <span id="enemy-name">${enemyName}</span> to bleed each round for <span class="damage-numbers">${enemyBleeding.damage}</span> damage for the next <span class="damage-numbers">${enemyBleeding.ticksLeft}</span> round(s).</p>`;
