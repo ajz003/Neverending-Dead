@@ -410,13 +410,13 @@ $(document).ready(function () {
 
             case "buy-protein-btn":
                 if (playerGold >= proteinPotCost) {
-                    $("#console-log-1").append(`<p>You chug your pre-fight protein potion and gain ${myAttack * 0.5} attack! LET'S GOOOOO!!</p>`);
+                    $("#console-log-1").append(`<p>You chug your pre-fight protein potion and gain ${Math.round(myAttack * 0.2)} attack! LET'S GOOOOO!!</p>`);
                     coinFlip.play();
                     michaelWelcome1.stop();
                     michaelCompliment2.play();
                     playerGold -= proteinPotCost;
                     $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
-                    myAttack = Math.round(myAttack * 1.5);
+                    myAttack = Math.round(myAttack * 1.2);
                     $("#my-attack").text(myAttack);
                     isChoiceMade = true;
                     break;
