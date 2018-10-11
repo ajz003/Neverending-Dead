@@ -606,13 +606,13 @@ $(document).ready(function () {
 
         if (ability === "Healing Potion") {
             myNewAttack = 0;
-            myHealth += myMaxHealth * 0.5;
+            myHealth += Math.floor(myMaxHealth * 0.5)
             if (myHealth > myMaxHealth) {
                 myHealth = myMaxHealth
             }
             hpBarUpdate();
             drinkPotion.play();
-            myCritNote = `<p>You take a moment to drink a revitalizing potion.</p>`;
+            myCritNote = `<p>You take a moment to drink a revitalizing potion. You heal <span class="damage-numbers">${Math.floor(myMaxHealth * 0.5)}</span> HP!</p>`;
         }
 
         if (ability === "Bleeding Attack") {
@@ -739,6 +739,7 @@ $(document).ready(function () {
                 $(this).removeClass('animated hinge');
                 $("#game-screen").hide();
                 $("#lose-screen").show();
+                michaelSad.stop();
             });
 
         };
@@ -751,7 +752,7 @@ $(document).ready(function () {
             levelUp();
 
             // Gold rewards
-            playerGold += 100 + Math.round(enemyMaxHealth / 5) + Math.round(enemyAttack / 2);
+            playerGold += 100 + Math.round(enemyMaxHealth) + Math.round(enemyAttack * 2);
             $(`.player-gold`).html(`${playerGold}&nbsp<i class="fas fa-coins"></i>`);
 
             $("#console-log-1").append(`<p>You have defeated ${enemyName}!</p>`);
